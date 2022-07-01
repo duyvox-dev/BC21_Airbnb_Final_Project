@@ -2,21 +2,50 @@ import { Tabs, DatePicker, Popover, Menu } from 'antd';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faGlobe, faMagnifyingGlass, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import styled from '../css/HeaderTemplate.css';
 import { Link } from 'react-router-dom';
 import MenuItem from 'antd/lib/menu/MenuItem';
+import { viTriService } from '../../../services/viTriService';
+import { layDanhSachViTri } from '../../../redux/viTriSlice';
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 
 export default function HeaderTemplate() {
 
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    async function fetchDanhSachViTri() {
+      try {
+        let result = await viTriService.layDanhSachViTri();
+        console.log(result.data);
+        dispatch(layDanhSachViTri(result.data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDanhSachViTri();
+  }, []);
+
+  let { danhSachViTri } = useSelector(state => state.viTriSlice);
+
+  const renderDanhSachViTri = () => {
+    return danhSachViTri.map((viTri, index) => {
+      return <p
+        key={index}
+        className='cursor-pointer hover:bg-neutral-200'
+      >
+        {viTri.name} | {viTri.province}
+      </p>
+    })
+  }
+
   const contentViTri = (
-    <div>
-      <p>TP.HCM</p>
-      <p>Hà Nội</p>
-      <p>Đà Nẵng</p>
+    <div className='h-52 overflow-y-scroll'>
+      {renderDanhSachViTri()}
     </div>
   );
 
@@ -107,7 +136,7 @@ export default function HeaderTemplate() {
       <MenuItem className='w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300'>
         <Link to={'/'}>
           Cho thuê nhà
-        </Link> 
+        </Link>
       </MenuItem>
       <MenuItem className='w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300'>
         <Link to={'/'}>
@@ -123,7 +152,7 @@ export default function HeaderTemplate() {
         <div className='col-span-1 cursor-pointer'>
           <img className='w-full' src='../img/airbnb-logo3.png' />
         </div>
-        <div className='search-bar-container col-span-8 w-full mx-auto'>
+        <div className='search-bar-container col-span-8 w-full ml-10'>
           <Tabs defaultActiveKey="1" centered onChange={onChangeDatePicker}>
             <TabPane tab="Chỗ ở" key="1">
               <div className='search-bar-container'>

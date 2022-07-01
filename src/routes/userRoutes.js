@@ -14,12 +14,12 @@ export const userRoutes = [
     },
     {
         path: "/register",
-        component: <ThemeLayout Component={DangNhapPage} />,
+        component: <ThemeLayout Component={DangKyPage} />,
         exact: true,
     },
     {
         path: "/login",
-        component: <ThemeLayout Component={DangKyPage} />,
+        component: <ThemeLayout Component={DangNhapPage} />,
         exact: true,
     },
     {
