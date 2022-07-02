@@ -5,36 +5,36 @@ import DangNhapPage from "../pages/DangNhapPage/DangNhapPage";
 import DanhSachPhongPage from "../pages/DanhSachPhongPage/DanhSachPhongPage";
 import HomePage from "../pages/HomePage/HomePage";
 import ThongTinCaNhan from "../pages/ThongTinCaNhanPage/ThongTinCaNhan";
-import NotFound from "../pages/NotFound/NotFound";
+
 export const userRoutes = [
-    {
-        path: "/",
-        component: <ThemeLayout Component={HomePage} />,
-    },
     {
         path: "/user/:id",
         component: <ThemeLayout Component={ThongTinCaNhan} />,
+        exact: true,
     },
     {
         path: "/register",
         component: <ThemeLayout Component={DangKyPage} />,
+        exact: true,
     },
     {
         path: "/login",
         component: <ThemeLayout Component={DangNhapPage} />,
+        exact: true,
     },
     {
-        path: "/rooms/:id",
+        path: "/rooms/:idPhong",
         component: <ThemeLayout Component={ChiTietPhongPage} />,
         exact: true,
     },
     {
-        path: "/search/",
+        path: "/search/:idViTri",
         component: <ThemeLayout Component={DanhSachPhongPage} />,
+        exact: true,
     },
-
     {
-        path: "*",
-        component: <NotFound />,
+        path: "/",
+        component: <ThemeLayout Component={HomePage} />,
+        exact: true,
     },
 ];

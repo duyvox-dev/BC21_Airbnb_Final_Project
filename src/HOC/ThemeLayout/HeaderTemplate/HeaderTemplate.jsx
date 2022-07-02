@@ -1,15 +1,14 @@
-import { Tabs, DatePicker, Popover, Menu } from 'antd';
+import { Tabs, DatePicker, Popover, Menu, message } from 'antd';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faGlobe, faMagnifyingGlass, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { moment } from 'moment';
 import styled from '../css/HeaderTemplate.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import { viTriService } from '../../../services/viTriService';
-import { layDanhSachViTri, setDanhSachViTri } from '../../../redux/viTriSlice';
+import { setDanhSachViTri } from '../../../redux/viTriSlice';
+import { localSearchStorageService } from '../../../services/localService';
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
@@ -21,7 +20,14 @@ const GiamSoLuong = -1;
 
 export default function HeaderTemplate() {
 
+  let navigate = useNavigate();
   let dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setDanhSachViTri());
+  }, []);
+
+  let { danhSachViTri } = useSelector(state => state.viTriSlice);
 
   let DanhSachLoaitKhach = [
     {
@@ -55,11 +61,15 @@ export default function HeaderTemplate() {
     }),
   });
 
-  useEffect(() => {
-    dispatch(setDanhSachViTri());
-  }, []);
+  const [visible, setVisible] = useState(false);
 
-  let { danhSachViTri } = useSelector(state => state.viTriSlice);
+  const hide = () => {
+    setVisible(false);
+  };
+
+  const handleVisibleChange = (newVisible) => {
+    setVisible(newVisible);
+  };
 
   const renderDanhSachViTri = () => {
     return danhSachViTri.map((viTri, index) => {
@@ -157,8 +167,6 @@ export default function HeaderTemplate() {
     return total += item.soLuong;
   }, 0);
 
-  console.log(renderTongSoLuongKhach);
-
   const contentLoaitKhach = (
     <div className='w-full'>
       {renderLoaiKhach()}
@@ -169,12 +177,12 @@ export default function HeaderTemplate() {
     <Menu className='w-52'>
       <MenuItem className='w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300'>
         <Link to={'/login'}>
-          Đăng ký
+          Đăng nhập
         </Link>
       </MenuItem>
       <MenuItem className='w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300'>
         <Link to={'/register'}>
-          Đăng nhập
+          Đăng ký
         </Link>
       </MenuItem>
       <MenuItem className='w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300'>
@@ -190,14 +198,23 @@ export default function HeaderTemplate() {
     </Menu>
   );
 
-  console.log(datPhong);
+  const handleSearch = () => {
+    if (datPhong.idViTri.trim() !== '') {
+      localSearchStorageService.setSearchInfoLocal(datPhong);
+      navigate(`/search/${datPhong.idViTri}`)
+    } else {
+      message.error('Vui lòng chọn địa điểm bạn muốn tìm phòng');
+    };
+  };
 
   return (
     <div className='header w-full pt-5 pb-5 bg-white shadow-md'>
       <div className='header-container w-11/12 mx-auto grid grid-cols-12'>
-        <div className='col-span-1 cursor-pointer'>
-          <img className='w-full' src='../img/airbnb-logo3.png' />
-        </div>
+        <Link to={'/'}>
+          <div className='col-span-1 cursor-pointer'>
+            <img className='w-full' src='../img/airbnb-logo3.png' />
+          </div>
+        </Link>
         <div className='search-bar-container col-span-8 w-full ml-10'>
           <Tabs defaultActiveKey="1" centered>
             <TabPane tab="Chỗ ở" key="1">
@@ -212,7 +229,7 @@ export default function HeaderTemplate() {
                     <input
                       value={datPhong.tenViTri}
                       className='location-input w-full bg-transparent border-none focus:outline-none'
-                      placeholder='Tìm kiếm điểm đến' />
+                      placeholder='Tìm kiếm phòng theo khu vực' />
                   </Popover>
                   <div className='date-input-block col-span-4 h-16 bg-transparent cursor-pointer flex flex-row flex-wrap items-stretch relative'>
                     <div className='date-input-item w-6/12 py-2 relative'>
@@ -236,8 +253,11 @@ export default function HeaderTemplate() {
                           : <p className='w-full text-gray-400 pointer-events-none'>Chọn khách</p>
                       }
                     </Popover>
-                    <button className='rounded-full w-14 h-12 my-auto border-none bg-rose-500 text-white cursor-pointer active:bg-rose-700 active:shadow-lg'>
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    <button
+                      className='rounded-full w-14 h-12 my-auto border-none bg-rose-500 text-white cursor-pointer z-50 active:bg-rose-700 active:shadow-lg'
+                      onClick={() => { handleSearch() }}
+                    >
+                      <FontAwesomeIcon className='pointer-events-none' icon={faMagnifyingGlass} />
                     </button>
                   </div>
                 </div>
@@ -262,8 +282,10 @@ export default function HeaderTemplate() {
           <div>
             <Popover
               className='w-20 h-10 rounded-full cursor-pointer flex justify-around items-center bg-white border-solid border border-neutral-300 hover:shadow-lg'
-              content={contentMenuBar}
+              content={<a onClick={hide}>{contentMenuBar}</a>}
               trigger="click"
+              visible={visible}
+              onVisibleChange={handleVisibleChange}
             >
               <FontAwesomeIcon className='text-base' icon={faBars} />
               <FontAwesomeIcon className='text-3xl' icon={faCircleUser} />

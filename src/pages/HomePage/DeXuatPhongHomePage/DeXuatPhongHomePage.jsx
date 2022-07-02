@@ -36,13 +36,19 @@ export default function DeXuatPhongHomePage(props) {
             <h1 className="w-11/12 mx-auto text-2xl text-center">Những chỗ nghỉ nổi bật khuyến nghị cho bạn</h1>
             <Tabs defaultActiveKey="1" centered>
                 <TabPane tab={tabValue[0].name} key={tabValue[0].key}>
-                    <DeXuatPhongTab1 deXuatDanhSachPhongTab1={deXuatDanhSachPhongTab1} />
+                    <DeXuatPhongTab1
+                        deXuatDanhSachPhongTab1={deXuatDanhSachPhongTab1}
+                    />
                 </TabPane>
                 <TabPane tab={tabValue[1].name} key={tabValue[1].key}>
-                    <DeXuatPhongTab2 deXuatDanhSachPhongTab2={deXuatDanhSachPhongTab2} />
+                    <DeXuatPhongTab2
+                        deXuatDanhSachPhongTab2={deXuatDanhSachPhongTab2}
+                    />
                 </TabPane>
                 <TabPane tab={tabValue[2].name} key={tabValue[2].key}>
-                    <DeXuatPhongTab3 deXuatDanhSachPhongTab3={deXuatDanhSachPhongTab3} />
+                    <DeXuatPhongTab3
+                        deXuatDanhSachPhongTab3={deXuatDanhSachPhongTab3}
+                    />
                 </TabPane>
             </Tabs>
         </div >

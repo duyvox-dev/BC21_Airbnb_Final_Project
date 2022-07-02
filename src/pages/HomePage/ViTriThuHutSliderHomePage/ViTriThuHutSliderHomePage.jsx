@@ -30,7 +30,7 @@ export default function ViTriThuHutSliderHomePage(props) {
     const renderDiemDenThuHut = () => {
         return _.uniqBy(danhSachViTriDanhGiaCao, 'province').map((viTri, index) => {
             return <Link
-                to={'/'}
+                to={`/search/${viTri._id}`}
                 className='text-inherit hover:text-inherit group'
             >
                 <div key={index}>

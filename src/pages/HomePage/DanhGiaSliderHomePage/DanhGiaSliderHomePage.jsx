@@ -1,6 +1,7 @@
 import { faChevronCircleLeft, faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
 export default function DanhGiaSliderHomePage(props) {
@@ -27,10 +28,12 @@ export default function DanhGiaSliderHomePage(props) {
 
     const renderDanhGiaSlider = () => {
         return danhSachDanhGia.map((danhGia, index) => {
-            return <div
+            return <Link
                 key={index}
+                to={`/rooms/${danhGia.roomId?._id}`}
+                className='group'
             >
-                <div className="w-80 h-80 mx-auto p-2 border border-neutral-400 border-b-4 border-b-rose-600 relative">
+                <div className="w-80 h-80 mx-auto p-2 border border-neutral-400 border-b-4 border-b-rose-600 relative group-hover:bg-neutral-200 group-hover:scale-95">
                     <h2 className="text-center text-xl my-auto text-rose-500">{danhGia.roomId?.name}</h2>
                     <h3 className="text-lg text-center my-auto mt-7">{danhGia.content}</h3>
                     {
@@ -43,7 +46,7 @@ export default function DanhGiaSliderHomePage(props) {
                             : <Fragment />
                     }
                 </div>
-            </div>
+            </Link>
         })
     };
 
