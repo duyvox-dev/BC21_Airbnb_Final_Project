@@ -3,7 +3,6 @@ import { localStorageService } from "./localService";
 
 export const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 export const TOKEN_CYBERSOFT = process.env.REACT_APP_CYBERSOFT_TOKEN;
-
 let timeRequestMax;
 
 const getAccessToken = () => {
