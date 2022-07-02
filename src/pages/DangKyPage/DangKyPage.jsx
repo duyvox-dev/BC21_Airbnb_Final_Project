@@ -122,7 +122,6 @@ export default function DangKyPage() {
               rules={[
                 {
                   required: true,
-                  message: "Please confirm your password!",
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
@@ -130,9 +129,7 @@ export default function DangKyPage() {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error(
-                        "The two passwords that you entered do not match!"
-                      )
+                      new Error("Mật khẩu không trùng khớp")
                     );
                   },
                 }),
