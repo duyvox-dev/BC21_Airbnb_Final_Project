@@ -2,32 +2,61 @@ import { Tabs, DatePicker, Popover, Menu } from 'antd';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faGlobe, faMagnifyingGlass, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { moment } from 'moment';
 import styled from '../css/HeaderTemplate.css';
 import { Link } from 'react-router-dom';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import { viTriService } from '../../../services/viTriService';
-import { layDanhSachViTri } from '../../../redux/viTriSlice';
+import { layDanhSachViTri, setDanhSachViTri } from '../../../redux/viTriSlice';
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
+
+const dateFormat = 'DD/MM/YYYY';
+
+const TangSoLuong = 1;
+const GiamSoLuong = -1;
 
 export default function HeaderTemplate() {
 
   let dispatch = useDispatch();
 
+  let DanhSachLoaitKhach = [
+    {
+      ten: 'Người lớn',
+      moTa: 'Từ 13 tuổi trở lên',
+    },
+    {
+      ten: 'Trẻ em',
+      moTa: 'Độ tuổi 2 - 12',
+    },
+    {
+      ten: 'Em bé',
+      moTa: 'Dưới 2 tuổi',
+    },
+    {
+      ten: 'Thú cưng',
+      moTa: 'Mang theo động vật cần được phục vụ?',
+    },
+  ];
+
+  let [datPhong, setDatPhong] = useState({
+    idViTri: '',
+    tenViTri: '',
+    ngayNhanPhong: '',
+    ngayTraPhong: '',
+    khach: DanhSachLoaitKhach.map((khach, index) => {
+      return {
+        loaiKhach: khach.ten,
+        soLuong: 0,
+      };
+    }),
+  });
+
   useEffect(() => {
-    async function fetchDanhSachViTri() {
-      try {
-        let result = await viTriService.layDanhSachViTri();
-        console.log(result.data);
-        dispatch(layDanhSachViTri(result.data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDanhSachViTri();
+    dispatch(setDanhSachViTri());
   }, []);
 
   let { danhSachViTri } = useSelector(state => state.viTriSlice);
@@ -37,6 +66,13 @@ export default function HeaderTemplate() {
       return <p
         key={index}
         className='cursor-pointer hover:bg-neutral-200'
+        onClick={() => {
+          setDatPhong({
+            ...datPhong,
+            idViTri: viTri._id,
+            tenViTri: viTri.name,
+          })
+        }}
       >
         {viTri.name} | {viTri.province}
       </p>
@@ -49,75 +85,83 @@ export default function HeaderTemplate() {
     </div>
   );
 
-  const onChangeDatePicker = (key) => {
-    console.log(key);
+  const onChangeDatePicker = (key, dateString) => {
+    let NgayNhanPhong = dateString[0];
+    let NgayTraPhong = dateString[1];
+    setDatPhong({
+      ...datPhong,
+      ngayNhanPhong: NgayNhanPhong,
+      ngayTraPhong: NgayTraPhong,
+    });
   };
+
+  const ThayDoiSoLuongLoaiKhach = (loaiKhach, giaTri) => {
+    let indexLoaiKhach = datPhong.khach.findIndex(item => {
+      return item.loaiKhach === loaiKhach
+    });
+
+    if (indexLoaiKhach !== -1) {
+      let capNhatSoLuongLoaiKhach = [...datPhong.khach];
+      capNhatSoLuongLoaiKhach[indexLoaiKhach].soLuong += giaTri;
+      if (capNhatSoLuongLoaiKhach[indexLoaiKhach].soLuong < 0) {
+        capNhatSoLuongLoaiKhach[indexLoaiKhach].soLuong = 0;
+      };
+      setDatPhong({
+        ...datPhong,
+        khach: capNhatSoLuongLoaiKhach,
+      });
+    };
+  };
+
+  const renderLoaiKhach = () => {
+    return DanhSachLoaitKhach.map((Khach, index) => {
+      let soLuongLoaiKhach = () => {
+        for (let key in datPhong.khach) {
+          if (datPhong.khach[key].loaiKhach === Khach.ten) {
+            return datPhong.khach[key].soLuong;
+          };
+        };
+      };
+      return <div
+        key={index}
+        className='w-full mb-2 grid grid-cols-3 border-solid border-0 border-b border-b-neutral-300 pb-2'
+      >
+        <div className='col-span-2 flex flex-wrap align-middle'>
+          <p className='w-full my-auto font-bold'>{Khach.ten}</p>
+          <p className='w-full my-auto'>{Khach.moTa}</p>
+        </div>
+        <div className='col-span-1 ml-3 flex justify-between items-center'>
+          <button
+            className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'
+            onClick={() => { ThayDoiSoLuongLoaiKhach(Khach.ten, GiamSoLuong) }}
+          >
+            <FontAwesomeIcon icon={faMinus} />
+          </button>
+          <p className='my-auto'>
+            {
+              soLuongLoaiKhach()
+            }
+          </p>
+          <button
+            className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'
+            onClick={() => { ThayDoiSoLuongLoaiKhach(Khach.ten, TangSoLuong) }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </div>
+      </div>
+    })
+  };
+
+  const renderTongSoLuongKhach = datPhong.khach.reduce((total, item) => {
+    return total += item.soLuong;
+  }, 0);
+
+  console.log(renderTongSoLuongKhach);
 
   const contentLoaitKhach = (
     <div className='w-full'>
-      <div className='w-full mb-2 grid grid-cols-3 border-solid border-0 border-b border-b-neutral-300 pb-2'>
-        <div className='col-span-2 flex flex-wrap align-middle'>
-          <p className='w-full my-auto font-bold'>Người lớn</p>
-          <p className='w-full my-auto'>Từ 13 tuổi trở lên</p>
-        </div>
-        <div className='col-span-1 ml-3 flex justify-between items-center'>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faMinus} />
-          </button>
-          <p className='my-auto'>0</p>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-      </div>
-
-      <div className='w-full mb-2 grid grid-cols-3 border-solid border-0 border-b border-b-neutral-300 pb-2'>
-        <div className='col-span-2 flex flex-wrap align-middle'>
-          <p className='w-full my-auto font-bold'>Trẻ em</p>
-          <p className='w-full my-auto'>Độ tuổi 2 - 12</p>
-        </div>
-        <div className='col-span-1 ml-3 flex justify-between items-center'>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faMinus} />
-          </button>
-          <p className='my-auto'>0</p>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-      </div>
-
-      <div className='w-full mb-2 grid grid-cols-3 border-solid border-0 border-b border-b-neutral-300 pb-2'>
-        <div className='col-span-2 flex flex-wrap align-middle'>
-          <p className='w-full my-auto font-bold'>Em bé</p>
-          <p className='w-full my-auto'>Dưới 2 tuổi</p>
-        </div>
-        <div className='col-span-1 ml-3 flex justify-between items-center'>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faMinus} />
-          </button>
-          <p className='my-auto'>0</p>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-      </div>
-
-      <div className='w-full mb-2 grid grid-cols-3 border-solid border-0 border-b border-b-neutral-300 pb-2'>
-        <div className='col-span-2 flex flex-wrap align-middle'>
-          <p className='w-full my-auto font-bold'>Thú cưng</p>
-          <p className='w-full my-auto'>Bạn sẽ mang theo động vật?</p>
-        </div>
-        <div className='col-span-1 ml-3 flex justify-between items-center'>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faMinus} />
-          </button>
-          <p className='my-auto'>0</p>
-          <button className='w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300'>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-      </div>
+      {renderLoaiKhach()}
     </div>
   );
 
@@ -146,6 +190,8 @@ export default function HeaderTemplate() {
     </Menu>
   );
 
+  console.log(datPhong);
+
   return (
     <div className='header w-full pt-5 pb-5 bg-white shadow-md'>
       <div className='header-container w-11/12 mx-auto grid grid-cols-12'>
@@ -153,7 +199,7 @@ export default function HeaderTemplate() {
           <img className='w-full' src='../img/airbnb-logo3.png' />
         </div>
         <div className='search-bar-container col-span-8 w-full ml-10'>
-          <Tabs defaultActiveKey="1" centered onChange={onChangeDatePicker}>
+          <Tabs defaultActiveKey="1" centered>
             <TabPane tab="Chỗ ở" key="1">
               <div className='search-bar-container'>
                 <div className='search-bar-inner w-full grid grid-cols-12 bg-gray-100 rounded-full border-solid border border-neutral-300'>
@@ -161,9 +207,12 @@ export default function HeaderTemplate() {
                     className='location-input-block col-span-5 h-16 rounded-full px-5 py-2 cursor-pointer'
                     content={contentViTri}
                     title="Tìm kiếm phòng theo khu vực"
-                    trigger="click">
+                    trigger="focus">
                     <label className='location-input-name w-full font-bold pointer-events-none'>Địa điểm</label>
-                    <input className='location-input w-full bg-transparent border-none focus:outline-none' placeholder='Tìm kiếm điểm đến' />
+                    <input
+                      value={datPhong.tenViTri}
+                      className='location-input w-full bg-transparent border-none focus:outline-none'
+                      placeholder='Tìm kiếm điểm đến' />
                   </Popover>
                   <div className='date-input-block col-span-4 h-16 bg-transparent cursor-pointer flex flex-row flex-wrap items-stretch relative'>
                     <div className='date-input-item w-6/12 py-2 relative'>
@@ -176,12 +225,16 @@ export default function HeaderTemplate() {
                         Trả phòng
                       </span>
                     </div>
-                    <RangePicker className='date-picker-container' />
+                    <RangePicker className='date-picker-container' format={dateFormat} onChange={onChangeDatePicker} />
                   </div>
                   <div className='col-span-3 h-16 px-2 rounded-full flex justify-between cursor-pointer hover:bg-gray-200'>
                     <Popover overlayClassName='rounded-lg' className='pl-3 py-2 w-full bg-transparent border-none' content={contentLoaitKhach} trigger="click">
                       <label className='w-full font-bold pointer-events-none'>Khách</label>
-                      <p className='w-full text-gray-300 pointer-events-none'>Chọn khách</p>
+                      {
+                        renderTongSoLuongKhach > 0
+                          ? <p className='w-full text-gray-800 pointer-events-none'>{renderTongSoLuongKhach} khách</p>
+                          : <p className='w-full text-gray-400 pointer-events-none'>Chọn khách</p>
+                      }
                     </Popover>
                     <button className='rounded-full w-14 h-12 my-auto border-none bg-rose-500 text-white cursor-pointer active:bg-rose-700 active:shadow-lg'>
                       <FontAwesomeIcon icon={faMagnifyingGlass} />
