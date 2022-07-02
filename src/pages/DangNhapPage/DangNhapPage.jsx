@@ -80,7 +80,6 @@ export default function DangNhapPage() {
                 {
                   required: true,
                   type: "email",
-                  whitespace: true,
                 },
               ]}
             >
@@ -94,11 +93,6 @@ export default function DangNhapPage() {
               rules={[
                 {
                   required: true,
-                  whitespace: true,
-                },
-                {
-                  min: 6,
-                  message: "Mật khẩu không được ít hơn 6 chữ số hoặc ký tự",
                 },
               ]}
             >
