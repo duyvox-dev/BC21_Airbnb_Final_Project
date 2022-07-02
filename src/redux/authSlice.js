@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { authService } from "../services/authService";
 import { localStorageService } from "../services/localService";
@@ -11,9 +11,10 @@ const setupInitialState = () => {
     isLoggedIn = true;
   }
   initialState = {
-    userLogin: userLogin,
+    userLogin: userLogin?.user,
     isLoggedIn: isLoggedIn,
     isRegisterred: false,
+    accessToken: userLogin?.accessToken,
   };
 };
 setupInitialState();
@@ -53,7 +54,14 @@ export const postDataDangNhap = createAsyncThunk(
 export const authSlice = createSlice({
   name: "authSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    dangXuat: (state, { payload }) => {
+      state.accessToken = null;
+      state.userLogin = {};
+      state.isLoggedIn = false;
+      state.isRegisterred = false;
+    },
+  },
   extraReducers: {
     [postDataDangKy.fulfilled]: (state) => {
       state.isRegisterred = true;
@@ -65,10 +73,11 @@ export const authSlice = createSlice({
       state.isRegisterred = false;
     },
     [postDataDangNhap.fulfilled]: (state, { payload }) => {
-      console.log(payload);
+      let { accessToken, ...user } = payload;
       state.isLoggedIn = true;
       state.isRegisterred = false;
-      state.userLogin = payload;
+      state.userLogin = user;
+      state.accessToken = accessToken;
     },
     [postDataDangNhap.rejected]: (state) => {
       state.isLoggedIn = false;
@@ -79,6 +88,13 @@ export const authSlice = createSlice({
       state.isRegisterred = false;
     },
   },
+});
+
+export const dangXuat = createAction("auth/dangXuat", () => {
+  authService.dangXuat();
+  return {
+    payload: {},
+  };
 });
 
 export default authSlice.reducer;

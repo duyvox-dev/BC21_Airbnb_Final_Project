@@ -17,6 +17,7 @@ import { viTriService } from "../../../services/viTriService";
 import { layDanhSachViTri } from "../../../redux/viTriSlice";
 import userPic from "../../../assets/img/user_pic.png";
 import { localStorageService } from "../../../services/localService";
+import { dangXuat } from "../../../redux/authSlice";
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
@@ -127,15 +128,14 @@ export default function HeaderTemplate() {
   );
 
   let handleLogout = () => {
-    localStorageService.removeUserLocal();
-    window.location.href = "/login";
+    dispatch(dangXuat());
   };
 
   const contentMenuBar = (
     <Menu className="w-52">
       {userLogin ? (
         <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-          <Link to={`/user/${userLogin.user._id}`}>Tài khoản</Link>
+          <Link to={`/user/${userLogin._id}`}>Tài khoản</Link>
         </MenuItem>
       ) : (
         <>
