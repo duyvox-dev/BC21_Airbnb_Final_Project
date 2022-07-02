@@ -7,6 +7,7 @@ const { Option } = Select;
 
 export default function DangKyPage() {
   const { userLogin } = useSelector((state) => state.authSlice);
+  const { isRegisterred } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,7 +16,8 @@ export default function DangKyPage() {
       navigate("/");
       message.warning("Bạn đã đăng nhập, vui lòng đăng xuất trước khi đăng ký");
     }
-  }, []);
+    isRegisterred && navigate("/login");
+  }, [isRegisterred, userLogin]);
 
   const validateMessages = {
     required: "${label} không được để trống",
@@ -31,15 +33,7 @@ export default function DangKyPage() {
       ...values,
       birthday: values["birthday"].format("YYYY/MM/DD"),
     };
-    dispatch(postDataDangKy(valueUpdate))
-      .unwrap()
-      .then((res) => {
-        console.log(res);
-        navigate("/login");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(postDataDangKy(valueUpdate));
   };
 
   const onFinishFailed = (errorInfo) => {

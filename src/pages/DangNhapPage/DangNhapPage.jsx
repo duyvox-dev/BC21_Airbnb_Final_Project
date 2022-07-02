@@ -3,10 +3,10 @@ import { Form, Input, message } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postDataDangNhap } from "../../redux/authSlice";
-import { localStorageService } from "../../services/localService";
 
 export default function DangNhapPage() {
   const { userLogin } = useSelector((state) => state.authSlice);
+  const { isLoggedIn } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,24 +25,12 @@ export default function DangNhapPage() {
       message.warning(
         "Bạn đã đăng nhập rồi, vui lòng đăng xuất trước khi đăng nhập tài khoản!"
       );
+      isLoggedIn && navigate("/");
     }
-  }, []);
+  }, [userLogin, isLoggedIn]);
 
   const onFinish = (values) => {
-    console.log(values);
-    dispatch(postDataDangNhap(values))
-      .unwrap()
-      .then((res) => {
-        message.success("Bạn đã đăng nhập thành công!");
-        navigate("/");
-        localStorageService.setUserLocal(values);
-      })
-      .catch((err) => {
-        message.error(
-          "Bạn đã đăng nhập thất bại, vui lòng kiểm tra thông tin lại!"
-        );
-        console.log(err);
-      });
+    dispatch(postDataDangNhap(values));
   };
 
   const onFinishFailed = (errorInfo) => {
