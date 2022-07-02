@@ -57,7 +57,7 @@ export const authSlice = createSlice({
   reducers: {
     dangXuat: (state, { payload }) => {
       state.accessToken = null;
-      state.userLogin = {};
+      state.userLogin = null;
       state.isLoggedIn = false;
       state.isRegisterred = false;
     },
@@ -90,7 +90,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const dangXuat = createAction("auth/dangXuat", () => {
+export const dangXuat = createAction("authSlice/dangXuat", () => {
   authService.dangXuat();
   return {
     payload: {},
