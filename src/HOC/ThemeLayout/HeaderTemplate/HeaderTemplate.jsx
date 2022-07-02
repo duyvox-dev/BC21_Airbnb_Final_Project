@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "../css/HeaderTemplate.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MenuItem from "antd/lib/menu/MenuItem";
 import { viTriService } from "../../../services/viTriService";
 import { layDanhSachViTri } from "../../../redux/viTriSlice";
@@ -25,6 +25,7 @@ const { RangePicker } = DatePicker;
 export default function HeaderTemplate() {
   const { userLogin } = useSelector((state) => state.authSlice);
   let dispatch = useDispatch();
+  let navigate = useNavigate();
 
   useEffect(() => {
     async function fetchDanhSachViTri() {
@@ -129,6 +130,7 @@ export default function HeaderTemplate() {
 
   let handleLogout = () => {
     dispatch(dangXuat());
+    navigate("/");
   };
 
   const contentMenuBar = (
