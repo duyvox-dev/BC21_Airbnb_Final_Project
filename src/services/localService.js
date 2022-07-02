@@ -1,6 +1,4 @@
-import locale from "antd/lib/date-picker/locale/en_US";
-
-const USER_INFO = 'USER_INFO';
+const USER_INFO = "USER_INFO";
 
 export const localStorageService = {
     setUserLocal: (data) => {
