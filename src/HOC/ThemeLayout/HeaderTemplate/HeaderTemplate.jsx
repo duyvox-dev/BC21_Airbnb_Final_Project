@@ -15,11 +15,14 @@ import { Link } from "react-router-dom";
 import MenuItem from "antd/lib/menu/MenuItem";
 import { viTriService } from "../../../services/viTriService";
 import { layDanhSachViTri } from "../../../redux/viTriSlice";
+import userPic from "../../../assets/img/user_pic.png";
+import { localStorageService } from "../../../services/localService";
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 
 export default function HeaderTemplate() {
+  const { userLogin } = useSelector((state) => state.authSlice);
   let dispatch = useDispatch();
 
   useEffect(() => {
@@ -123,20 +126,43 @@ export default function HeaderTemplate() {
     </div>
   );
 
+  let handleLogout = () => {
+    localStorageService.removeUserLocal();
+    window.location.href = "/login";
+  };
+
   const contentMenuBar = (
     <Menu className="w-52">
-      <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-        <Link to={"/register"}>Đăng ký</Link>
-      </MenuItem>
-      <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-        <Link to={"/login"}>Đăng nhập</Link>
-      </MenuItem>
+      {userLogin ? (
+        <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
+          <Link to={`/user/${userLogin.user._id}`}>Tài khoản</Link>
+        </MenuItem>
+      ) : (
+        <>
+          <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
+            <Link to={"/register"}>Đăng ký</Link>
+          </MenuItem>
+          <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
+            <Link to={"/login"}>Đăng nhập</Link>
+          </MenuItem>
+        </>
+      )}
       <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
         <Link to={"/"}>Cho thuê nhà</Link>
       </MenuItem>
       <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
         <Link to={"/"}>Tổ chức trải nghiệm</Link>
       </MenuItem>
+      {userLogin ? (
+        <MenuItem
+          onClick={() => handleLogout()}
+          className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300"
+        >
+          Đăng xuất
+        </MenuItem>
+      ) : (
+        ""
+      )}
     </Menu>
   );
 
@@ -225,7 +251,16 @@ export default function HeaderTemplate() {
               trigger="click"
             >
               <FontAwesomeIcon className="text-base" icon={faBars} />
-              <FontAwesomeIcon className="text-3xl" icon={faCircleUser} />
+              {userLogin ? (
+                <img
+                  style={{ width: 35, height: 35 }}
+                  className="rounded-full"
+                  src={userLogin.avatar ? userLogin.avatar : userPic}
+                  alt={userLogin.avatar ? userLogin.avatar : userPic}
+                />
+              ) : (
+                <FontAwesomeIcon className="text-3xl" icon={faCircleUser} />
+              )}
             </Popover>
           </div>
         </div>

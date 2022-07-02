@@ -11,10 +11,9 @@ const setupInitialState = () => {
     isLoggedIn = true;
   }
   initialState = {
-    ...localStorageService.getUserLocal(),
+    userLogin: userLogin,
     isLoggedIn: isLoggedIn,
     isRegisterred: false,
-    userLogin: userLogin,
   };
 };
 setupInitialState();
@@ -27,7 +26,7 @@ export const postDataDangKy = createAsyncThunk(
       message.success("Đăng ký thành công");
       return result.data.content;
     } catch (error) {
-      message.error(error.response.data.content);
+      message.error(error.response.data.message);
       return thunkAPI.rejectWithValue();
     }
   }
@@ -38,13 +37,14 @@ export const postDataDangNhap = createAsyncThunk(
   async (dataDangNhap, thunkAPI) => {
     try {
       const result = await authService.dangNhap(dataDangNhap);
-      localStorageService.setUserLocal(result.data.user);
-      message.success("Đăng nhập thành công");
-      return result.data.user;
+      message.success(result.data.message);
+      localStorageService.setUserLocal({
+        accessToken: result.data.token,
+        user: result.data.user,
+      });
+      return { accessToken: result.data.token, user: result.data.user };
     } catch (error) {
-      message.error(
-        "Đăng nhập thất bại, vui lòng kiểm tra thông tin hoặc liên hệ admin hỗ trợ"
-      );
+      message.error(error.response.data.message);
       return thunkAPI.rejectWithValue();
     }
   }
@@ -65,6 +65,7 @@ export const authSlice = createSlice({
       state.isRegisterred = false;
     },
     [postDataDangNhap.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.isLoggedIn = true;
       state.isRegisterred = false;
       state.userLogin = payload;

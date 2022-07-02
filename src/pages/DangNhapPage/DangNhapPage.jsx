@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { Form, Input, message } from "antd";
+import { Form, Input } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postDataDangNhap } from "../../redux/authSlice";
 
 export default function DangNhapPage() {
-  const { userLogin } = useSelector((state) => state.authSlice);
   const { isLoggedIn } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,14 +19,8 @@ export default function DangNhapPage() {
   };
 
   useEffect(() => {
-    if (userLogin) {
-      navigate("/");
-      message.warning(
-        "Bạn đã đăng nhập rồi, vui lòng đăng xuất trước khi đăng nhập tài khoản!"
-      );
-      isLoggedIn && navigate("/");
-    }
-  }, [userLogin, isLoggedIn]);
+    isLoggedIn && navigate("/");
+  }, [isLoggedIn]);
 
   const onFinish = (values) => {
     dispatch(postDataDangNhap(values));
