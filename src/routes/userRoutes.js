@@ -4,6 +4,7 @@ import DangKyPage from "../pages/DangKyPage/DangKyPage";
 import DangNhapPage from "../pages/DangNhapPage/DangNhapPage";
 import DanhSachPhongPage from "../pages/DanhSachPhongPage/DanhSachPhongPage";
 import HomePage from "../pages/HomePage/HomePage";
+import NotFound from "../pages/NotFound/NotFound";
 import ThongTinCaNhan from "../pages/ThongTinCaNhanPage/ThongTinCaNhan";
 
 export const userRoutes = [

@@ -10,6 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import userPic from '../../../assets/img/user_pic.png';
 import styled from "../css/HeaderTemplate.css";
 import { Link, useNavigate } from "react-router-dom";
 import MenuItem from "antd/lib/menu/MenuItem";
@@ -19,6 +20,7 @@ import {
     setDanhSachViTri,
 } from "../../../redux/viTriSlice";
 import { localSearchStorageService } from "../../../services/localService";
+import { dangXuat } from "../../../redux/authSlice";
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
