@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getRoomDetail } from "../../redux/phongSlice";
-
+import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
 import moment from "moment";
 import { FaStar, FaMedal, FaAirbnb, FaBed } from "react-icons/fa";
 import { BsTranslate } from "react-icons/bs";
@@ -10,20 +10,23 @@ import { Link } from "react-router-dom";
 import { convertLocaleString } from "../../utils/stringFormatUtils";
 import RoomFeatureList from "./RoomFeature/RoomFeatureList";
 import RangeDatePicker from "./RangeDatePicker/RangeDatePicker";
-import CommentList from "./Comment/CommentList";
 import Bed from "../../assets/img/room-convenience/bed.png";
 import CommentContainer from "./Comment/CommentContainer";
+import CommentModal from "./Comment/CommentModal";
 export default function ChiTietPhongPage() {
     const dispatch = useDispatch();
     const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
+    const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
     const [roomFeatures, setRoomFeatures] = useState({});
     const { id } = useParams();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [bookingTime, setBookingTime] = useState({
         checkIn: "",
         checkOut: "",
     });
     useEffect(() => {
         dispatch(getRoomDetail(id));
+        dispatch(getDanhSachDanhGiaPhong(id));
     }, []);
     useEffect(() => {
         const features = {
@@ -40,6 +43,9 @@ export default function ChiTietPhongPage() {
         };
         setRoomFeatures({ ...features });
     }, [thongTinChiTietPhong]);
+    useEffect(() => {
+        console.log(danhSachDanhGia);
+    }, [danhSachDanhGia]);
     const onDatePickerChange = (key, data) => {
         setBookingTime({
             checkIn: moment(data[0]).format(),
@@ -62,8 +68,15 @@ export default function ChiTietPhongPage() {
             components.push(<img src={Bed} className="w-[30px] h-[30px]" />);
         return components;
     };
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+    useEffect(() => {
+        console.log(isModalOpen);
+    }, [isModalOpen]);
     return (
         <div>
+            <CommentModal isModalOpen={isModalOpen} toggleModal={toggleModal} />
             <div className="container mx-auto py-10">
                 <div>
                     <h1 className=" font-bold text-3xl flex gap-2 items-center">
@@ -79,7 +92,7 @@ export default function ChiTietPhongPage() {
                         <span className="flex gap-2 items-center">
                             <FaMedal></FaMedal>
                             <span className=" underline  font-semibold cursor-pointer">
-                                38 đánh giá
+                                {danhSachDanhGia.length} đánh giá
                             </span>
                         </span>
                         <span className="text-slate-500">.</span>
@@ -208,15 +221,24 @@ export default function ChiTietPhongPage() {
                         {/* Booking */}
                         <div className="w-[30%] relative">
                             <div className="border border-slate-300 rounded-md p-5 shadow sticky top-1">
-                                <span className="flex gap-2 items-center">
-                                    <span className="font-semibold text-xl">
-                                        đ{" "}
-                                        {convertLocaleString(
-                                            thongTinChiTietPhong.price
-                                        )}
+                                <div className="flex justify-between items-center">
+                                    <span className="flex gap-2 items-center">
+                                        <span className="font-semibold text-xl">
+                                            đ{" "}
+                                            {convertLocaleString(
+                                                thongTinChiTietPhong.price
+                                            )}
+                                        </span>
+                                        <span>/ đêm</span>
                                     </span>
-                                    <span>/ đêm</span>
-                                </span>
+                                    <span className="flex gap-2 items-center">
+                                        <FaMedal></FaMedal>
+                                        <span className=" underline  font-semibold cursor-pointer text-slate-500">
+                                            {danhSachDanhGia.length} đánh giá
+                                        </span>
+                                    </span>
+                                </div>
+
                                 <div className="my-5 border border-slate-300 rounded-md">
                                     <div className="w-full flex relative pt-3 pb-8">
                                         <div className="w-[1px] bg-slate-300 absolute top-0 left-1/2 h-full z-10"></div>
@@ -252,8 +274,15 @@ export default function ChiTietPhongPage() {
                         </div>
                     </div>
                     <div className="comment py-5">
-                        <h2 className="text-2xl font-semibold">Đánh giá</h2>
-                        <div className="mt-10">{<CommentContainer />}</div>
+                        <h2 className="text-2xl font-semibold">
+                            <span>
+                                {danhSachDanhGia.length}
+                                <span> đánh giá</span>
+                            </span>
+                        </h2>
+                        <div className="mt-10">
+                            {<CommentContainer toggleModal={toggleModal} />}
+                        </div>
                     </div>
                 </div>
             </div>
