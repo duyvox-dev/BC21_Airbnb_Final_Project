@@ -9,32 +9,28 @@ let initialState = {
 };
 
 //Lấy danh sách vị trí có điểm đánh giá cao
-export let setDanhSachDiaDiemThuHutService = createAsyncThunk(
+export let danhSachDiaDiemThuHutAsync = createAsyncThunk(
     "viTriSlice/fetchDanhSachViTriDanhGiaCao",
-    async (diemDanhGia, thunkAPI) => {
+    async (diemDanhGia) => {
         try {
             let result = await viTriService.layDanhSachViTriTheoDanhGia(diemDanhGia);
-            thunkAPI.dispatch(layDanhSachViTriDanhGiaCao(result.data));
             return result.data;
         } catch (error) {
             console.log(error);
-
             return error;
         }
     }
 );
 
 //Lấy danh sách tất cả các vị trí
-export let setDanhSachViTri = createAsyncThunk(
+export let danhSachViTriAsync = createAsyncThunk(
     "viTriSlice/fetchDanhSachViTri",
-    async (id, thunkAPI) => {
+    async () => {
         try {
             let result = await viTriService.layDanhSachViTri();
-            thunkAPI.dispatch(layDanhSachViTri(result.data));
             return result.data;
         } catch (error) {
             console.log(error);
-
             return error;
         }
     }
@@ -51,8 +47,21 @@ const viTriSlice = createSlice({
             state.danhSachViTriDanhGiaCao = action.payload;
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(danhSachDiaDiemThuHutAsync.fulfilled, (state, action) => {
+                state.danhSachViTriDanhGiaCao = action.payload;
+            })
+            .addCase(danhSachViTriAsync.fulfilled, (state, action) => {
+                state.danhSachViTri = action.payload;
+            })
+    }
 });
 
 export const { layDanhSachViTri, layDanhSachViTriDanhGiaCao } = viTriSlice.actions;
+
+export const selectDanhSachViTri = (state) => state.viTriSlice.danhSachViTri;
+export const selectDanhSachViTriDanhGiaCao = (state) => state.viTriSlice.danhSachViTriDanhGiaCao;
+export const selectThongTinChiTietViTri = (state) => state.viTriSlice.thongTinChiTietViTri;
 
 export default viTriSlice.reducer;

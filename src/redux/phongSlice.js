@@ -9,16 +9,14 @@ let initialState = {
 };
 
 //Lấy danh sách tất cả phòng tại mọi tỉnh thành
-export let setDanhSachPhongService = createAsyncThunk(
+export let danhSachPhongAsync = createAsyncThunk(
     "phongSlice/fetchDanhSachPhong",
-    async (idViTri, thunkAPI) => {
+    async (idViTri) => {
         try {
             let result = await phongService.layDanhSachPhong(idViTri);
-            thunkAPI.dispatch(layDanhSachPhong(result.data));
             return result.data;
         } catch (error) {
             console.log(error);
-
             return error;
         }
     }
@@ -32,8 +30,17 @@ const phongSlice = createSlice({
             state.danhSachPhong = action.payload;
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(danhSachPhongAsync.fulfilled, (state, action) => {
+                state.danhSachPhong = action.payload;
+            })
+    }
 });
 
 export const { layDanhSachPhong } = phongSlice.actions;
+
+export const selectDanhSachPhong = (state) => state.phongSlice.danhSachPhong;
+export const selectThongTinChiTiePhong = (state) => state.phongSlice.thongTinChiTiePhong;
 
 export default phongSlice.reducer;

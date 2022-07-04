@@ -7,11 +7,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
-export default function DeXuatPhongTab1(props) {
+export default function DeXuatPhongTab(props) {
 
     let navigate = useNavigate();
 
-    let { deXuatDanhSachPhongTab1 } = props;
+    let { deXuatDanhSachPhongTab } = props;
 
     const customSlider = React.createRef();
 
@@ -25,21 +25,21 @@ export default function DeXuatPhongTab1(props) {
 
     const SliderSettings = {
         dots: false,
-        infinite: deXuatDanhSachPhongTab1 > 4 ? true : false,
+        infinite: deXuatDanhSachPhongTab > 4 ? true : false,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
     };
 
-    const renderDeXuatPhongTab1 = () => {
-        return deXuatDanhSachPhongTab1.map((phong, index) => {
+    const renderDeXuatPhongTab = () => {
+        return deXuatDanhSachPhongTab.map((phong, index) => {
 
             let diemDanhGia = phong.locationId?.valueate / 2;
 
             return <Link
                 to={`/rooms/${phong._id}`}
                 key={index}
-                className='w-36 px-2 hover:shadow-xl p-2 cursor-pointer relative'
+                className='w-36 px-2 my-2 hover:shadow-xl p-2 cursor-pointer relative'
             >
                 <div>
                     <img className="w-full mx-auto rounded-xl" alt={phong.name} src={phong.image} />
@@ -59,19 +59,19 @@ export default function DeXuatPhongTab1(props) {
     };
 
     const handleClick = () => {
-        navigate(`/search/${_.first(deXuatDanhSachPhongTab1).locationId.province}`)
+        navigate(`/search/${_.first(deXuatDanhSachPhongTab).locationId.province}`)
     };
 
     return (
         <div className="relative">
             {
-                deXuatDanhSachPhongTab1.length > 0 && <Fragment>
+                deXuatDanhSachPhongTab.length > 0 && <Fragment>
                     <Slider
                         ref={customSlider}
                         {...SliderSettings}
                         className='w-full'
                     >
-                        {renderDeXuatPhongTab1()}
+                        {renderDeXuatPhongTab()}
                     </Slider>
                     <button
                         className="absolute left-0 top-1/3 text-3xl text-rose-600"
@@ -91,7 +91,7 @@ export default function DeXuatPhongTab1(props) {
                     </button>
                     <div className="w-full flex items-center">
                         <button
-                            className="px-5 py-2 mx-auto rounded-lg bg-rose-500 text-white text-base active:scale-95"
+                            className="px-5 py-2 mt-2 mx-auto rounded-lg bg-rose-500 text-white text-base active:scale-95"
                             onClick={() => { handleClick() }}
                         >
                             Xem tất cả

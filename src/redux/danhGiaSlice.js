@@ -10,16 +10,14 @@ let initialState = {
 };
 
 //Lấy danh sách đánh giá của phòng cụ thể
-export let setDanhSachDanhGiaPhongService = createAsyncThunk(
+export let danhSachDanhGiaPhongAsync = createAsyncThunk(
     "danhGiaSlice/fetchDanhSachDanhGiaTheoPhong",
-    async (idPhong, thunkAPI) => {
+    async (idPhong) => {
         try {
             let result = await danhGiaService.layDanhSachDanhGiaTheoPhong(idPhong);
-            thunkAPI.dispatch(layDanhSachDanhGia(result.data));
             return result.data;
         } catch (error) {
             console.log(error);
-
             return error;
         }
     }
@@ -33,8 +31,17 @@ const danhGiaSlice = createSlice({
             state.danhSachDanhGia = action.payload;
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(danhSachDanhGiaPhongAsync.fulfilled, (state, action) => {
+                state.danhSachDanhGia = action.payload;
+            })
+    }
 });
 
 export const { layDanhSachDanhGia } = danhGiaSlice.actions;
+
+export const selectDanhSachDanhGia = (state) => state.danhGiaSlice.danhSachDanhGia;
+export const selectThongTinChiDanhGia = (state) => state.danhGiaSlice.thongTinChiDanhGia;
 
 export default danhGiaSlice.reducer;
