@@ -19,3 +19,26 @@ export const localStorageService = {
         }
     },
 };
+
+//Lưu thông tin đặt phòng tại search bar homepage vào localStorage
+const SEARCH = "SEARCH_INFO";
+
+export const localSearchStorageService = {
+    setSearchInfoLocal: (data) => {
+        let dataJson = JSON.stringify(data);
+        localStorage.setItem(SEARCH, dataJson);
+    },
+    getSearchInfoLocal: () => {
+        let dataJson = localStorage.getItem(SEARCH);
+        if (dataJson) {
+            return JSON.parse(dataJson);
+        }
+        return null;
+    },
+    removeSearchInfoLocal: () => {
+        let dataJson = localStorage.getItem(SEARCH);
+        if (dataJson) {
+            localStorage.removeItem(SEARCH);
+        }
+    },
+};
