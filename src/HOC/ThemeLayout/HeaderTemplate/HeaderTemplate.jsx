@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from '../css/HeaderTemplate.css';
 import { Link, useNavigate } from 'react-router-dom';
 import MenuItem from 'antd/lib/menu/MenuItem';
-import { danhSachViTriAsync, selectDanhSachViTri, setDanhSachViTri } from '../../../redux/viTriSlice';
+import {getDanhSachViTri, selectDanhSachViTri, setDanhSachViTri } from '../../../redux/viTriSlice';
 import { localSearchStorageService } from '../../../services/localService';
 
 const { TabPane } = Tabs;
@@ -24,7 +24,7 @@ export default function HeaderTemplate() {
   let dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(danhSachViTriAsync());
+    dispatch(getDanhSachViTri());
   }, []);
 
   let danhSachViTri = useSelector(selectDanhSachViTri);

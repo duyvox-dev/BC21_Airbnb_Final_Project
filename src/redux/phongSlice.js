@@ -9,7 +9,7 @@ let initialState = {
 };
 
 //Lấy danh sách tất cả phòng tại mọi tỉnh thành
-export let danhSachPhongAsync = createAsyncThunk(
+export let getDanhSachPhong = createAsyncThunk(
     "phongSlice/fetchDanhSachPhong",
     async (idViTri) => {
         try {
@@ -32,13 +32,13 @@ const phongSlice = createSlice({
     },
     extraReducers: {
         //Action xử lý lấy danh sách phòng theo id vị trí
-        [danhSachPhongAsync.pending]: (state, action) => {
+        [getDanhSachPhong.pending]: (state, action) => {
             state.danhSachPhong = DanhSachPhong;
         },
-        [danhSachPhongAsync.fulfilled]: (state, action) => {
+        [getDanhSachPhong.fulfilled]: (state, action) => {
             state.danhSachPhong = action.payload;
         },
-        [danhSachPhongAsync.rejected]: (state, action) => { },
+        [getDanhSachPhong.rejected]: (state, action) => { },
     },
 });
 

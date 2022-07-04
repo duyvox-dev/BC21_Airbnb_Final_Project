@@ -10,7 +10,7 @@ let initialState = {
 };
 
 //Lấy danh sách đánh giá của phòng cụ thể
-export let danhSachDanhGiaPhongAsync = createAsyncThunk(
+export let getDanhSachDanhGiaPhong = createAsyncThunk(
     "danhGiaSlice/fetchDanhSachDanhGiaTheoPhong",
     async (idPhong) => {
         try {
@@ -33,13 +33,13 @@ const danhGiaSlice = createSlice({
     },
     extraReducers: {
         //Action xử lý lấy danh sách đánh giá theo id phòng
-        [danhSachDanhGiaPhongAsync.pending]: (state, action) => {
+        [getDanhSachDanhGiaPhong.pending]: (state, action) => {
             state.danhSachDanhGia = DanhSachDanhGia;
         },
-        [danhSachDanhGiaPhongAsync.fulfilled]: (state, action) => {
+        [getDanhSachDanhGiaPhong.fulfilled]: (state, action) => {
             state.danhSachDanhGia = action.payload;
         },
-        [danhSachDanhGiaPhongAsync.rejected]: (state, action) => { },
+        [getDanhSachDanhGiaPhong.rejected]: (state, action) => { },
     },
 });
 

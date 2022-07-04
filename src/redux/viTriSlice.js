@@ -9,7 +9,7 @@ let initialState = {
 };
 
 //Lấy danh sách vị trí có điểm đánh giá cao
-export let danhSachDiaDiemThuHutAsync = createAsyncThunk(
+export let getDanhSachDiaDiemThuHut = createAsyncThunk(
     "viTriSlice/fetchDanhSachViTriDanhGiaCao",
     async (diemDanhGia) => {
         try {
@@ -23,7 +23,7 @@ export let danhSachDiaDiemThuHutAsync = createAsyncThunk(
 );
 
 //Lấy danh sách tất cả các vị trí
-export let danhSachViTriAsync = createAsyncThunk(
+export let getDanhSachViTri = createAsyncThunk(
     "viTriSlice/fetchDanhSachViTri",
     async () => {
         try {
@@ -49,22 +49,22 @@ const viTriSlice = createSlice({
     },
     extraReducers: {
         //Action xử lý lấy danh sách địa điểm thu hút nhất
-        [danhSachDiaDiemThuHutAsync.pending]: (state, action) => {
+        [getDanhSachDiaDiemThuHut.pending]: (state, action) => {
             state.danhSachViTriDanhGiaCao = DanhSachViTri;
         },
-        [danhSachDiaDiemThuHutAsync.fulfilled]: (state, action) => {
+        [getDanhSachDiaDiemThuHut.fulfilled]: (state, action) => {
             state.danhSachViTriDanhGiaCao = action.payload;
         },
-        [danhSachDiaDiemThuHutAsync.rejected]: (state, action) => { },
+        [getDanhSachDiaDiemThuHut.rejected]: (state, action) => { },
 
         //Action xử lý lấy danh sách tất cả địa điểm
-        [danhSachViTriAsync.pending]: (state, action) => {
+        [getDanhSachViTri.pending]: (state, action) => {
             state.danhSachViTri = DanhSachViTri;
         },
-        [danhSachViTriAsync.fulfilled]: (state, action) => {
+        [getDanhSachViTri.fulfilled]: (state, action) => {
             state.danhSachViTri = action.payload;
         },
-        [danhSachViTriAsync.rejected]: (state, action) => { },
+        [getDanhSachViTri.rejected]: (state, action) => { },
     },
 });
 

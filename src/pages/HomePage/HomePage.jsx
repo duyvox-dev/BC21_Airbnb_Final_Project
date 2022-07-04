@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import styles from '../css/HomePage.css';
-import { danhSachDiaDiemThuHutAsync, danhSachViTriAsync, selectDanhSachViTri, selectDanhSachViTriDanhGiaCao } from "../../redux/viTriSlice";
+import { getDanhSachDiaDiemThuHut, getDanhSachViTri, selectDanhSachViTri, selectDanhSachViTriDanhGiaCao } from "../../redux/viTriSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { danhSachPhongAsync, selectDanhSachPhong } from "../../redux/phongSlice";
-import { danhSachDanhGiaPhongAsync, selectDanhSachDanhGia } from "../../redux/danhGiaSlice";
+import { getDanhSachPhong, selectDanhSachPhong } from "../../redux/phongSlice";
+import { getDanhSachDanhGiaPhong, selectDanhSachDanhGia } from "../../redux/danhGiaSlice";
 import BannerHomePage from "./BannerHomePage/BannerHomePage";
 import ViTriThuHutSliderHomePage from "./ViTriThuHutSliderHomePage/ViTriThuHutSliderHomePage";
 import LoaiHinhTienIchSliderHomePage from "./LoaiHinhTienIchSliderHomePage/LoaiHinhTienIchSliderHomePage";
@@ -22,16 +22,16 @@ export default function HomePage() {
 
     useEffect(() => {
         //Lấy danh sách vị trí có điểm đánh giá cao
-        dispatch(danhSachDiaDiemThuHutAsync(diemDanhGiaDiaDanhThuHut));
+        dispatch(getDanhSachDiaDiemThuHut(diemDanhGiaDiaDanhThuHut));
 
         //Lấy danh sách tất cả vị trí
-        dispatch(danhSachViTriAsync())
+        dispatch(getDanhSachViTri())
 
         //Lấy danh sách tất cả phòng tại mọi tỉnh thành
-        dispatch(danhSachPhongAsync(idViTriTimPhong));
+        dispatch(getDanhSachPhong(idViTriTimPhong));
 
         //Lấy danh sách đánh giá của phòng cụ thể
-        dispatch(danhSachDanhGiaPhongAsync(idPhongLayDanhGia));
+        dispatch(getDanhSachDanhGiaPhong(idPhongLayDanhGia));
     }, []);
 
     let danhSachViTriDanhGiaCao = useSelector(selectDanhSachViTriDanhGiaCao);
