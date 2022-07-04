@@ -5,7 +5,7 @@ import { ThongTinViTri } from "../_core/ThongTinViTri";
 
 let initialState = {
     danhSachPhong: DanhSachPhong,
-    thongTinChiTiePhong: ThongTinPhong,
+    thongTinChiTietPhong: ThongTinPhong,
 };
 
 //Lấy danh sách tất cả phòng tại mọi tỉnh thành
