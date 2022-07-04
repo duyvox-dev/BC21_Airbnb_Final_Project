@@ -30,12 +30,16 @@ const phongSlice = createSlice({
             state.danhSachPhong = action.payload;
         },
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(danhSachPhongAsync.fulfilled, (state, action) => {
-                state.danhSachPhong = action.payload;
-            })
-    }
+    extraReducers: {
+        //Action xử lý lấy danh sách phòng theo id vị trí
+        [danhSachPhongAsync.pending]: (state, action) => {
+            state.danhSachPhong = DanhSachPhong;
+        },
+        [danhSachPhongAsync.fulfilled]: (state, action) => {
+            state.danhSachPhong = action.payload;
+        },
+        [danhSachPhongAsync.rejected]: (state, action) => { },
+    },
 });
 
 export const { layDanhSachPhong } = phongSlice.actions;

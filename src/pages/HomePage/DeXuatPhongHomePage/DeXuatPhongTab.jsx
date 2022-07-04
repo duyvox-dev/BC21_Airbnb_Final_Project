@@ -51,7 +51,7 @@ export default function DeXuatPhongTab(props) {
                     </div>
                     <div className="w-full">
                         <p className="text-right w-full my-auto italic">Giá rẻ nhất mỗi đêm từ</p>
-                        <p className="w-full my-auto text-lg text-rose-600 text-right">{phong.price.toLocaleString()} VND</p>
+                        <p className="w-full my-auto text-lg text-rose-600 text-right">{phong.price?.toLocaleString()} VND</p>
                     </div>
                 </div>
             </Link>

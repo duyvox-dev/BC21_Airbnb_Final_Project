@@ -31,12 +31,16 @@ const danhGiaSlice = createSlice({
             state.danhSachDanhGia = action.payload;
         },
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(danhSachDanhGiaPhongAsync.fulfilled, (state, action) => {
-                state.danhSachDanhGia = action.payload;
-            })
-    }
+    extraReducers: {
+        //Action xử lý lấy danh sách đánh giá theo id phòng
+        [danhSachDanhGiaPhongAsync.pending]: (state, action) => {
+            state.danhSachDanhGia = DanhSachDanhGia;
+        },
+        [danhSachDanhGiaPhongAsync.fulfilled]: (state, action) => {
+            state.danhSachDanhGia = action.payload;
+        },
+        [danhSachDanhGiaPhongAsync.rejected]: (state, action) => { },
+    },
 });
 
 export const { layDanhSachDanhGia } = danhGiaSlice.actions;

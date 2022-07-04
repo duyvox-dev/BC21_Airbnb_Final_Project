@@ -33,7 +33,6 @@ export default function DeXuatPhongHomePage(props) {
             DSPhong: danhSachPhong.filter(item => item.locationId?.province == Province.name),
         }
     });
-    console.log(danhSachPhongTheoProvince);
 
     const renderTabPane = () => {
         return danhSachPhongTheoProvince.map((item, index) => {

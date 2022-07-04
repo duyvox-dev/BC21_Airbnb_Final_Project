@@ -47,15 +47,25 @@ const viTriSlice = createSlice({
             state.danhSachViTriDanhGiaCao = action.payload;
         },
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(danhSachDiaDiemThuHutAsync.fulfilled, (state, action) => {
-                state.danhSachViTriDanhGiaCao = action.payload;
-            })
-            .addCase(danhSachViTriAsync.fulfilled, (state, action) => {
-                state.danhSachViTri = action.payload;
-            })
-    }
+    extraReducers: {
+        //Action xử lý lấy danh sách địa điểm thu hút nhất
+        [danhSachDiaDiemThuHutAsync.pending]: (state, action) => {
+            state.danhSachViTriDanhGiaCao = DanhSachViTri;
+        },
+        [danhSachDiaDiemThuHutAsync.fulfilled]: (state, action) => {
+            state.danhSachViTriDanhGiaCao = action.payload;
+        },
+        [danhSachDiaDiemThuHutAsync.rejected]: (state, action) => { },
+
+        //Action xử lý lấy danh sách tất cả địa điểm
+        [danhSachViTriAsync.pending]: (state, action) => {
+            state.danhSachViTri = DanhSachViTri;
+        },
+        [danhSachViTriAsync.fulfilled]: (state, action) => {
+            state.danhSachViTri = action.payload;
+        },
+        [danhSachViTriAsync.rejected]: (state, action) => { },
+    },
 });
 
 export const { layDanhSachViTri, layDanhSachViTriDanhGiaCao } = viTriSlice.actions;
