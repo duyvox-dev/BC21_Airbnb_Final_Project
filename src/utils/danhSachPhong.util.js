@@ -59,19 +59,3 @@ export let switchCaseKeyObj = (keyObj, data) => {
   });
   return arr;
 };
-
-export let renderCheckbox = (
-  keyObj,
-  dataCheckbox,
-  id,
-  valueCheckbox,
-  danhSachPhong,
-  arr,
-  number
-) => {
-  arr = switchCaseKeyObj(keyObj, dataCheckbox[number - 1]);
-  dataCheckbox[number] = arr;
-  id[number] = valueCheckbox[number];
-  danhSachPhong = dataCheckbox[number];
-  loopReset(number + 1, dataCheckbox, id);
-};

@@ -27,6 +27,7 @@ let initialState = {
   valueCheckbox: [],
   dataCheckbox: [],
   id: [],
+  dataKeyObjCheckbox: [],
 };
 
 export const getDanhSachPhong = createAsyncThunk(
@@ -122,7 +123,11 @@ const danhSachPhongSlice = createSlice({
           state.danhSachPhong = state.dataSave;
           break;
         case 1:
-          arr = switchCaseKeyObj(keyObj, state.dataSave);
+          if (state.danhSachPhong.length !== state.dataSave.length) {
+            arr = switchCaseKeyObj(keyObj, state.dataCheckbox[0]);
+          } else {
+            arr = switchCaseKeyObj(keyObj, state.dataSave);
+          }
           state.id[0] = state.valueCheckbox[0];
           state.dataCheckbox[0] = arr;
           state.danhSachPhong = state.dataCheckbox[0];
@@ -177,36 +182,23 @@ const danhSachPhongSlice = createSlice({
           state.danhSachPhong = state.dataCheckbox[7];
           loopReset(8, state.dataCheckbox, state.id);
           break;
+        case 9:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[7]);
+          state.dataCheckbox[8] = arr;
+          state.id[8] = state.valueCheckbox[8];
+          state.danhSachPhong = state.dataCheckbox[8];
+          loopReset(9, state.dataCheckbox, state.id);
+          break;
+        case 10:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[8]);
+          state.dataCheckbox[9] = arr;
+          state.id[9] = state.valueCheckbox[9];
+          state.danhSachPhong = state.dataCheckbox[9];
+          loopReset(10, state.dataCheckbox, state.id);
+          break;
         default:
           break;
       }
-      // if (keyObj.length === 1) {
-      //   arr = switchCaseKeyObj(keyObj, state.dataSave);
-      //   state.id[0] = state.valueCheckbox[0];
-      //   state.dataCheckbox[0] = arr;
-      //   state.danhSachPhong = state.dataCheckbox[0];
-      //   loopReset(1, state.dataCheckbox, state.id);
-      // } else if (keyObj.length === 2) {
-      //   arr = switchCaseKeyObj(keyObj, state.dataCheckbox[0]);
-      //   state.id[1] = state.valueCheckbox[1];
-      //   state.dataCheckbox[1] = arr;
-      //   state.danhSachPhong = state.dataCheckbox[1];
-
-      //   loopReset(2, state.dataCheckbox, state.id);
-      // } else if (keyObj.length === 3) {
-      //   arr = switchCaseKeyObj(keyObj, state.dataCheckbox[1]);
-      //   state.id[2] = state.valueCheckbox[2];
-      //   state.dataCheckbox[2] = arr;
-      //   state.danhSachPhong = state.dataCheckbox[2];
-
-      //   loopReset(3, state.dataCheckbox, state.id);
-      // } else if (keyObj.length === 0) {
-      //   state.danhSachPhong = state.dataSave;
-      //   state.dataCheckbox[0] = [];
-      //   state.id[0] = null;
-      // } else {
-      //   console.log("order");
-      // }
     },
   },
   extraReducers: {
