@@ -6,6 +6,7 @@ import { ThongTinViTri } from "../_core/ThongTinViTri";
 let initialState = {
     danhSachPhong: DanhSachPhong,
     thongTinChiTietPhong: ThongTinPhong,
+    isBookedSuccess: false,
 };
 
 //Lấy danh sách tất cả phòng tại mọi tỉnh thành
@@ -26,6 +27,21 @@ export const getRoomDetail = createAsyncThunk(
     async (id, thunkAPI) => {
         try {
             const res = await phongService.layThongTinChiTietPhong(id);
+            return res.data;
+        } catch (err) {
+            // const message = err.response.data.content;
+            // thunkAPI.dispatch(setErrorMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+    }
+);
+export const bookRoom = createAsyncThunk(
+    "phongSlice/bookRoom",
+    async (data, thunkAPI) => {
+        try {
+            const res = await phongService.datPhong(data);
+            // dispatch(res.)
+            console.log(res);
             return res.data;
         } catch (err) {
             // const message = err.response.data.content;
@@ -58,6 +74,12 @@ const phongSlice = createSlice({
             state.thongTinChiTietPhong = action.payload;
         },
         [getRoomDetail.rejected]: (state, action) => {},
+        [bookRoom.pending]: (state, action) => {
+            state.isBookedSuccess = false;
+        },
+        [bookRoom.fulfilled]: (state, action) => {
+            state.isBookedSuccess = true;
+        },
     },
 });
 

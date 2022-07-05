@@ -1,87 +1,103 @@
-import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-export default function ChooseCustomer() {
-    let DanhSachLoaitKhach = [
+import { Popover } from "@headlessui/react";
+import { useEffect, useState } from "react";
+import ChooseCustomerItem from "./ChooseCustomerItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
+    let danhSachLoaiKhach = [
         {
+            index: 0,
             ten: "Người lớn",
             moTa: "Từ 13 tuổi trở lên",
+            soLuong: 0,
         },
         {
+            index: 1,
             ten: "Trẻ em",
             moTa: "Độ tuổi 2 - 12",
+            soLuong: 0,
         },
         {
+            index: 2,
             ten: "Em bé",
             moTa: "Dưới 2 tuổi",
+            soLuong: 0,
         },
         {
+            index: 3,
             ten: "Thú cưng",
             moTa: "Mang theo động vật cần được phục vụ?",
+            soLuong: 0,
         },
     ];
-    const solutions = [
-        {
-            name: "Nguời lớn",
-            description: "Measure actions your users take",
-            href: "##",
-        },
-        {
-            name: "Automations",
-            description: "Create your own targeted content",
-            href: "##",
-        },
-        {
-            name: "Reports",
-            description: "Keep track of your growth",
-            href: "##",
-        },
-    ];
+    const [customerList, setCustomerList] = useState(danhSachLoaiKhach);
+    const [disabledSide, setDisabledSide] = useState("");
+    const [totalCustomers, setTotalCustomers] = useState(0);
+    // const [customerQuantity]
+    const incQuantity = (index) => {
+        const newCustomerList = [...customerList];
+        newCustomerList[index].soLuong += 1;
+        setCustomerList(newCustomerList);
+    };
+    const decQuantity = (index) => {
+        const newCustomerList = [...customerList];
+
+        newCustomerList[index].soLuong = Math.max(
+            0,
+            newCustomerList[index].soLuong - 1
+        );
+        setCustomerList(newCustomerList);
+    };
+    const countTotalCustomer = () => {
+        return customerList.reduce((sum, customer) => {
+            return sum + customer.soLuong;
+        }, 0);
+    };
+
+    useEffect(() => {
+        setTotalCustomers(countTotalCustomer);
+    }, [customerList]);
+    useEffect(() => {
+        if (limit && totalCustomers >= limit) setDisabledSide("inc");
+        else if (totalCustomers < 0) setDisabledSide("dec");
+        else setDisabledSide("");
+        handleChooseCustomer(totalCustomers, customerList);
+    }, [totalCustomers]);
+
     return (
-        <div className="fixed top-16 w-full max-w-sm px-4">
+        <div>
+            {" "}
             <Popover className="relative">
-                {({ open }) => (
-                    <>
-                        <Popover.Button
-                            className={`
-              ${open ? "" : "text-opacity-90"}
-              group inline-flex items-center rounded-md bg-orange-700 px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-                        >
-                            <span>Solutions</span>
-                        </Popover.Button>
-                        <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-200"
-                            enterFrom="opacity-0 translate-y-1"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease-in duration-150"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 translate-y-1"
-                        >
-                            <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-                                <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                                    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-                                        {solutions.map((item) => (
-                                            <a
-                                                key={item.name}
-                                                href={item.href}
-                                                className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                                            >
-                                                <div className="ml-4">
-                                                    <p className="text-sm font-medium text-gray-900">
-                                                        {item.name}
-                                                    </p>
-                                                    <p className="text-sm text-gray-500">
-                                                        {item.description}
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        ))}
-                                    </div>
-                                </div>
-                            </Popover.Panel>
-                        </Transition>
-                    </>
-                )}
+                <Popover.Button className="outline-none border-none block w-full text-left">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <span className="font-semibold block">Khách</span>
+                            <span>{totalCustomers} Khách</span>
+                        </div>
+
+                        <span>
+                            <FontAwesomeIcon
+                                className="text-xl"
+                                icon={faAngleDown}
+                            />
+                        </span>
+                    </div>
+                </Popover.Button>
+
+                <Popover.Panel className="absolute z-10 top-[50px] -left-[17px]">
+                    <div className="flex flex-col gap-5 bg-white p-5 shadow w-[312px] border border-slate-300 rounded">
+                        {customerList.map((loaiKhach) => {
+                            return (
+                                <ChooseCustomerItem
+                                    data={loaiKhach}
+                                    incQuantity={incQuantity}
+                                    decQuantity={decQuantity}
+                                    disabled={disabledSide}
+                                />
+                            );
+                        })}
+                    </div>
+                </Popover.Panel>
             </Popover>
         </div>
     );

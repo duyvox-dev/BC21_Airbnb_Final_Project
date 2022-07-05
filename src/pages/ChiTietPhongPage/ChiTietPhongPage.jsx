@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getRoomDetail } from "../../redux/phongSlice";
+import { useLocation, useParams } from "react-router-dom";
+import { bookRoom, getRoomDetail } from "../../redux/phongSlice";
 import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
 import moment from "moment";
 import { FaStar, FaMedal, FaAirbnb, FaBed } from "react-icons/fa";
@@ -13,18 +13,50 @@ import RangeDatePicker from "./RangeDatePicker/RangeDatePicker";
 import Bed from "../../assets/img/room-convenience/bed.png";
 import CommentContainer from "./Comment/CommentContainer";
 import CommentModal from "./Comment/CommentModal";
+import ModalDirect from "./ModalDirect";
 import ChooseCustomer from "../../components/ChooseCustomer/ChooseCustomer";
 export default function ChiTietPhongPage() {
+    const location = useLocation();
     const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.authSlice);
     const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
     const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
+    const { isBookedSuccess } = useSelector((state) => state.phongSlice);
     const [roomFeatures, setRoomFeatures] = useState({});
     const { id } = useParams();
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalCommentOpen, setIsModalCommentOpen] = useState(false);
+    const [isModalDirectOpen, setIsModalDirectOpen] = useState(false);
+
+    const [customerQuantity, setCustomerQuantity] = useState(0);
+    const [daysOfBooking, setDaysOfBooking] = useState(0);
     const [bookingTime, setBookingTime] = useState({
         checkIn: "",
         checkOut: "",
     });
+    const modalDetailLogin = {
+        title: "Vui lòng đăng nhập để đặt vé",
+        message: "Để đặt vé cần đăng nhập tài khoản",
+        actions: [
+            { type: "normal", path: "/", name: "Quay về trang chủ" },
+            {
+                type: "primary",
+                path: "/login",
+                redirect: location.pathname,
+                name: "Đăng nhập",
+            },
+        ],
+    };
+    const modalDetailSuccessBooking = {
+        title: "Đặt vé thành công",
+        message: "Chúc bạn có một kì nghỉ tuyệt vời.",
+        actions: [
+            { type: "normal", path: "/", name: "Quay về trang chủ" },
+            { type: "primary", path: "/User", name: "Xem vé vừa đặt" },
+        ],
+    };
+    const [modalDirectDetail, setModalDirectDetail] =
+        useState(modalDetailLogin);
+    const [ableToBook, setAbleToBook] = useState(false);
     useEffect(() => {
         dispatch(getRoomDetail(id));
         dispatch(getDanhSachDanhGiaPhong(id));
@@ -51,12 +83,45 @@ export default function ChiTietPhongPage() {
             checkOut: moment(data[1]).format(),
         });
     };
+    useEffect(() => {
+        const temp =
+            moment(bookingTime.checkOut).diff(bookingTime.checkIn, "days") + 1;
+        if (temp) setDaysOfBooking(temp);
+        console.log(bookingTime);
+    }, [bookingTime]);
 
+    useEffect(() => {
+        if (
+            bookingTime.checkIn == "Invalid date" ||
+            bookingTime.checkOut == "Invalid date" ||
+            customerQuantity == 0
+        )
+            setAbleToBook(false);
+        else setAbleToBook(true);
+    }, [customerQuantity, bookingTime]);
+    useEffect(() => {
+        if (!accessToken) {
+            setModalDirectDetail(modalDetailLogin);
+            setIsModalDirectOpen(true);
+        }
+    }, [accessToken]);
+    useEffect(() => {
+        if (isBookedSuccess) {
+            setModalDirectDetail(modalDetailSuccessBooking);
+            setIsModalDirectOpen(true);
+        }
+    }, [isBookedSuccess]);
     const handleBooking = () => {
         const bookingData = {
             roomId: id,
             ...bookingTime,
         };
+        // console.log(bookingData);
+        dispatch(bookRoom(bookingData));
+    };
+    const handleChooseCustomer = (totalCustomers, customerList) => {
+        setCustomerQuantity(totalCustomers);
+        console.log(totalCustomers, customerList);
     };
     const renderBedRoom = () => {
         const components = [];
@@ -65,11 +130,22 @@ export default function ChiTietPhongPage() {
         return components;
     };
     const toggleModal = () => {
-        setIsModalOpen(!isModalOpen);
+        setIsModalCommentOpen(!isModalCommentOpen);
     };
+    const countTotalCost = () => {
+        return daysOfBooking * thongTinChiTietPhong.price;
+    };
+    document.title = `${thongTinChiTietPhong.name} - Airbnb`;
     return (
         <div>
-            <CommentModal isModalOpen={isModalOpen} toggleModal={toggleModal} />
+            <ModalDirect
+                isModalOpen={isModalDirectOpen}
+                modalDetail={modalDirectDetail}
+            />
+            <CommentModal
+                isModalOpen={isModalCommentOpen}
+                toggleModal={toggleModal}
+            />
             <div className="container mx-auto py-10">
                 <div>
                     <h1 className=" font-bold text-3xl flex gap-2 items-center">
@@ -91,7 +167,10 @@ export default function ChiTietPhongPage() {
                         <span className="text-slate-500">.</span>
                         <Link to="/search/">
                             <span className="underline text-black font-semibold">
-                                {thongTinChiTietPhong?.locationId?.name}
+                                <span>
+                                    {thongTinChiTietPhong?.locationId?.name} -{" "}
+                                    {thongTinChiTietPhong?.locationId?.province}
+                                </span>
                             </span>
                         </Link>
                     </div>
@@ -252,26 +331,54 @@ export default function ChiTietPhongPage() {
                                         </div>
                                     </div>
                                     <div className="w-full p-4 border-t cursor-pointer">
-                                        <span className="font-semibold">
-                                            Khách
-                                        </span>
                                         <div>
-                                            {/* <ChooseCustomer></ChooseCustomer> */}
+                                            <ChooseCustomer
+                                                limit={
+                                                    thongTinChiTietPhong?.guests
+                                                }
+                                                handleChooseCustomer={
+                                                    handleChooseCustomer
+                                                }
+                                            ></ChooseCustomer>
                                         </div>
                                     </div>
                                 </div>
                                 <button
-                                    className="bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out"
+                                    className={`${
+                                        !ableToBook
+                                            ? "bg-gray-500 cursor-not-allowed"
+                                            : "bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 "
+                                    } text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out`}
+                                    // className="bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out"
                                     onClick={handleBooking}
+                                    disabled={!ableToBook}
                                 >
                                     Đặt Phòng
                                 </button>
+                                <div className="mt-2">
+                                    <p className="text-gray-700 text-center">
+                                        Bạn vẫn chưa bị trừ tiền
+                                    </p>
+                                    <div className="flex justify-between text-lg text-gray-500">
+                                        <span className="underline">
+                                            <span>
+                                                đ{" "}
+                                                {convertLocaleString(
+                                                    thongTinChiTietPhong.price
+                                                )}{" "}
+                                                x {daysOfBooking} đêm
+                                            </span>
+                                        </span>
+                                        <span> đ {countTotalCost()}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className="comment py-5">
                         <h2 className="text-2xl font-semibold">
                             <span>
+                                <span>Có </span>
                                 {danhSachDanhGia.length}
                                 <span> đánh giá</span>
                             </span>

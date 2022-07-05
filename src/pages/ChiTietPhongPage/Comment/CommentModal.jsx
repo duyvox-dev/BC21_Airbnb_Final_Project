@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import CommentItem from "./CommentItem";
 export default function CommentModal({ isModalOpen, toggleModal }) {
@@ -61,7 +61,7 @@ export default function CommentModal({ isModalOpen, toggleModal }) {
                                             )}
                                     </div>
 
-                                    <div className="mt-4">
+                                    <div className="mt-4 mt-5 pt-5 border-t border-slate-300">
                                         <button
                                             type="button"
                                             className="bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out"
