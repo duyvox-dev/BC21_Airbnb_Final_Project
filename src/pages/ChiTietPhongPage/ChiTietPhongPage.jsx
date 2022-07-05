@@ -55,7 +55,7 @@ export default function ChiTietPhongPage() {
         message: "Chúc bạn có một kì nghỉ tuyệt vời.",
         actions: [
             { type: "normal", path: "/", name: "Quay về trang chủ" },
-            { type: "primary", path: "/User", name: "Xem vé vừa đặt" },
+            { type: "primary", path: "/user", name: "Xem vé vừa đặt" },
         ],
     };
     const [modalDirectDetail, setModalDirectDetail] =

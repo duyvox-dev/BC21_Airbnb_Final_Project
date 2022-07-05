@@ -1,4 +1,5 @@
 import axios from "axios";
+import { config } from "dotenv";
 import { localStorageService } from "./localService";
 
 export const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -28,16 +29,16 @@ const getRequestConfig = () => {
 export const httpService = axios.create({
     baseURL: BASE_URL,
     timeout: 1000 * timeRequestMax,
-    // headers: {
-    //     tokenByClass: TOKEN_CYBERSOFT,
-    //     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTJmMGQ5M2ExODAxNTAwMWMwMTFkMDQiLCJlbWFpbCI6ImtoYTl4MDE1OUBnbWFpbC5jb20iLCJ0eXBlIjoiQ0xJRU5UIiwiaWF0IjoxNjMwNDczNjYxfQ.8JgWF4GQ_7klcn4PudsMBwYtwtjIW-f0IgFA1jBuVIk",
-    // },
+
     ...getRequestConfig(),
 });
 
 //Action can thiệp trước khi gọi request API
 httpService.interceptors.request.use(
     function (config) {
+        const accessToken = getAccessToken();
+        if (accessToken) config.headers.token = accessToken;
+        else delete httpService.defaults.headers.common.token;
         return config;
     },
     function (error) {
@@ -48,6 +49,7 @@ httpService.interceptors.request.use(
 //Action can thiệp sau khi có request API trả về
 httpService.interceptors.response.use(
     function (response) {
+        // else delete httpService.defaults.headers.common.token;
         return response;
     },
     function (error) {
