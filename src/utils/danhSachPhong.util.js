@@ -44,3 +44,34 @@ export let arrConvenient = [
   { id: 9, name: "Gym", gym: true },
   { id: 10, name: "Bồn tắm nước nóng", hotTub: true },
 ];
+
+export let loopReset = (number, data, id) => {
+  for (let i = number; i < 8; i++) {
+    id[i] = null;
+    data[i] = {};
+  }
+};
+
+export let switchCaseKeyObj = (keyObj, data) => {
+  let arr = [];
+  keyObj.forEach((e) => {
+    arr = data.filter((item) => item[e] === true);
+  });
+  return arr;
+};
+
+export let renderCheckbox = (
+  keyObj,
+  dataCheckbox,
+  id,
+  valueCheckbox,
+  danhSachPhong,
+  arr,
+  number
+) => {
+  arr = switchCaseKeyObj(keyObj, dataCheckbox[number - 1]);
+  dataCheckbox[number] = arr;
+  id[number] = valueCheckbox[number];
+  danhSachPhong = dataCheckbox[number];
+  loopReset(number + 1, dataCheckbox, id);
+};

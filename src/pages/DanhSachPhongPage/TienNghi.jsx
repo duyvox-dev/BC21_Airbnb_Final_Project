@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { handleCheckbox } from "../../redux/danhSachPhongSlice";
 import { arrConvenient } from "../../utils/danhSachPhong.util";
 
 export default function TienNghi() {
   let dispatch = useDispatch();
+  const { valueCheckbox } = useSelector((state) => state.danhSachPhongSlice);
 
   let renderTienNghi = () => {
     return arrConvenient?.map((item) => {
+      let index = valueCheckbox?.findIndex(
+        (itemCheck) => itemCheck === item.id
+      );
       return (
         <div key={item.id} className="space-x-3 flex justify-center">
           <input
@@ -15,6 +19,7 @@ export default function TienNghi() {
             className="w-7 h-7 accent-black cursor-pointer"
             type="checkbox"
             value={item.id}
+            checked={index !== -1 ? item.id : false}
             onChange={(e) => dispatch(handleCheckbox(e.target.value))}
           />
           <label htmlFor={item.name} className="w-full text-lg cursor-pointer">

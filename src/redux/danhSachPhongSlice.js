@@ -7,6 +7,9 @@ import {
   handleDataReduce,
   handleErrorValueInput,
   INCREASE,
+  loopReset,
+  renderCheckbox,
+  switchCaseKeyObj,
 } from "../utils/danhSachPhong.util";
 
 let initialState = {
@@ -22,6 +25,8 @@ let initialState = {
   dataBedRoom: [],
   dataBath: [],
   valueCheckbox: [],
+  dataCheckbox: [],
+  id: [],
 };
 
 export const getDanhSachPhong = createAsyncThunk(
@@ -104,29 +109,104 @@ const danhSachPhongSlice = createSlice({
         .flat();
       let keyObj = dataCheck.map((item) => {
         let keys = Object.keys(item).pop();
-        let values = Object.values(item).pop();
-        return { [keys]: values };
+        return keys;
       });
-      // let dataDanhSachPhongUpdate = keyObj.map((item) => {
-      //   let arrUpdate = state.danhSachPhong.filter(
-      //     (itemArr) => itemArr[item] === true
-      //   );
-      //   return arrUpdate;
-      // });
-      let arrNew = state.dataSave.map((item) => {
-        let arr = [];
-        let check = keyObj.filter((itemCheck) => {
-          for (const [key, value] of Object.entries(itemCheck)) {
-            if (item[key] === itemCheck[key]) {
-              return [...arr, item];
-            } else {
-              return 0;
-            }
-          }
-        });
-        return arr;
-      });
-      console.log(arrNew);
+
+      let arr = switchCaseKeyObj(keyObj, state.danhSachPhong);
+
+      // xét từng trường hợp, nếu không xét như vậy mà dùng cách rút gọn sẽ gây ra lỗi
+      switch (keyObj.length) {
+        case 0:
+          state.id[0] = null;
+          state.dataCheckbox[0] = [];
+          state.danhSachPhong = state.dataSave;
+          break;
+        case 1:
+          arr = switchCaseKeyObj(keyObj, state.dataSave);
+          state.id[0] = state.valueCheckbox[0];
+          state.dataCheckbox[0] = arr;
+          state.danhSachPhong = state.dataCheckbox[0];
+          loopReset(1, state.dataCheckbox, state.id);
+          break;
+        case 2:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[0]);
+          state.dataCheckbox[1] = arr;
+          state.id[1] = state.valueCheckbox[1];
+          state.danhSachPhong = state.dataCheckbox[1];
+          loopReset(2, state.dataCheckbox, state.id);
+          break;
+        case 3:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[1]);
+          state.dataCheckbox[2] = arr;
+          state.id[2] = state.valueCheckbox[2];
+          state.danhSachPhong = state.dataCheckbox[2];
+          loopReset(3, state.dataCheckbox, state.id);
+          break;
+        case 4:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[2]);
+          state.dataCheckbox[3] = arr;
+          state.id[3] = state.valueCheckbox[3];
+          state.danhSachPhong = state.dataCheckbox[3];
+          loopReset(4, state.dataCheckbox, state.id);
+          break;
+        case 5:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[3]);
+          state.dataCheckbox[4] = arr;
+          state.id[4] = state.valueCheckbox[4];
+          state.danhSachPhong = state.dataCheckbox[4];
+          loopReset(5, state.dataCheckbox, state.id);
+          break;
+        case 6:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[4]);
+          state.dataCheckbox[5] = arr;
+          state.id[5] = state.valueCheckbox[5];
+          state.danhSachPhong = state.dataCheckbox[5];
+          loopReset(6, state.dataCheckbox, state.id);
+          break;
+        case 7:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[5]);
+          state.dataCheckbox[6] = arr;
+          state.id[6] = state.valueCheckbox[6];
+          state.danhSachPhong = state.dataCheckbox[6];
+          loopReset(7, state.dataCheckbox, state.id);
+          break;
+        case 8:
+          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[6]);
+          state.dataCheckbox[7] = arr;
+          state.id[7] = state.valueCheckbox[7];
+          state.danhSachPhong = state.dataCheckbox[7];
+          loopReset(8, state.dataCheckbox, state.id);
+          break;
+        default:
+          break;
+      }
+      // if (keyObj.length === 1) {
+      //   arr = switchCaseKeyObj(keyObj, state.dataSave);
+      //   state.id[0] = state.valueCheckbox[0];
+      //   state.dataCheckbox[0] = arr;
+      //   state.danhSachPhong = state.dataCheckbox[0];
+      //   loopReset(1, state.dataCheckbox, state.id);
+      // } else if (keyObj.length === 2) {
+      //   arr = switchCaseKeyObj(keyObj, state.dataCheckbox[0]);
+      //   state.id[1] = state.valueCheckbox[1];
+      //   state.dataCheckbox[1] = arr;
+      //   state.danhSachPhong = state.dataCheckbox[1];
+
+      //   loopReset(2, state.dataCheckbox, state.id);
+      // } else if (keyObj.length === 3) {
+      //   arr = switchCaseKeyObj(keyObj, state.dataCheckbox[1]);
+      //   state.id[2] = state.valueCheckbox[2];
+      //   state.dataCheckbox[2] = arr;
+      //   state.danhSachPhong = state.dataCheckbox[2];
+
+      //   loopReset(3, state.dataCheckbox, state.id);
+      // } else if (keyObj.length === 0) {
+      //   state.danhSachPhong = state.dataSave;
+      //   state.dataCheckbox[0] = [];
+      //   state.id[0] = null;
+      // } else {
+      //   console.log("order");
+      // }
     },
   },
   extraReducers: {
