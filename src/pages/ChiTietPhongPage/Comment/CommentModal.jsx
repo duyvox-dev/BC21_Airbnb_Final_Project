@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import CommentItem from "./CommentItem";
 export default function CommentModal({ isModalOpen, toggleModal }) {
     const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
-    const sortedCommentList = [...danhSachDanhGia];
-    sortedCommentList.sort(function compare(a, b) {
-        var dateA = new Date(a.created_at);
-        var dateB = new Date(b.created_at);
-        return dateB - dateA;
-    });
+
     return (
         <>
             <Transition appear show={isModalOpen} as={Fragment}>
@@ -51,16 +46,19 @@ export default function CommentModal({ isModalOpen, toggleModal }) {
                                     </Dialog.Title>
 
                                     <div className="mt-10 grid grid-cols-2 gap-10">
-                                        {sortedCommentList.map(
-                                            (danhGia, index) => {
-                                                return (
-                                                    <CommentItem
-                                                        key={index}
-                                                        data={danhGia}
-                                                    ></CommentItem>
-                                                );
-                                            }
-                                        )}
+                                        {danhSachDanhGia.length > 1 &&
+                                            danhSachDanhGia.map(
+                                                (danhGia, index) => {
+                                                    // console.log(danhGia);
+                                                    return (
+                                                        <CommentItem
+                                                            key={index}
+                                                            data={danhGia}
+                                                            needTruncate={false}
+                                                        ></CommentItem>
+                                                    );
+                                                }
+                                            )}
                                     </div>
 
                                     <div className="mt-4">

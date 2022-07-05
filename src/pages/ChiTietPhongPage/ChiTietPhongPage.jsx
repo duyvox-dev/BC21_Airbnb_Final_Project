@@ -13,6 +13,7 @@ import RangeDatePicker from "./RangeDatePicker/RangeDatePicker";
 import Bed from "../../assets/img/room-convenience/bed.png";
 import CommentContainer from "./Comment/CommentContainer";
 import CommentModal from "./Comment/CommentModal";
+import ChooseCustomer from "../../components/ChooseCustomer/ChooseCustomer";
 export default function ChiTietPhongPage() {
     const dispatch = useDispatch();
     const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
@@ -43,24 +44,19 @@ export default function ChiTietPhongPage() {
         };
         setRoomFeatures({ ...features });
     }, [thongTinChiTietPhong]);
-    useEffect(() => {
-        console.log(danhSachDanhGia);
-    }, [danhSachDanhGia]);
+
     const onDatePickerChange = (key, data) => {
         setBookingTime({
             checkIn: moment(data[0]).format(),
             checkOut: moment(data[1]).format(),
         });
     };
-    useEffect(() => {
-        console.log(bookingTime);
-    }, [bookingTime]);
+
     const handleBooking = () => {
         const bookingData = {
             roomId: id,
             ...bookingTime,
         };
-        console.log(bookingData);
     };
     const renderBedRoom = () => {
         const components = [];
@@ -71,9 +67,6 @@ export default function ChiTietPhongPage() {
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
     };
-    useEffect(() => {
-        console.log(isModalOpen);
-    }, [isModalOpen]);
     return (
         <div>
             <CommentModal isModalOpen={isModalOpen} toggleModal={toggleModal} />
@@ -262,6 +255,9 @@ export default function ChiTietPhongPage() {
                                         <span className="font-semibold">
                                             Khách
                                         </span>
+                                        <div>
+                                            {/* <ChooseCustomer></ChooseCustomer> */}
+                                        </div>
                                     </div>
                                 </div>
                                 <button

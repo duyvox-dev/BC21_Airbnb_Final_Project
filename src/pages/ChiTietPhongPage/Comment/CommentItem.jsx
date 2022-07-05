@@ -2,7 +2,11 @@ import React from "react";
 import userImg from "../../../assets/img/user_default.png";
 import moment from "moment";
 import { truncate } from "../../../utils/stringFormatUtils";
-export default function ({ data, toggleModal = () => {}, needTruncate }) {
+export default function ({
+    data,
+    toggleModal = () => {},
+    needTruncate = false,
+}) {
     const STRING_LIMIT_LENGTH = 150;
     return (
         <div className="pr-10">
@@ -22,8 +26,10 @@ export default function ({ data, toggleModal = () => {}, needTruncate }) {
                     {needTruncate
                         ? truncate(data.content, STRING_LIMIT_LENGTH)
                         : data.content}
+                    {/* {data.content} */}
                 </span>
-                {data.content.length > STRING_LIMIT_LENGTH && needTruncate && (
+                {needTruncate & (data.content.length > STRING_LIMIT_LENGTH) &
+                (
                     <span
                         className="underline font-semibold ml-3 cursor-pointer"
                         onClick={toggleModal}
