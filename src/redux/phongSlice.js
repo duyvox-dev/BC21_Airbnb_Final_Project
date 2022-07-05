@@ -57,6 +57,9 @@ const phongSlice = createSlice({
         layDanhSachPhong: (state, action) => {
             state.danhSachPhong = action.payload;
         },
+        resetBookingStatus: (state, action) => {
+            state.isBookedSuccess = false;
+        },
     },
     extraReducers: {
         //Action xử lý lấy danh sách phòng theo id vị trí
@@ -83,7 +86,7 @@ const phongSlice = createSlice({
     },
 });
 
-export const { layDanhSachPhong } = phongSlice.actions;
+export const { layDanhSachPhong, resetBookingStatus } = phongSlice.actions;
 
 export const selectDanhSachPhong = (state) => state.phongSlice.danhSachPhong;
 export const selectThongTinChiTiePhong = (state) =>

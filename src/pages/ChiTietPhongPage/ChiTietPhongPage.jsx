@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { bookRoom, getRoomDetail } from "../../redux/phongSlice";
+import {
+    bookRoom,
+    getRoomDetail,
+    resetBookingStatus,
+} from "../../redux/phongSlice";
 import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
 import moment from "moment";
 import { FaStar, FaMedal, FaAirbnb, FaBed } from "react-icons/fa";
@@ -111,6 +115,11 @@ export default function ChiTietPhongPage() {
             setIsModalDirectOpen(true);
         }
     }, [isBookedSuccess]);
+    useEffect(() => {
+        return () => {
+            dispatch(resetBookingStatus());
+        };
+    }, []);
     const handleBooking = () => {
         const bookingData = {
             roomId: id,
