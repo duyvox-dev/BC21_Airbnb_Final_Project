@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { trim } from "lodash";
 import { danhGiaService } from "../services/danhGiaService";
 import { DanhSachDanhGia, ThongTinDanhGia } from "../_core/ThongTinDanhGia";
 import { DanhSachPhong, ThongTinPhong } from "../_core/ThongTinPhong";
@@ -14,8 +15,21 @@ export let getDanhSachDanhGiaPhong = createAsyncThunk(
     "danhGiaSlice/fetchDanhSachDanhGiaTheoPhong",
     async (idPhong) => {
         try {
-            let result = await danhGiaService.layDanhSachDanhGiaTheoPhong(idPhong);
-            return result.data;
+            let result = await danhGiaService.layDanhSachDanhGiaTheoPhong(
+                idPhong
+            );
+            const rawData = result.data;
+            let filterBlankComment = result.data;
+            filterBlankComment = filterBlankComment.filter((comment) => {
+                return comment.content != "";
+            });
+            filterBlankComment.sort(function compare(a, b) {
+                var dateA = new Date(a.created_at);
+                var dateB = new Date(b.created_at);
+                return dateB - dateA;
+            });
+            // console.log(rawData);
+            return filterBlankComment;
         } catch (error) {
             console.log(error);
             return error;
@@ -39,13 +53,15 @@ const danhGiaSlice = createSlice({
         [getDanhSachDanhGiaPhong.fulfilled]: (state, action) => {
             state.danhSachDanhGia = action.payload;
         },
-        [getDanhSachDanhGiaPhong.rejected]: (state, action) => { },
+        [getDanhSachDanhGiaPhong.rejected]: (state, action) => {},
     },
 });
 
 export const { layDanhSachDanhGia } = danhGiaSlice.actions;
 
-export const selectDanhSachDanhGia = (state) => state.danhGiaSlice.danhSachDanhGia;
-export const selectThongTinChiDanhGia = (state) => state.danhGiaSlice.thongTinChiDanhGia;
+export const selectDanhSachDanhGia = (state) =>
+    state.danhGiaSlice.danhSachDanhGia;
+export const selectThongTinChiDanhGia = (state) =>
+    state.danhGiaSlice.thongTinChiDanhGia;
 
 export default danhGiaSlice.reducer;
