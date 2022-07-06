@@ -334,7 +334,7 @@ export default function HeaderTemplate() {
                     </div>
                     <div>
                         <Popover
-                            className="w-20 h-10 rounded-full cursor-pointer flex justify-around items-center bg-white border-solid border border-neutral-300 hover:shadow-lg"
+                            className="w-20 h-10 rounded-full cursor-pointer flex justify-between pl-3 pr-1 items-center bg-white border-solid border border-neutral-300 hover:shadow-lg"
                             content={<a onClick={hide}>{contentMenuBar}</a>}
                             trigger="click"
                             visible={visible}
@@ -353,11 +353,7 @@ export default function HeaderTemplate() {
                                             ? userLogin.avatar
                                             : userPic
                                     }
-                                    alt={
-                                        userLogin.avatar
-                                            ? userLogin.avatar
-                                            : userPic
-                                    }
+                                    alt='user-avatar'
                                 />
                             ) : (
                                 <FontAwesomeIcon

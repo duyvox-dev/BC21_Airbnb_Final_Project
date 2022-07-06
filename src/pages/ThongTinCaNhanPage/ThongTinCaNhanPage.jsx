@@ -25,8 +25,6 @@ export default function ThongTinCaNhanPage(props) {
   let thongTinNguoiDung = useSelector(selectThongTinNguoiDung);
   let formChinhSuaHoSoOpen = useSelector(selectFormChinhSuaHoSoOpen);
 
-  console.log(thongTinNguoiDung);
-
   const [loading, setLoading] = useState(false);
   const [imgUrl, setImgUrl] = useState('');
 

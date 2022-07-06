@@ -11,8 +11,6 @@ export default function DeXuatPhongTab(props) {
 
     let { deXuatDanhSachPhongTab } = props;
 
-    console.log(deXuatDanhSachPhongTab);
-
     const customSlider = React.createRef();
 
     const goToNext = () => {

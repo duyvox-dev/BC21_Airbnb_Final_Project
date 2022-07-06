@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { localStorageService } from "../services/localService";
 import { userService } from "../services/userService";
 import { ThongTinNguoiDung } from "../_core/ThongTinNguoiDung";
 
@@ -16,25 +17,28 @@ export const getThongTinNguoiDung = createAsyncThunk(
             let result = await userService.layThongTinChiTietNguoiDung(idNguoiDung);
             return result.data;
         } catch (error) {
-            console.log(error);
             return error;
         }
     }
 );
 
 //Upload ảnh đại diện người dùng
-export const uploadAnhNguoiDung = (formData) => {
-    return async () => {
+export const uploadAnhNguoiDung = createAsyncThunk(
+    'nguoiDungSlice/uploadAnhNguoiDung',
+    async (formData) => {
         try {
             let result = await userService.capNhatAnhDaiDienNguoiDung(formData)
+            localStorageService.setUserLocal({
+                accessToken: localStorageService.getUserLocal().accessToken,
+                user: result.data,
+            });
             message.success('Upload ảnh người dùng thành công!');
-            return result;
+            return result.data;
         } catch (error) {
-            console.log(error);
             return error;
         }
     }
-};
+);
 
 const nguoiDungSlice = createSlice({
     name: "nguoiDungSlice",
