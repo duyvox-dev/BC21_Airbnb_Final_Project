@@ -4,11 +4,12 @@ import { phongService } from "../services/phongService";
 import {
   arrConvenient,
   DECLINE,
+  handleCompareDataJSON,
   handleDataReduce,
   handleErrorValueInput,
   INCREASE,
+  loopDefault,
   loopReset,
-  renderCheckbox,
   switchCaseKeyObj,
 } from "../utils/danhSachPhong.util";
 
@@ -26,8 +27,6 @@ let initialState = {
   dataBath: [],
   valueCheckbox: [],
   dataCheckbox: [],
-  id: [],
-  dataKeyObjCheckbox: [],
 };
 
 export const getDanhSachPhong = createAsyncThunk(
@@ -80,6 +79,26 @@ const danhSachPhongSlice = createSlice({
         state.priceMax,
         state.priceMin
       );
+      let dataUpdate = [];
+      if (state.dataCheckbox[12].length > 0) {
+        dataUpdate = state.dataCheckbox[12].filter(
+          (item) =>
+            item.price >= state.valueInputPriceMin &&
+            item.price <= state.priceMax
+        );
+      } else {
+        dataUpdate = state.danhSachPhong.filter(
+          (item) =>
+            item.price >= state.valueInputPriceMin &&
+            item.price <= state.priceMax
+        );
+      }
+
+      state.danhSachPhong = dataUpdate;
+      state.dataCheckbox[11] = dataUpdate;
+      state.averagePrice = dataUpdate?.reduce((average, data) => {
+        return (average += data.price);
+      }, 0);
     },
     handleChangeValueInput: (state, { payload }) => {
       let percentUpdate = 0;
@@ -92,6 +111,26 @@ const danhSachPhongSlice = createSlice({
         state.priceMax,
         state.priceMin
       );
+      let dataUpdate = [];
+      if (state.dataCheckbox[12].length > 0) {
+        dataUpdate = state.dataCheckbox[12].filter(
+          (item) =>
+            item.price >= state.valueInputPriceMin &&
+            item.price <= state.priceMax
+        );
+      } else {
+        dataUpdate = state.danhSachPhong.filter(
+          (item) =>
+            item.price >= state.valueInputPriceMin &&
+            item.price <= state.priceMax
+        );
+      }
+
+      state.danhSachPhong = dataUpdate;
+      state.dataCheckbox[11] = dataUpdate;
+      state.averagePrice = dataUpdate?.reduce((average, data) => {
+        return (average += data.price);
+      }, 0);
     },
 
     // Tiện nghi
@@ -118,83 +157,136 @@ const danhSachPhongSlice = createSlice({
       // xét từng trường hợp, nếu không xét như vậy mà dùng cách rút gọn sẽ gây ra lỗi
       switch (keyObj.length) {
         case 0:
-          state.id[0] = null;
           state.dataCheckbox[0] = [];
-          state.danhSachPhong = state.dataSave;
+          console.log("125");
+          if (state.priceMin === state.valueInputPriceMin) {
+            console.log("dasdasjd");
+            state.danhSachPhong = state.dataSave;
+          } else if (state.dataCheckbox[11].length > 0) {
+            console.log("asds");
+            state.danhSachPhong = state.dataCheckbox[11];
+          }
           break;
         case 1:
-          if (state.danhSachPhong.length !== state.dataSave.length) {
+          if (
+            state.priceMin !== state.valueInputPriceMin &&
+            state.dataCheckbox[0].length === 0
+          ) {
+            arr = switchCaseKeyObj(keyObj, state.danhSachPhong);
+          } else if (state.dataCheckbox[0].length > 0) {
             arr = switchCaseKeyObj(keyObj, state.dataCheckbox[0]);
-          } else {
-            arr = switchCaseKeyObj(keyObj, state.dataSave);
           }
-          state.id[0] = state.valueCheckbox[0];
           state.dataCheckbox[0] = arr;
           state.danhSachPhong = state.dataCheckbox[0];
-          loopReset(1, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[0];
           break;
         case 2:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[0]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            0,
+            keyObj
+          );
           state.dataCheckbox[1] = arr;
-          state.id[1] = state.valueCheckbox[1];
+          state.dataCheckbox[12] = state.dataCheckbox[1];
           state.danhSachPhong = state.dataCheckbox[1];
-          loopReset(2, state.dataCheckbox, state.id);
           break;
         case 3:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[1]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            1,
+            keyObj
+          );
           state.dataCheckbox[2] = arr;
-          state.id[2] = state.valueCheckbox[2];
           state.danhSachPhong = state.dataCheckbox[2];
-          loopReset(3, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[2];
           break;
         case 4:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[2]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            2,
+            keyObj
+          );
           state.dataCheckbox[3] = arr;
-          state.id[3] = state.valueCheckbox[3];
           state.danhSachPhong = state.dataCheckbox[3];
-          loopReset(4, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[3];
           break;
         case 5:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[3]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            3,
+            keyObj
+          );
           state.dataCheckbox[4] = arr;
-          state.id[4] = state.valueCheckbox[4];
           state.danhSachPhong = state.dataCheckbox[4];
-          loopReset(5, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[4];
           break;
         case 6:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[4]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            4,
+            keyObj
+          );
           state.dataCheckbox[5] = arr;
-          state.id[5] = state.valueCheckbox[5];
           state.danhSachPhong = state.dataCheckbox[5];
-          loopReset(6, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[5];
           break;
         case 7:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[5]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            5,
+            keyObj
+          );
           state.dataCheckbox[6] = arr;
-          state.id[6] = state.valueCheckbox[6];
           state.danhSachPhong = state.dataCheckbox[6];
-          loopReset(7, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[6];
           break;
         case 8:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[6]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            6,
+            keyObj
+          );
           state.dataCheckbox[7] = arr;
-          state.id[7] = state.valueCheckbox[7];
           state.danhSachPhong = state.dataCheckbox[7];
-          loopReset(8, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[7];
           break;
         case 9:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[7]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            7,
+            keyObj
+          );
           state.dataCheckbox[8] = arr;
-          state.id[8] = state.valueCheckbox[8];
           state.danhSachPhong = state.dataCheckbox[8];
-          loopReset(9, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[8];
           break;
         case 10:
-          arr = switchCaseKeyObj(keyObj, state.dataCheckbox[8]);
+          handleCompareDataJSON(
+            arr,
+            state.danhSachPhong,
+            state.dataCheckbox,
+            8,
+            keyObj
+          );
           state.dataCheckbox[9] = arr;
-          state.id[9] = state.valueCheckbox[9];
           state.danhSachPhong = state.dataCheckbox[9];
-          loopReset(10, state.dataCheckbox, state.id);
+          state.dataCheckbox[12] = state.dataCheckbox[9];
           break;
         default:
           break;
@@ -210,12 +302,13 @@ const danhSachPhongSlice = createSlice({
         return (average += data.price);
       }, 0);
 
-      let arrPrice = payload?.reduce((arr, data) => {
+      let arrPrice = state.danhSachPhong?.reduce((arr, data) => {
         return [...arr, data.price];
       }, []);
       state.priceMax = Math.max(...arrPrice);
       state.priceMin = Math.min(...arrPrice);
       state.valueInputPriceMin = state.priceMin;
+      loopDefault(state.dataCheckbox);
 
       // Khách và phòng ngủ
       state.dataGuests = handleDataReduce(payload, "guests");

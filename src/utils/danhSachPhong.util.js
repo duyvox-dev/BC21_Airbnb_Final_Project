@@ -45,10 +45,9 @@ export let arrConvenient = [
   { id: 10, name: "Bồn tắm nước nóng", hotTub: true },
 ];
 
-export let loopReset = (number, data, id) => {
-  for (let i = number; i < 8; i++) {
-    id[i] = null;
-    data[i] = {};
+export let loopDefault = (data) => {
+  for (let i = 0; i <= 12; i++) {
+    data[i] = [];
   }
 };
 
@@ -58,4 +57,27 @@ export let switchCaseKeyObj = (keyObj, data) => {
     arr = data.filter((item) => item[e] === true);
   });
   return arr;
+};
+
+export let handleCompareDataJSON = (
+  arr,
+  danhSachPhong,
+  dataCheckbox,
+  number,
+  keyObj
+) => {
+  if (
+    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[11]) &&
+    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[number])
+  ) {
+    arr = switchCaseKeyObj(keyObj, danhSachPhong);
+  } else if (
+    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[11])
+  ) {
+    arr = switchCaseKeyObj(keyObj, dataCheckbox[number]);
+  } else if (
+    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[number])
+  ) {
+    arr = switchCaseKeyObj(keyObj, dataCheckbox[11]);
+  }
 };
