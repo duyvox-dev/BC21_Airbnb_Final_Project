@@ -1,6 +1,8 @@
+import userPic from '../assets/img/user_pic.png';
+
 export const ThongTinNguoiDung = {
     address: '',
-    avatar: '',
+    avatar: userPic,
     birthday: '',
     deleteAt: false,
     email: '',

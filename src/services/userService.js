@@ -17,11 +17,7 @@ export const userService = {
         return httpService.post(`/api/users`, dataForm);
     },
 
-    capNhatAnhDaiDienNguoiDung: (idNguoiDung, dataForm) => {
-        return httpService.post(`/api/users/upload-avatar/${idNguoiDung}`, dataForm);
-    },
-
-    chinhSuaNguoiDung: (idNguoiDung, dataForm) => {
-        return httpService.post(`/api/users/${idNguoiDung}`, dataForm);
+    capNhatAnhDaiDienNguoiDung: (formData) => {
+        return httpService.post(`/api/users/upload-avatar/`, formData);
     },
 };
