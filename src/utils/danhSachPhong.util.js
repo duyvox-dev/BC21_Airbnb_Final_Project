@@ -2,7 +2,11 @@ import _ from "lodash";
 
 export const INCREASE = 10;
 export const DECLINE = -10;
+export const guests = "guests";
+export const bedRoom = "bedRoom";
+export const bath = "bath";
 
+// khi có lỗi thì sẽ trả về chuỗi lỗi
 export let handleErrorValueInput = (valueInput, max, min) => {
   let error = "";
   if (valueInput < min) {
@@ -15,15 +19,16 @@ export let handleErrorValueInput = (valueInput, max, min) => {
   return error;
 };
 
+// lọc ra những id phù hợp
 export let handleDataReduce = (payload, selected) => {
   return _.sortBy(
     _.unionBy(
       payload?.reduce((arrNew, data) => {
         return [
           ...arrNew,
-          selected === "guests"
+          selected === guests
             ? data.guests
-            : selected === "bedRoom"
+            : selected === bedRoom
             ? data.bedRoom
             : data.bath,
         ];
@@ -32,6 +37,7 @@ export let handleDataReduce = (payload, selected) => {
   );
 };
 
+// mảng tiện nghi được tạo ra để render ui
 export let arrConvenient = [
   { id: 1, name: "Cable TV", cableTV: true },
   { id: 2, name: "Thang máy", elevator: true },
@@ -45,12 +51,14 @@ export let arrConvenient = [
   { id: 10, name: "Bồn tắm nước nóng", hotTub: true },
 ];
 
-export let loopDefault = (data) => {
-  for (let i = 0; i <= 12; i++) {
+// vòng lặp mặc định để tạo [] ban đầu cho data
+export let loopDefault = (data, number) => {
+  for (let i = 0; i <= number; i++) {
     data[i] = [];
   }
 };
 
+// filter ra những trường hợp trùng khớp với key
 export let switchCaseKeyObj = (keyObj, data) => {
   let arr = [];
   keyObj.forEach((e) => {
@@ -59,25 +67,49 @@ export let switchCaseKeyObj = (keyObj, data) => {
   return arr;
 };
 
+// so sánh giá trị ở checkbox để render
 export let handleCompareDataJSON = (
   arr,
   danhSachPhong,
   dataCheckbox,
   number,
-  keyObj
+  keyObj,
+  btn13,
+  btn14,
+  btn15
 ) => {
   if (
     JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[11]) &&
-    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[number])
+    JSON.stringify(danhSachPhong) !==
+      JSON.stringify(
+        dataCheckbox[number] &&
+          JSON.stringify(danhSachPhong) !==
+            JSON.stringify(dataCheckbox[btn13]) &&
+          JSON.stringify(danhSachPhong) !==
+            JSON.stringify(dataCheckbox[btn14]) &&
+          JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[btn15])
+      )
   ) {
     arr = switchCaseKeyObj(keyObj, danhSachPhong);
   } else if (
-    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[11])
+    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[number])
   ) {
     arr = switchCaseKeyObj(keyObj, dataCheckbox[number]);
   } else if (
-    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[number])
+    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[11])
   ) {
     arr = switchCaseKeyObj(keyObj, dataCheckbox[11]);
+  } else if (
+    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[btn13])
+  ) {
+    arr = switchCaseKeyObj(keyObj, dataCheckbox[btn13]);
+  } else if (
+    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[btn14])
+  ) {
+    arr = switchCaseKeyObj(keyObj, dataCheckbox[btn14]);
+  } else if (
+    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[btn15])
+  ) {
+    arr = switchCaseKeyObj(keyObj, dataCheckbox[btn15]);
   }
 };

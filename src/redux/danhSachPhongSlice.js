@@ -3,7 +3,10 @@ import _ from "lodash";
 import { phongService } from "../services/phongService";
 import {
   arrConvenient,
+  bath,
+  bedRoom,
   DECLINE,
+  guests,
   handleCompareDataJSON,
   handleDataReduce,
   handleErrorValueInput,
@@ -26,7 +29,14 @@ let initialState = {
   dataBedRoom: [],
   dataBath: [],
   valueCheckbox: [],
+  // dataCheckbox 0 - 10 là dùng để check các trường hợp trong checkbox, 11 là lưu giá trị cho checkbox, 12 lưu giá trị cho khoảng giá, 13,14,15 là lưu giá trị cho khách, phòng ngủ và phòng tắm
   dataCheckbox: [],
+  dataValueButton: [
+    { name: guests, value: 0 },
+    { name: bedRoom, value: 0 },
+    { name: bath, value: 0 },
+  ],
+  dataSelectButtonDefault: [],
 };
 
 export const getDanhSachPhong = createAsyncThunk(
@@ -93,9 +103,11 @@ const danhSachPhongSlice = createSlice({
             item.price <= state.priceMax
         );
       }
-
       state.danhSachPhong = dataUpdate;
       state.dataCheckbox[11] = dataUpdate;
+      state.dataSelectButtonDefault[3] = dataUpdate;
+      state.dataSelectButtonDefault[4] = dataUpdate;
+      state.dataSelectButtonDefault[5] = dataUpdate;
       state.averagePrice = dataUpdate?.reduce((average, data) => {
         return (average += data.price);
       }, 0);
@@ -125,7 +137,6 @@ const danhSachPhongSlice = createSlice({
             item.price <= state.priceMax
         );
       }
-
       state.danhSachPhong = dataUpdate;
       state.dataCheckbox[11] = dataUpdate;
       state.averagePrice = dataUpdate?.reduce((average, data) => {
@@ -158,14 +169,14 @@ const danhSachPhongSlice = createSlice({
       switch (keyObj.length) {
         case 0:
           state.dataCheckbox[0] = [];
-          console.log("125");
           if (state.priceMin === state.valueInputPriceMin) {
-            console.log("dasdasjd");
             state.danhSachPhong = state.dataSave;
           } else if (state.dataCheckbox[11].length > 0) {
-            console.log("asds");
             state.danhSachPhong = state.dataCheckbox[11];
           }
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 1:
           if (
@@ -179,6 +190,9 @@ const danhSachPhongSlice = createSlice({
           state.dataCheckbox[0] = arr;
           state.danhSachPhong = state.dataCheckbox[0];
           state.dataCheckbox[12] = state.dataCheckbox[0];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 2:
           handleCompareDataJSON(
@@ -186,11 +200,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             0,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[1] = arr;
           state.dataCheckbox[12] = state.dataCheckbox[1];
           state.danhSachPhong = state.dataCheckbox[1];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 3:
           handleCompareDataJSON(
@@ -198,11 +218,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             1,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[2] = arr;
           state.danhSachPhong = state.dataCheckbox[2];
           state.dataCheckbox[12] = state.dataCheckbox[2];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 4:
           handleCompareDataJSON(
@@ -210,11 +236,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             2,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[3] = arr;
           state.danhSachPhong = state.dataCheckbox[3];
           state.dataCheckbox[12] = state.dataCheckbox[3];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 5:
           handleCompareDataJSON(
@@ -222,11 +254,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             3,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[4] = arr;
           state.danhSachPhong = state.dataCheckbox[4];
-          state.dataCheckbox[12] = state.dataCheckbox[4];
+          state.dataCheckbox[13] = state.dataCheckbox[4];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 6:
           handleCompareDataJSON(
@@ -234,11 +272,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             4,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[5] = arr;
           state.danhSachPhong = state.dataCheckbox[5];
           state.dataCheckbox[12] = state.dataCheckbox[5];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 7:
           handleCompareDataJSON(
@@ -246,11 +290,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             5,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[6] = arr;
           state.danhSachPhong = state.dataCheckbox[6];
           state.dataCheckbox[12] = state.dataCheckbox[6];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 8:
           handleCompareDataJSON(
@@ -258,11 +308,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             6,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[7] = arr;
           state.danhSachPhong = state.dataCheckbox[7];
           state.dataCheckbox[12] = state.dataCheckbox[7];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 9:
           handleCompareDataJSON(
@@ -270,11 +326,17 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             7,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[8] = arr;
           state.danhSachPhong = state.dataCheckbox[8];
           state.dataCheckbox[12] = state.dataCheckbox[8];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
           break;
         case 10:
           handleCompareDataJSON(
@@ -282,11 +344,211 @@ const danhSachPhongSlice = createSlice({
             state.danhSachPhong,
             state.dataCheckbox,
             8,
-            keyObj
+            keyObj,
+            13,
+            14,
+            15
           );
           state.dataCheckbox[9] = arr;
           state.danhSachPhong = state.dataCheckbox[9];
           state.dataCheckbox[12] = state.dataCheckbox[9];
+          state.dataSelectButtonDefault[3] = state.danhSachPhong;
+          state.dataSelectButtonDefault[4] = state.danhSachPhong;
+          state.dataSelectButtonDefault[5] = state.danhSachPhong;
+          break;
+        default:
+          break;
+      }
+    },
+
+    // Khách, phòng và phòng ngủ
+    handleValueButton: (state, { payload }) => {
+      let dataNew = [];
+      switch (payload.name) {
+        case guests:
+          state.dataValueButton[0] = payload;
+          if (payload.value === 0) {
+            dataNew = state.dataSelectButtonDefault[3].filter(
+              (item) => item[guests] >= payload.value
+            );
+          } else if (
+            state.dataCheckbox[11].length === 0 &&
+            state.dataCheckbox[12].length === 0 &&
+            state.dataCheckbox[13].length === 0 &&
+            state.dataCheckbox[14].length === 0 &&
+            state.dataCheckbox[15].length === 0
+          ) {
+            dataNew = state.dataSave.filter(
+              (item) => item[guests] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[11])
+          ) {
+            dataNew = state.dataCheckbox[11].filter(
+              (item) => item[guests] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[12])
+          ) {
+            dataNew = state.dataCheckbox[12].filter(
+              (item) => item[guests] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[13])
+          ) {
+            dataNew = state.dataSelectButtonDefault[0].filter(
+              (item) => item[guests] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[14])
+          ) {
+            dataNew = state.dataCheckbox[14].filter(
+              (item) => item[guests] >= payload.value
+            );
+            state.dataSelectButtonDefault[0] = dataNew;
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[15])
+          ) {
+            dataNew = state.dataCheckbox[15].filter(
+              (item) => item[guests] >= payload.value
+            );
+            state.dataSelectButtonDefault[0] = dataNew;
+          }
+          if (state.dataSelectButtonDefault[0].length === 0) {
+            state.dataSelectButtonDefault[0] = dataNew;
+          }
+
+          state.dataCheckbox[13] = dataNew;
+          state.danhSachPhong = dataNew;
+
+          break;
+        case bedRoom:
+          state.dataValueButton[1] = payload;
+
+          if (payload.value === 0) {
+            dataNew = state.dataSelectButtonDefault[4].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            state.dataCheckbox[11].length === 0 &&
+            state.dataCheckbox[12].length === 0 &&
+            state.dataCheckbox[13].length === 0 &&
+            state.dataCheckbox[14].length === 0 &&
+            state.dataCheckbox[15].length === 0
+          ) {
+            dataNew = state.dataSave.filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[11])
+          ) {
+            dataNew = state.dataCheckbox[11].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[12])
+          ) {
+            dataNew = state.dataCheckbox[12].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[14])
+          ) {
+            dataNew = state.dataSelectButtonDefault[1].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[13])
+          ) {
+            dataNew = state.dataCheckbox[13].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+            state.dataSelectButtonDefault[1] = dataNew;
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[15])
+          ) {
+            dataNew = state.dataCheckbox[15].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+            state.dataSelectButtonDefault[1] = dataNew;
+          }
+          if (state.dataSelectButtonDefault[1].length === 0) {
+            state.dataSelectButtonDefault[1] = dataNew;
+          }
+
+          state.dataCheckbox[14] = dataNew;
+          state.danhSachPhong = dataNew;
+          break;
+        case bath:
+          state.dataValueButton[2] = payload;
+          if (payload.value === 0) {
+            dataNew = state.dataSelectButtonDefault[5].filter(
+              (item) => item[bath] >= payload.value
+            );
+          } else if (
+            state.dataCheckbox[11].length === 0 &&
+            state.dataCheckbox[12].length === 0 &&
+            state.dataCheckbox[13].length === 0 &&
+            state.dataCheckbox[14].length === 0 &&
+            state.dataCheckbox[15].length === 0
+          ) {
+            dataNew = state.dataSave.filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[11])
+          ) {
+            dataNew = state.dataCheckbox[11].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[12])
+          ) {
+            dataNew = state.dataCheckbox[12].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[15])
+          ) {
+            dataNew = state.dataSelectButtonDefault[2].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[13])
+          ) {
+            dataNew = state.dataCheckbox[13].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+            state.dataSelectButtonDefault[2] = dataNew;
+          } else if (
+            JSON.stringify(state.danhSachPhong) ===
+            JSON.stringify(state.dataCheckbox[14])
+          ) {
+            dataNew = state.dataCheckbox[14].filter(
+              (item) => item[bedRoom] >= payload.value
+            );
+            state.dataSelectButtonDefault[2] = dataNew;
+          }
+          if (state.dataSelectButtonDefault[2].length === 0) {
+            state.dataSelectButtonDefault[2] = dataNew;
+          }
+
+          state.dataCheckbox[15] = dataNew;
+          state.danhSachPhong = dataNew;
           break;
         default:
           break;
@@ -308,12 +570,15 @@ const danhSachPhongSlice = createSlice({
       state.priceMax = Math.max(...arrPrice);
       state.priceMin = Math.min(...arrPrice);
       state.valueInputPriceMin = state.priceMin;
-      loopDefault(state.dataCheckbox);
+
+      // Tạo vòng lặp để tạo tất cả mảng rỗng
+      loopDefault(state.dataCheckbox, 15);
+      loopDefault(state.dataSelectButtonDefault, 5);
 
       // Khách và phòng ngủ
-      state.dataGuests = handleDataReduce(payload, "guests");
-      state.dataBedRoom = handleDataReduce(payload, "bedRoom");
-      state.dataBath = handleDataReduce(payload, "bath");
+      state.dataGuests = handleDataReduce(payload, guests);
+      state.dataBedRoom = handleDataReduce(payload, bedRoom);
+      state.dataBath = handleDataReduce(payload, bath);
     },
     [getDanhSachPhong.pending]: (state) => {
       state.danhSachPhong = [];
@@ -337,11 +602,22 @@ export const handleChangeValueInput = createAction(
   }
 );
 
+// actions tiện nghi
 export const handleCheckbox = createAction(
   "danhSachPhongSlice/handleCheckbox",
   (value) => {
     let valueUpdate = Number(value);
     return { payload: valueUpdate };
+  }
+);
+
+// actions khách, phòng và phòng tắm
+export const handleValueButton = createAction(
+  "danhSachPhongSlice/handleValueButton",
+  (value, name) => {
+    let valueUpdate = Number(value);
+    let key = { name, value: valueUpdate };
+    return { payload: key };
   }
 );
 
