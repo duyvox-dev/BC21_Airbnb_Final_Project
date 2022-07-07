@@ -15,6 +15,7 @@ export default function DanhSachPhongPage() {
     dispatch(getDanhSachPhong(id));
   }, []);
 
+  document.title = `Airbnb® | ${danhSachPhong[0]?.locationId.province} - ${danhSachPhong[0]?.locationId.name}`;
   let renderDanhSachPhong = () => {
     return danhSachPhong?.map((item, index) => {
       return (

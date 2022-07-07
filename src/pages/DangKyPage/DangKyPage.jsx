@@ -16,6 +16,8 @@ export default function DangKyPage() {
     }
     isRegisterred && navigate("/login");
   }, [isRegisterred, userLogin]);
+
+  document.title = "Airbnb® | Đăng ký";
   return (
     <div className="p-10 flex justify-center">
       <FormDangKy />
