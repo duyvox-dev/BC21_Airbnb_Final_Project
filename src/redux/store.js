@@ -5,6 +5,7 @@ import nguoiDungSlice from "./nguoiDungSlice";
 import danhSachPhongSlice from "./danhSachPhongSlice";
 import phongSlice from "./phongSlice";
 import viTriSlice from "./viTriSlice";
+import chiTietPhongSlice from "./chiTietPhongSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
         nguoiDungSlice: nguoiDungSlice,
         authSlice,
         danhSachPhongSlice,
+        chiTietPhongSlice,
     },
 });
