@@ -8,8 +8,10 @@ import {
 } from "../../redux/phongSlice";
 import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
 import moment from "moment";
-import { FaStar, FaMedal, FaAirbnb, FaBed } from "react-icons/fa";
-import { BsTranslate } from "react-icons/bs";
+// import { FaStar, FaMedal, FaAirbnb, FaBed } from "react-icons/fa";
+// import { BsTranslate } from "react-icons/bs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMedal, faStar, faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { convertLocaleString } from "../../utils/stringFormatUtils";
 import RoomFeatureList from "./RoomFeature/RoomFeatureList";
@@ -19,6 +21,7 @@ import CommentContainer from "./Comment/CommentContainer";
 import CommentModal from "./Comment/CommentModal";
 import ModalDirect from "./ModalDirect";
 import ChooseCustomer from "../../components/ChooseCustomer/ChooseCustomer";
+import { animateScroll as scroll, scroller, Element } from "react-scroll";
 export default function ChiTietPhongPage() {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -144,6 +147,14 @@ export default function ChiTietPhongPage() {
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
     };
+    const scrollTo = (element) => {
+        scroller.scrollTo(element, {
+            duration: 1500,
+            delay: 0,
+            smooth: "easeInOutQuart",
+            offset: -100,
+        });
+    };
     document.title = `${thongTinChiTietPhong.name} - Airbnb`;
     return (
         <div>
@@ -155,35 +166,47 @@ export default function ChiTietPhongPage() {
                 isModalOpen={isModalCommentOpen}
                 toggleModal={toggleModal}
             />
-            <div className="container mx-auto py-10">
+            <div className="container mx-auto py-10 px-2 ">
                 <div>
-                    <h1 className=" font-bold text-3xl flex gap-2 items-center">
-                        <FaAirbnb />
-                        <span> {thongTinChiTietPhong.name}</span>
-                    </h1>
-                    <div className="flex gap-2 items-center text-lg">
-                        <span className="flex gap-2 items-center">
-                            <FaStar></FaStar>
-                            <span className=" font-semibold">4.83</span>
-                        </span>
-                        <span className="text-slate-500">.</span>
-                        <span className="flex gap-2 items-center">
-                            <FaMedal></FaMedal>
-                            <span className=" underline  font-semibold cursor-pointer">
-                                {danhSachDanhGia.length} đánh giá
+                    {/* Room header */}
+                    <div>
+                        <h1 className=" font-bold text-3xl flex gap-2 items-center">
+                            <span> {thongTinChiTietPhong.name}</span>
+                        </h1>
+                        <div className="flex gap-2 items-center text-lg">
+                            <span className="flex gap-2 items-center">
+                                <FontAwesomeIcon className="" icon={faStar} />
+                                <span className=" font-semibold">4.83</span>
                             </span>
-                        </span>
-                        <span className="text-slate-500">.</span>
-                        <Link to="/search/">
-                            <span className="underline text-black font-semibold">
-                                <span>
-                                    {thongTinChiTietPhong?.locationId?.name} -{" "}
-                                    {thongTinChiTietPhong?.locationId?.province}
+                            <span className="text-slate-500">.</span>
+                            <span
+                                className="flex gap-2 items-center"
+                                onClick={() => {
+                                    scrollTo("commentContainer");
+                                }}
+                            >
+                                <FontAwesomeIcon className="" icon={faMedal} />
+                                <span className=" underline  font-semibold cursor-pointer">
+                                    {danhSachDanhGia.length} đánh giá
                                 </span>
                             </span>
-                        </Link>
+                            <span className="text-slate-500">.</span>
+                            <Link to="/search/">
+                                <span className="underline text-black font-semibold">
+                                    <span>
+                                        {thongTinChiTietPhong?.locationId?.name}{" "}
+                                        -{" "}
+                                        {
+                                            thongTinChiTietPhong?.locationId
+                                                ?.province
+                                        }
+                                    </span>
+                                </span>
+                            </Link>
+                        </div>
                     </div>
-                    <div className="h-[500px] my-5 grid grid-cols-2 gap-5">
+                    {/* Room image */}
+                    <div className=" h-96 my-5 grid grid-cols-2 gap-5">
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
@@ -233,8 +256,11 @@ export default function ChiTietPhongPage() {
                                         alt=""
                                         className="rounded-full w-[70px] h-[70px]"
                                     />
-                                    <span className="absolute -right-1 -bottom-[10px] bg-white p-2 rounded-full border-[1px] border-slate-400 text-2xl text-yellow-500">
-                                        <FaMedal />
+                                    <span className="absolute -right-1 -bottom-[10px] bg-white w-[40px] h-[40px] flex justify-center items-center rounded-full border-[1px] border-slate-400 text-xl text-yellow-500">
+                                        <FontAwesomeIcon
+                                            className=""
+                                            icon={faMedal}
+                                        />
                                     </span>
                                 </div>
                             </div>
@@ -243,7 +269,10 @@ export default function ChiTietPhongPage() {
                             <div className="py-5 border-b-[2px] border-slate-200">
                                 <div className="flex gap-5 items-center">
                                     <div className=" text-xl">
-                                        <FaMedal />
+                                        <FontAwesomeIcon
+                                            className=""
+                                            icon={faMedal}
+                                        />
                                     </div>
                                     <div>
                                         <h4 className="font-semibold text-lg mb-0">
@@ -280,7 +309,10 @@ export default function ChiTietPhongPage() {
                                 <div className="py-3 px-5 border-[1px] border-slate-700 flex items-center justify-between text-lg rounded cursor-pointer">
                                     <span>Dịch sang tiếng việt</span>
                                     <span>
-                                        <BsTranslate />
+                                        <FontAwesomeIcon
+                                            className=""
+                                            icon={faLanguage}
+                                        />
                                     </span>
                                 </div>
                                 <p className="text-lg mt-5 mb-0">
@@ -313,8 +345,16 @@ export default function ChiTietPhongPage() {
                                         <span>/ đêm</span>
                                     </span>
                                     <span className="flex gap-2 items-center">
-                                        <FaMedal></FaMedal>
-                                        <span className=" underline  font-semibold cursor-pointer text-slate-500">
+                                        <FontAwesomeIcon
+                                            className=""
+                                            icon={faMedal}
+                                        />
+                                        <span
+                                            className=" underline  font-semibold cursor-pointer text-slate-500"
+                                            onClick={() => {
+                                                scrollTo("commentContainer");
+                                            }}
+                                        >
                                             {danhSachDanhGia.length} đánh giá
                                         </span>
                                     </span>
@@ -384,6 +424,7 @@ export default function ChiTietPhongPage() {
                             </div>
                         </div>
                     </div>
+                    {/* Comment */}
                     <div className="comment py-5">
                         <h2 className="text-2xl font-semibold">
                             <span>
@@ -392,8 +433,10 @@ export default function ChiTietPhongPage() {
                                 <span> đánh giá</span>
                             </span>
                         </h2>
-                        <div className="mt-10">
-                            {<CommentContainer toggleModal={toggleModal} />}
+                        <div className="">
+                            <Element name="commentContainer" className="py-10">
+                                {<CommentContainer toggleModal={toggleModal} />}
+                            </Element>
                         </div>
                     </div>
                 </div>
