@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 export default function Modal({ isOpen, onClose, children }) {
   return (
     <Transition show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-20" onClose={onClose}>
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
