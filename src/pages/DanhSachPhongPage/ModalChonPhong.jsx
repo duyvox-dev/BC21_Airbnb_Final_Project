@@ -7,10 +7,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import KhoangGia from "./KhoangGia";
 import PhongNgu from "./PhongNgu";
 import TienNghi from "./TienNghi";
+import Modal from "../../components/Modal/Modal";
 
 export default function ModalChonPhong() {
   const { danhSachPhong } = useSelector((state) => state.danhSachPhongSlice);
   const [isOpen, setIsOpen] = useState(false);
+
+  let onClose = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -26,70 +31,42 @@ export default function ModalChonPhong() {
             <FontAwesomeIcon icon={faArrowRightArrowLeft} />
             <div>Bộ lọc</div>
           </button>
-          <Transition appear show={isOpen} as={Fragment}>
-            <Dialog
-              as="div"
-              className="relative z-20"
-              onClose={() => setIsOpen(false)}
-            >
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
-              </Transition.Child>
-
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95 -translate-y-full"
-                    enterTo="opacity-100 scale-100 translate-y-0"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100 translate-y-0"
-                    leaveTo="opacity-0 scale-95 translate-y-full"
-                  >
-                    <Dialog.Panel className="w-full md:max-w-[45rem] max-w-[25rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900 text-center p-5 border-b"
-                      >
-                        Bộ lọc
-                      </Dialog.Title>
-                      <div className="mt-2 h-[75vh] overflow-y-scroll">
-                        <div className="p-5">
-                          <KhoangGia />
-                          <PhongNgu />
-                          <TienNghi />
-                        </div>
-                      </div>
-
-                      <div className="py-4 px-5 border-t">
-                        <div className="flex justify-between">
-                          <button className="text-lg font-medium underline rounded-lg px-2 hover:bg-stone-100 transition-all duration-300">
-                            Xóa tất cả
-                          </button>
-                          <button
-                            type="button"
-                            className="inline-flex justify-center rounded-md border border-transparent bg-stone-700 px-4 py-2 text-base font-medium text-white hover:bg-stone-900 transition-all duration-300"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            Hiển thị hơn {danhSachPhong?.length} chỗ ở
-                          </button>
-                        </div>
-                      </div>
-                    </Dialog.Panel>
-                  </Transition.Child>
+          <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            children={
+              <Dialog.Panel className="w-full md:max-w-[45rem] max-w-[25rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                <Dialog.Title
+                  as="h3"
+                  className="text-lg font-medium leading-6 text-gray-900 text-center p-5 border-b"
+                >
+                  Bộ lọc
+                </Dialog.Title>
+                <div className="mt-2 h-[75vh] overflow-y-scroll">
+                  <div className="p-5">
+                    <KhoangGia />
+                    <PhongNgu />
+                    <TienNghi />
+                  </div>
                 </div>
-              </div>
-            </Dialog>
-          </Transition>
+
+                <div className="py-4 px-5 border-t">
+                  <div className="flex justify-between">
+                    <button className="text-lg font-medium underline rounded-lg px-2 hover:bg-stone-100 transition-all duration-300">
+                      Xóa tất cả
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-stone-700 px-4 py-2 text-base font-medium text-white hover:bg-stone-900 transition-all duration-300"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Hiển thị hơn {danhSachPhong?.length} chỗ ở
+                    </button>
+                  </div>
+                </div>
+              </Dialog.Panel>
+            }
+          />
         </div>
       </div>
     </>
