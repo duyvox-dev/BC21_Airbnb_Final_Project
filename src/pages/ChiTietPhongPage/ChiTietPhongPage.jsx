@@ -159,37 +159,45 @@ export default function ChiTietPhongPage() {
             />
             <div className="container mx-auto py-10 px-2 ">
                 <div>
-                    <h1 className=" font-bold text-3xl flex gap-2 items-center">
-                        <span> {thongTinChiTietPhong.name}</span>
-                    </h1>
-                    <div className="flex gap-2 items-center text-lg">
-                        <span className="flex gap-2 items-center">
-                            <FontAwesomeIcon className="" icon={faStar} />
-                            <span className=" font-semibold">4.83</span>
-                        </span>
-                        <span className="text-slate-500">.</span>
-                        <span
-                            className="flex gap-2 items-center"
-                            onClick={() => {
-                                scrollTo("commentContainer");
-                            }}
-                        >
-                            <FontAwesomeIcon className="" icon={faMedal} />
-                            <span className=" underline  font-semibold cursor-pointer">
-                                {danhSachDanhGia.length} đánh giá
+                    {/* Room header */}
+                    <div>
+                        <h1 className=" font-bold text-3xl flex gap-2 items-center">
+                            <span> {thongTinChiTietPhong.name}</span>
+                        </h1>
+                        <div className="flex gap-2 items-center text-lg">
+                            <span className="flex gap-2 items-center">
+                                <FontAwesomeIcon className="" icon={faStar} />
+                                <span className=" font-semibold">4.83</span>
                             </span>
-                        </span>
-                        <span className="text-slate-500">.</span>
-                        <Link to="/search/">
-                            <span className="underline text-black font-semibold">
-                                <span>
-                                    {thongTinChiTietPhong?.locationId?.name} -{" "}
-                                    {thongTinChiTietPhong?.locationId?.province}
+                            <span className="text-slate-500">.</span>
+                            <span
+                                className="flex gap-2 items-center"
+                                onClick={() => {
+                                    scrollTo("commentContainer");
+                                }}
+                            >
+                                <FontAwesomeIcon className="" icon={faMedal} />
+                                <span className=" underline  font-semibold cursor-pointer">
+                                    {danhSachDanhGia.length} đánh giá
                                 </span>
                             </span>
-                        </Link>
+                            <span className="text-slate-500">.</span>
+                            <Link to="/search/">
+                                <span className="underline text-black font-semibold">
+                                    <span>
+                                        {thongTinChiTietPhong?.locationId?.name}{" "}
+                                        -{" "}
+                                        {
+                                            thongTinChiTietPhong?.locationId
+                                                ?.province
+                                        }
+                                    </span>
+                                </span>
+                            </Link>
+                        </div>
                     </div>
-                    <div className="h-[500px] my-5 grid grid-cols-2 gap-5">
+                    {/* Room image */}
+                    <div className=" h-96 my-5 grid grid-cols-2 gap-5">
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
@@ -407,6 +415,7 @@ export default function ChiTietPhongPage() {
                             </div>
                         </div>
                     </div>
+                    {/* Comment */}
                     <div className="comment py-5">
                         <h2 className="text-2xl font-semibold">
                             <span>
