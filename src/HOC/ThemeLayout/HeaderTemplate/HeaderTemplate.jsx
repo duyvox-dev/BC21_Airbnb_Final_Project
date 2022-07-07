@@ -32,6 +32,7 @@ const GiamSoLuong = -1;
 
 export default function HeaderTemplate() {
   const { userLogin } = useSelector((state) => state.authSlice);
+  console.log(userLogin);
   let dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -344,8 +345,8 @@ export default function HeaderTemplate() {
                 <img
                   style={{ width: 35, height: 35 }}
                   className="rounded-full"
-                  src={userLogin.user.avatar ? userLogin.user.avatar : userPic}
-                  alt={userLogin.user.avatar ? userLogin.user.avatar : userPic}
+                  src={userLogin.avatar ? userLogin.avatar : userPic}
+                  alt={userLogin.avatar ? userLogin.avatar : userPic}
                 />
               ) : (
                 <FontAwesomeIcon className="text-3xl" icon={faCircleUser} />

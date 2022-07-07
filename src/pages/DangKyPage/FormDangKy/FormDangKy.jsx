@@ -1,23 +1,12 @@
-import React, { useEffect } from "react";
-import { Form, Input, DatePicker, Select, message } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { Form, Input, DatePicker, Select } from "antd";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { postDataDangKy } from "../../../redux/authSlice";
 const { Option } = Select;
 
 export default function FormDangKy() {
-  const { userLogin } = useSelector((state) => state.authSlice);
-  const { isRegisterred } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (userLogin) {
-      navigate("/");
-      message.warning("Bạn đã đăng nhập, vui lòng đăng xuất trước khi đăng ký");
-    }
-    isRegisterred && navigate("/login");
-  }, [isRegisterred, userLogin]);
 
   const validateMessages = {
     required: "${label} không được để trống",

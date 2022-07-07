@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Input } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { postDataDangNhap } from "../../../redux/authSlice";
 
 export default function FormDangNhap() {
-  const { isLoggedIn } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const validateMessages = {
     required: "${label} không được để trống",
@@ -17,10 +15,6 @@ export default function FormDangNhap() {
       number: "${label} không hợp lệ",
     },
   };
-
-  useEffect(() => {
-    isLoggedIn && navigate("/");
-  }, [isLoggedIn]);
 
   const onFinish = (values) => {
     dispatch(postDataDangNhap(values));
