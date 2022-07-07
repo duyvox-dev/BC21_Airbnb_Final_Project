@@ -3,13 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Fragment } from 'react';
 import Slider from 'react-slick';
 import { Rate } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
 export default function DeXuatPhongTab(props) {
-
-    let navigate = useNavigate();
 
     let { deXuatDanhSachPhongTab } = props;
 
@@ -58,10 +56,6 @@ export default function DeXuatPhongTab(props) {
         });
     };
 
-    const handleClick = () => {
-        navigate(`/search/${_.first(deXuatDanhSachPhongTab).locationId.province}`)
-    };
-
     return (
         <div className="relative">
             {
@@ -89,14 +83,6 @@ export default function DeXuatPhongTab(props) {
                             icon={faChevronCircleRight}
                         />
                     </button>
-                    <div className="w-full flex items-center">
-                        <button
-                            className="px-5 py-2 mt-2 mx-auto rounded-lg bg-rose-500 text-white text-base active:scale-95"
-                            onClick={() => { handleClick() }}
-                        >
-                            Xem tất cả
-                        </button>
-                    </div>
                 </Fragment>
             }
         </div>

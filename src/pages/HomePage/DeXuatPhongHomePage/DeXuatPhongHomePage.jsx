@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs } from 'antd';
 import _ from 'lodash';
 import DeXuatPhongTab from './DeXuatPhongTab';
+import { useNavigate } from 'react-router-dom';
 import styles from '../css/DeXuatPhongHomePage.css';
 
 const { TabPane } = Tabs;
@@ -9,6 +10,8 @@ const { TabPane } = Tabs;
 export default function DeXuatPhongHomePage(props) {
 
     let { danhSachPhong, danhSachViTri } = props;
+
+    let navigate = useNavigate();
 
     let DSViTri = _.uniqBy(danhSachViTri, 'province');
 
@@ -23,6 +26,7 @@ export default function DeXuatPhongHomePage(props) {
         return {
             key: renderKey(),
             name: viTri.province,
+            _id: viTri._id
         }
     });
 
@@ -30,6 +34,7 @@ export default function DeXuatPhongHomePage(props) {
         return {
             key: Province.key,
             name: Province.name,
+            _id: Province._id,
             DSPhong: danhSachPhong.filter(item => item.locationId?.province == Province.name),
         }
     });
@@ -40,6 +45,14 @@ export default function DeXuatPhongHomePage(props) {
                 <DeXuatPhongTab
                     deXuatDanhSachPhongTab={item.DSPhong}
                 />
+                <div className="w-full flex items-center">
+                    <button
+                        className="px-5 py-2 mt-2 mx-auto rounded-lg bg-rose-500 text-white text-base active:scale-95"
+                        onClick={() => { navigate(`/search/${item._id}`) }}
+                    >
+                        Xem tất cả
+                    </button>
+                </div>
             </TabPane>
         })
     };
