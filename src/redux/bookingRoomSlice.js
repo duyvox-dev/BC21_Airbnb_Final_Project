@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
 import { phongService } from "../services/phongService";
 
 export const bookRoom = createAsyncThunk(
@@ -13,6 +13,23 @@ export const bookRoom = createAsyncThunk(
         }
     }
 );
+export const setCustomerInfo = createAction(
+    "bookingRoom/setCustomerInfo",
+    (customerInfo) => {
+        const countTotalCustomer = () => {
+            return customerInfo.reduce((sum, customer) => {
+                return sum + customer.soLuong;
+            }, 0);
+        };
+        const totalCus = countTotalCustomer();
+        return {
+            payload: {
+                customerInfo,
+                totalCustomer: totalCus,
+            },
+        };
+    }
+);
 const bookingRoom = createSlice({
     name: "bookingRoom",
     initialState: {
@@ -23,6 +40,7 @@ const bookingRoom = createSlice({
         },
         customerInfo: [],
         isBookedSuccess: false,
+        totalCustomer: 0,
     },
     reducers: {
         setBookingDate(state, action) {
@@ -32,7 +50,8 @@ const bookingRoom = createSlice({
             state.bookingLocation = action.payload;
         },
         setCustomerInfo(state, action) {
-            state.customerInfo = action.payload;
+            state.customerInfo = action.payload.customerInfo;
+            state.totalCustomer = action.payload.totalCustomer;
         },
         setBookingStatus(state, action) {
             state.isBookedSuccess = action.payload;
@@ -48,5 +67,5 @@ const bookingRoom = createSlice({
     },
 });
 const { reducer, actions } = bookingRoom;
-export const { setBookingDate, setCustomerInfo, setBookingStatus } = actions;
+export const { setBookingDate, setBookingStatus } = actions;
 export default reducer;
