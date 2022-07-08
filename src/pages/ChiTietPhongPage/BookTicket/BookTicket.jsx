@@ -3,24 +3,63 @@ import { convertLocaleString } from "../../../utils/stringFormatUtils";
 import RangeDatePicker from "../RangeDatePicker/RangeDatePicker";
 import ChooseCustomer from "../../../components/ChooseCustomer/ChooseCustomer";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal } from "@fortawesome/free-solid-svg-icons";
+import {
+    setBookingDate,
+    setCustomerInfo,
+    setBookingStatus,
+} from "../../../redux/bookingRoomSlice";
+import { countDays } from "../../../utils/timeMomentUtils";
+import { useEffect } from "react";
 export default function BookTicket({
     thongTinChiTietPhong = {},
     scrollTo = () => {},
     commentListSize = 0,
 }) {
     const dispatch = useDispatch();
-    const { daysOfBooking, bookingDate, customerInfo } = useSelector(
-        (state) => state.chiTietPhongSlice
+    const { bookingDate, customerInfo } = useSelector(
+        (state) => state.bookingRoomSlice
     );
+    const { accessToken } = useSelector((state) => state.authSlice);
+    // const { daysOfBooking, bookingDate, customerInfo } = useSelector(
+    //     (state) => state.chiTietPhongSlice
+    // );
+    const [daysOfBooking, setDaysOfBooking] = useState(0);
     const [ableToBook, setAbleToBook] = useState(true);
+    const [totalCustomers, setTotalCustomers] = useState(0);
+    useEffect(() => {
+        setDaysOfBooking(
+            countDays(bookingDate?.checkIn, bookingDate?.checkOut)
+        );
+    }, [bookingDate]);
+
+    useEffect(() => {
+        let isAbleToBook = false;
+        if (
+            accessToken &&
+            bookingDate?.checkIn != "" &&
+            bookingDate?.checkOut != "" &&
+            totalCustomers != 0
+        )
+            isAbleToBook = true;
+        setAbleToBook(isAbleToBook);
+    }, [bookingDate, accessToken, totalCustomers]);
+    useEffect(() => {
+        console.log({ ableToBook });
+    }, [ableToBook]);
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
     };
-    const handleChooseCustomer = (totalCustomers, customerList) => {
-        // setCustomerQuantity(totalCustomers);
-        console.log(totalCustomers, customerList);
+    const handleChooseCustomer = (totalCustomer, customerList) => {
+        setTotalCustomers(totalCustomer);
+        const customerDataWithoutIndex = customerList.map((customerItem) => {
+            return {
+                ten: customerItem.ten,
+                moTa: customerItem.moTa,
+                soLuong: customerItem.soLuong,
+            };
+        });
+        dispatch(setCustomerInfo(customerDataWithoutIndex));
+        console.log(totalCustomer, customerDataWithoutIndex);
     };
     const handleBooking = () => {
         // const bookingData = {
@@ -31,11 +70,11 @@ export default function BookTicket({
         // dispatch(bookRoom(bookingData));
     };
     const onDatePickerChange = (key, data) => {
-        // setBookingTime({
-        //     checkIn: moment(data[0]).format(),
-        //     checkOut: moment(data[1]).format(),
-        // });
-        console.log(data);
+        const newBookingDate = {
+            checkIn: data[0],
+            checkOut: data[1],
+        };
+        dispatch(setBookingDate(newBookingDate));
     };
     return (
         <div>
@@ -47,17 +86,6 @@ export default function BookTicket({
                         </span>
                         <span>/ đêm</span>
                     </span>
-                    {/* <span className="flex gap-2 items-center">
-                        <FontAwesomeIcon className="" icon={faMedal} />
-                        <span
-                            className=" underline  font-semibold cursor-pointer text-slate-500"
-                            onClick={() => {
-                                scrollTo("commentContainer");
-                            }}
-                        >
-                            {commentListSize} đánh giá
-                        </span>
-                    </span> */}
                 </div>
 
                 <div className="my-5 border border-slate-300 rounded-md">
