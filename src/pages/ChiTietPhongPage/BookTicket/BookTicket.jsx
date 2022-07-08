@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { convertLocaleString } from "../../../utils/stringFormatUtils";
 import RangeDatePicker from "../RangeDatePicker/RangeDatePicker";
 import ChooseCustomer from "../../../components/ChooseCustomer/ChooseCustomer";
 import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMedal } from "@fortawesome/free-solid-svg-icons";
 export default function BookTicket({
     thongTinChiTietPhong = {},
     scrollTo = () => {},
+    commentListSize = 0,
 }) {
     const dispatch = useDispatch();
     const { daysOfBooking, bookingDate, customerInfo } = useSelector(
         (state) => state.chiTietPhongSlice
     );
+    const [ableToBook, setAbleToBook] = useState(true);
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
     };
@@ -26,9 +30,16 @@ export default function BookTicket({
         // console.log(bookingData);
         // dispatch(bookRoom(bookingData));
     };
+    const onDatePickerChange = (key, data) => {
+        // setBookingTime({
+        //     checkIn: moment(data[0]).format(),
+        //     checkOut: moment(data[1]).format(),
+        // });
+        console.log(data);
+    };
     return (
         <div>
-            <div className="border border-slate-300 rounded-md p-5 shadow sticky top-1">
+            <div className="border border-slate-300 rounded-md p-5 shadow ">
                 <div className="flex justify-between items-center">
                     <span className="flex gap-2 items-center">
                         <span className="font-semibold text-xl">
@@ -36,7 +47,7 @@ export default function BookTicket({
                         </span>
                         <span>/ đêm</span>
                     </span>
-                    <span className="flex gap-2 items-center">
+                    {/* <span className="flex gap-2 items-center">
                         <FontAwesomeIcon className="" icon={faMedal} />
                         <span
                             className=" underline  font-semibold cursor-pointer text-slate-500"
@@ -44,9 +55,9 @@ export default function BookTicket({
                                 scrollTo("commentContainer");
                             }}
                         >
-                            {danhSachDanhGia.length} đánh giá
+                            {commentListSize} đánh giá
                         </span>
-                    </span>
+                    </span> */}
                 </div>
 
                 <div className="my-5 border border-slate-300 rounded-md">

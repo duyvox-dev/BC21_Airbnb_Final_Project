@@ -3,9 +3,13 @@ const chiTietPhongSlice = createSlice({
     name: "chiTietPhongSlice",
     initialState: {
         daysOfBooking: 0,
-        bookingDate: {},
-        isBookedSuccess: false,
+        location: "",
+        bookingDate: {
+            checkIn: "",
+            checkOut: "",
+        },
         customerInfo: {},
+        isBookedSuccess: false,
     },
     reducers: {},
     extraReducers: {},
