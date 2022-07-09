@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Dialog, Transition } from "@headlessui/react";
@@ -8,10 +8,15 @@ import KhoangGia from "./KhoangGia";
 import PhongNgu from "./PhongNgu";
 import TienNghi from "./TienNghi";
 import Modal from "../../components/Modal/Modal";
+import {
+  deleteAllSearchRoomList,
+  handleSearchRoomList,
+} from "../../redux/danhSachPhongSlice";
 
 export default function ModalChonPhong() {
   const { danhSachPhong } = useSelector((state) => state.danhSachPhongSlice);
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   let onClose = () => {
     setIsOpen(false);
@@ -52,15 +57,21 @@ export default function ModalChonPhong() {
 
                 <div className="py-4 px-5 border-t">
                   <div className="flex justify-between">
-                    <button className="text-lg font-medium underline rounded-lg px-2 hover:bg-stone-100 transition-all duration-300">
+                    <button
+                      className="text-lg font-medium underline rounded-lg px-2 hover:bg-stone-100 transition-all duration-300"
+                      onClick={() => dispatch(deleteAllSearchRoomList())}
+                    >
                       Xóa tất cả
                     </button>
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-stone-700 px-4 py-2 text-base font-medium text-white hover:bg-stone-900 transition-all duration-300"
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        dispatch(handleSearchRoomList());
+                      }}
                     >
-                      Hiển thị hơn {danhSachPhong?.length} chỗ ở
+                      Tìm kiếm
                     </button>
                   </div>
                 </div>
