@@ -17,10 +17,10 @@ import MenuItem from "antd/lib/menu/MenuItem";
 import {
     getDanhSachViTri,
     selectDanhSachViTri,
-    setDanhSachViTri,
 } from "../../../redux/viTriSlice";
 import { localSearchStorageService } from "../../../services/localService";
 import { dangXuat } from "../../../redux/authSlice";
+import { setBookingDate, setBookingLocation, setCustomerInfo, setTotalCustomer } from "../../../redux/bookingRoomSlice";
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
@@ -36,53 +36,61 @@ export default function HeaderTemplate() {
     let navigate = useNavigate();
 
     useEffect(() => {
+        //Gọi API lấy danh sách tất cả vị trí
         dispatch(getDanhSachViTri());
     }, []);
 
     let danhSachViTri = useSelector(selectDanhSachViTri);
 
+    //Quy định phân loại khách
     let DanhSachLoaitKhach = [
         {
-            ten: "Người lớn",
-            moTa: "Từ 13 tuổi trở lên",
+            cusomerType: "Người lớn",
+            description: "Từ 13 tuổi trở lên",
         },
         {
-            ten: "Trẻ em",
-            moTa: "Độ tuổi 2 - 12",
+            cusomerType: "Trẻ em",
+            description: "Độ tuổi 2 - 12",
         },
         {
-            ten: "Em bé",
-            moTa: "Dưới 2 tuổi",
+            cusomerType: "Em bé",
+            description: "Dưới 2 tuổi",
         },
         {
-            ten: "Thú cưng",
-            moTa: "Mang theo động vật cần được phục vụ?",
+            cusomerType: "Thú cưng",
+            description: "Mang theo động vật cần được phục vụ?",
         },
     ];
 
+    //Form lưu trữ thông tin tìm kiếm phòng khách nhập tại search bar
     let [datPhong, setDatPhong] = useState({
-        idViTri: "",
-        tenViTri: "",
-        ngayNhanPhong: "",
-        ngayTraPhong: "",
-        khach: DanhSachLoaitKhach.map((khach, index) => {
+        bookingLocation: {
+            idLocation: "",
+            locationName: "",
+        },
+        bookingDate: {
+            checkIn: "",
+            checkOut: "",
+        },
+        customerInfo: DanhSachLoaitKhach.map((khach, index) => {
             return {
-                loaiKhach: khach.ten,
-                soLuong: 0,
+                cusomerType: khach.cusomerType,
+                quantity: 0,
             };
         }),
+        totalCustomer: 0,
     });
 
+    //Điều khiển hiển thị popover menu người dùng
     const [visible, setVisible] = useState(false);
-
     const hide = () => {
         setVisible(false);
     };
-
     const handleVisibleChange = (newVisible) => {
         setVisible(newVisible);
     };
 
+    //Render danh sách tất cả vị trí trong search bar
     const renderDanhSachViTri = () => {
         return danhSachViTri.map((viTri, index) => {
             return (
@@ -92,8 +100,10 @@ export default function HeaderTemplate() {
                     onClick={() => {
                         setDatPhong({
                             ...datPhong,
-                            idViTri: viTri._id,
-                            tenViTri: viTri.name,
+                            bookingLocation: {
+                                idLocation: viTri._id,
+                                locationName: viTri.name,
+                            },
                         });
                     }}
                 >
@@ -103,44 +113,55 @@ export default function HeaderTemplate() {
         });
     };
 
+    //Truyền content vào popover địa điểm trong search bar
     const contentViTri = (
         <div className="h-52 overflow-y-scroll">{renderDanhSachViTri()}</div>
     );
 
+    //Nhận giá trị từ ô input ngày nhận/trả phòng
     const onChangeDatePicker = (key, dateString) => {
-        let NgayNhanPhong = dateString[0];
-        let NgayTraPhong = dateString[1];
+        let CheckIn = dateString[0];
+        let CheckOut = dateString[1];
         setDatPhong({
             ...datPhong,
-            ngayNhanPhong: NgayNhanPhong,
-            ngayTraPhong: NgayTraPhong,
+            bookingDate: {
+                checkIn: CheckIn,
+                checkOut: CheckOut,
+            },
         });
     };
 
-    const ThayDoiSoLuongLoaiKhach = (loaiKhach, giaTri) => {
-        let indexLoaiKhach = datPhong.khach.findIndex((item) => {
-            return item.loaiKhach === loaiKhach;
+    //Hàm cho người dùng chọn số lượng từng loại khách trong search bar
+    const ThayDoiSoLuongLoaiKhach = (CustomerType, giaTri) => {
+        let indexCustomerType = datPhong.customerInfo.findIndex((item) => { //Tìm index object loại khách đang thay đổi số lượng
+            return item.cusomerType === CustomerType;
         });
 
-        if (indexLoaiKhach !== -1) {
-            let capNhatSoLuongLoaiKhach = [...datPhong.khach];
-            capNhatSoLuongLoaiKhach[indexLoaiKhach].soLuong += giaTri;
-            if (capNhatSoLuongLoaiKhach[indexLoaiKhach].soLuong < 0) {
-                capNhatSoLuongLoaiKhach[indexLoaiKhach].soLuong = 0;
+        if (indexCustomerType !== -1) { //Thay đổi số lượng loại khách đã xác định
+            let updateCustomerNumber = [...datPhong.customerInfo];
+            updateCustomerNumber[indexCustomerType].quantity += giaTri;
+            if (updateCustomerNumber[indexCustomerType].quantity < 0) {
+                updateCustomerNumber[indexCustomerType].quantity = 0;
             }
             setDatPhong({
                 ...datPhong,
-                khach: capNhatSoLuongLoaiKhach,
+                customerInfo: updateCustomerNumber,
             });
-        }
+        };
+        setDatPhong({ //Tính tổng số lượng tất cả các loại khác
+            ...datPhong,
+            totalCustomer: datPhong.customerInfo.reduce((total, item) => {
+                return (total += item.quantity);
+            }, 0),
+        });
     };
-
+    //Render popover chọn số lượng từng loại khách trong search bar
     const renderLoaiKhach = () => {
         return DanhSachLoaitKhach.map((Khach, index) => {
-            let soLuongLoaiKhach = () => {
-                for (let key in datPhong.khach) {
-                    if (datPhong.khach[key].loaiKhach === Khach.ten) {
-                        return datPhong.khach[key].soLuong;
+            let soLuongLoaiKhach = () => { //Render số lượng hiện tại của từng loại khách
+                for (let key in datPhong.customerInfo) {
+                    if (datPhong.customerInfo[key].cusomerType === Khach.cusomerType) {
+                        return datPhong.customerInfo[key].quantity;
                     }
                 }
             };
@@ -150,14 +171,14 @@ export default function HeaderTemplate() {
                     className="w-full mb-2 grid grid-cols-3 border-solid border-0 border-b border-b-neutral-300 pb-2"
                 >
                     <div className="col-span-2 flex flex-wrap align-middle">
-                        <p className="w-full my-auto font-bold">{Khach.ten}</p>
-                        <p className="w-full my-auto">{Khach.moTa}</p>
+                        <p className="w-full my-auto font-bold">{Khach.cusomerType}</p>
+                        <p className="w-full my-auto">{Khach.description}</p>
                     </div>
                     <div className="col-span-1 ml-3 flex justify-between items-center">
                         <button
                             className="w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300"
                             onClick={() => {
-                                ThayDoiSoLuongLoaiKhach(Khach.ten, GiamSoLuong);
+                                ThayDoiSoLuongLoaiKhach(Khach.cusomerType, GiamSoLuong);
                             }}
                         >
                             <FontAwesomeIcon icon={faMinus} />
@@ -166,7 +187,7 @@ export default function HeaderTemplate() {
                         <button
                             className="w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300"
                             onClick={() => {
-                                ThayDoiSoLuongLoaiKhach(Khach.ten, TangSoLuong);
+                                ThayDoiSoLuongLoaiKhach(Khach.cusomerType, TangSoLuong);
                             }}
                         >
                             <FontAwesomeIcon icon={faPlus} />
@@ -177,17 +198,16 @@ export default function HeaderTemplate() {
         });
     };
 
-    const renderTongSoLuongKhach = datPhong.khach.reduce((total, item) => {
-        return (total += item.soLuong);
-    }, 0);
-
+    //Truyền content vào popover chọn số lượng từng loại khách trong search bar
     const contentLoaitKhach = <div className="w-full">{renderLoaiKhach()}</div>;
 
+    //Hàm xử lý đăng xuất cho người dùng
     let handleLogout = () => {
         dispatch(dangXuat());
         navigate("/");
     };
 
+    //Truyền content vào popover menu người dùng
     const contentMenuBar = (
         <Menu className="w-52">
             {userLogin ? (
@@ -223,10 +243,16 @@ export default function HeaderTemplate() {
         </Menu>
     );
 
+    //Nhận thông tin người dùng nhập vào search bar & xử lý lưu trữ sử dụng
     const handleSearch = () => {
-        if (datPhong.idViTri.trim() !== "") {
-            localSearchStorageService.setSearchInfoLocal(datPhong);
-            navigate(`/search/${datPhong.idViTri}`);
+        if (datPhong.bookingLocation.idLocation.trim() !== "") {
+            //Lưu trữ thông tin tìm phòng vào redux bookingRoomSlice
+            dispatch(setBookingDate(datPhong.bookingDate));
+            dispatch(setBookingLocation(datPhong.bookingLocation));
+            dispatch(setCustomerInfo(datPhong.customerInfo));
+            dispatch(setTotalCustomer(datPhong.totalCustomer));
+            localSearchStorageService.setSearchInfoLocal(datPhong); //Lưu trữ thông tin tìm phòng vào localStorage SEARCH_INFO
+            // navigate(`/search/${datPhong.idViTri}`);
         } else {
             message.error("Vui lòng chọn địa điểm bạn muốn tìm phòng");
         }
@@ -255,7 +281,7 @@ export default function HeaderTemplate() {
                                             Địa điểm
                                         </label>
                                         <input
-                                            value={datPhong.tenViTri}
+                                            value={datPhong.bookingLocation.locationName}
                                             className="location-input w-full bg-transparent border-none focus:outline-none"
                                             placeholder="Tìm kiếm phòng theo khu vực"
                                         />
@@ -287,9 +313,9 @@ export default function HeaderTemplate() {
                                             <label className="w-full font-bold pointer-events-none">
                                                 Khách
                                             </label>
-                                            {renderTongSoLuongKhach > 0 ? (
+                                            {datPhong.totalCustomer > 0 ? (
                                                 <p className="w-full text-gray-800 pointer-events-none">
-                                                    {renderTongSoLuongKhach}{" "}
+                                                    {datPhong.totalCustomer}{" "}
                                                     khách
                                                 </p>
                                             ) : (

@@ -13,8 +13,8 @@ export const bookRoom = createAsyncThunk(
         }
     }
 );
-export const setCustomerInfo = createAction(
-    "bookingRoom/setCustomerInfo",
+export const SetCustomerInfo = createAction(
+    "bookingRoom/SetCustomerInfo",
     (customerInfo) => {
         const countTotalCustomer = () => {
             return customerInfo.reduce((sum, customer) => {
@@ -33,7 +33,10 @@ export const setCustomerInfo = createAction(
 const bookingRoom = createSlice({
     name: "bookingRoom",
     initialState: {
-        bookingLocation: "",
+        bookingLocation: {
+            idLocation: "",
+            locationName: "",
+        },
         bookingDate: {
             checkIn: "",
             checkOut: "",
@@ -51,6 +54,8 @@ const bookingRoom = createSlice({
         },
         setCustomerInfo(state, action) {
             state.customerInfo = action.payload.customerInfo;
+        },
+        setTotalCustomer(state, action) {
             state.totalCustomer = action.payload.totalCustomer;
         },
         setBookingStatus(state, action) {
@@ -67,5 +72,5 @@ const bookingRoom = createSlice({
     },
 });
 const { reducer, actions } = bookingRoom;
-export const { setBookingDate, setBookingStatus } = actions;
+export const { setBookingDate, setBookingStatus, setBookingLocation, setCustomerInfo, setTotalCustomer } = actions;
 export default reducer;
