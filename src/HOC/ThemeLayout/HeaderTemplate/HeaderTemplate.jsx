@@ -23,6 +23,7 @@ import { dangXuat } from "../../../redux/authSlice";
 import { selectThongTinTimPhong, setBookingDate, setBookingLocation, setCustomerInfo, setTotalCustomer } from "../../../redux/bookingRoomSlice";
 import moment from "moment";
 import _ from 'lodash';
+import { useFormik } from "formik";
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
@@ -44,60 +45,40 @@ export default function HeaderTemplate() {
 
     let danhSachViTri = useSelector(selectDanhSachViTri);
 
-    //Quy định phân loại khách
-    let DanhSachLoaitKhach = [
-        {
-            CustomerType: "Người lớn",
-            Description: "Từ 13 tuổi trở lên",
-        },
-        {
-            CustomerType: "Trẻ em",
-            Description: "Độ tuổi 2 - 12",
-        },
-        {
-            CustomerType: "Em bé",
-            Description: "Dưới 2 tuổi",
-        },
-        {
-            CustomerType: "Thú cưng",
-            Description: "Mang theo động vật cần được phục vụ?",
-        },
-    ];
-
     //Lấy thông tin tìm phòng của người dùng từ localSearchStorage
     let ThongTinTimPhong = useSelector(selectThongTinTimPhong);
 
     //Form lưu trữ thông tin tìm kiếm phòng khách nhập tại search bar
-    let [datPhong, setDatPhong] = useState({
-        bookingLocation: {
-            idLocation: "",
-            locationName: "",
+    const formik = useFormik({
+        initialValues: {
+            bookingLocation: {
+                idLocation: ThongTinTimPhong.bookingLocation.idLocation,
+                locationName: ThongTinTimPhong.bookingLocation.locationName,
+            },
+            bookingDate: {
+                checkIn: ThongTinTimPhong.bookingDate.checkIn,
+                checkOut: ThongTinTimPhong.bookingDate.checkOut,
+            },
+            customerInfo: ThongTinTimPhong.customerInfo,
+            totalCustomer: ThongTinTimPhong.totalCustomer,
         },
-        bookingDate: {
-            checkIn: null,
-            checkOut: null,
-        },
-        customerInfo: DanhSachLoaitKhach.map((khach, index) => {
-            return {
-                customerType: khach.CustomerType,
-                quantity: 0,
-            };
-        }),
-        totalCustomer: 0,
+        onSubmit: values => {
+            if (values.bookingLocation.idLocation.trim() !== "") {
+                //Lưu trữ thông tin tìm phòng vào redux bookingRoomSlice
+                dispatch(setBookingDate(values.bookingDate));
+                dispatch(setBookingLocation(values.bookingLocation));
+                dispatch(setCustomerInfo(values.customerInfo));
+                dispatch(setTotalCustomer(values.totalCustomer));
+
+                localSearchStorageService.setSearchInfoLocal(values); //Lưu trữ thông tin tìm phòng vào localStorage SEARCH_INFO
+
+                //Chuyển trang danh sách phòng với vị trí chọn từ người dùnng
+                navigate(`/search/${values.bookingLocation.idLocation}`);
+            } else {
+                message.error("Vui lòng chọn địa điểm bạn muốn tìm phòng");
+            }
+        }
     });
-    //Truyền value từ redux state bookingRoomSlice vào state search bar
-    if (ThongTinTimPhong.bookingLocation.locationName.trim() !== '') {
-        let updateBookingDate = {
-            checkIn: moment(ThongTinTimPhong.bookingDate.checkIn, dateFormat),
-            checkOut: moment(ThongTinTimPhong.bookingDate.checkOut, dateFormat),
-        };
-        setBookingDate(
-            datPhong.bookingLocation = ThongTinTimPhong.bookingLocation,
-            datPhong.bookingDate = updateBookingDate,
-            datPhong.customerInfo = ThongTinTimPhong.customerInfo,
-            datPhong.totalCustomer = ThongTinTimPhong.totalCustomer,
-        );
-    };
 
     //Điều khiển hiển thị popover menu người dùng
     const [visible, setVisible] = useState(false);
@@ -116,13 +97,8 @@ export default function HeaderTemplate() {
                     key={index}
                     className="cursor-pointer hover:bg-neutral-200"
                     onClick={() => {
-                        setDatPhong({
-                            ...datPhong,
-                            bookingLocation: {
-                                idLocation: viTri._id,
-                                locationName: viTri.name,
-                            },
-                        });
+                        formik.setFieldValue('bookingLocation.idLocation', viTri._id);
+                        formik.setFieldValue('bookingLocation.locationName', viTri.name);
                     }}
                 >
                     {viTri.name} | {viTri.province}
@@ -140,54 +116,39 @@ export default function HeaderTemplate() {
     const onChangeDatePicker = (key, dateString) => {
         let CheckIn = dateString[0]; //moment(key[0]).format(dateFormat);
         let CheckOut = dateString[1]; //moment(key[1]).format(dateFormat);
-        setDatPhong({
-            ...datPhong,
-            bookingDate: {
-                checkIn: CheckIn,
-                checkOut: CheckOut,
-            },
-        });
+        formik.setFieldValue('bookingDate.checkIn', CheckIn);
+        formik.setFieldValue('bookingDate.checkOut', CheckOut);
     };
 
     //Truyền value từ localSearchStorage vào RangePicker ngày nhận/trả phòng
     let DatePickerInitialValue = [
-        datPhong.bookingDate.checkIn,
-        datPhong.bookingDate.checkOut,
+        formik.values.bookingDate.checkIn,
+        formik.values.bookingDate.checkOut,
     ];
 
     //Hàm cho người dùng chọn số lượng từng loại khách trong search bar
-    const ThayDoiSoLuongLoaiKhach = (CustomerType, giaTri) => {
-        let indexCustomerType = datPhong.customerInfo.findIndex((item) => { //Tìm index object loại khách đang thay đổi số lượng
-            return item.customerType === CustomerType;
+    const ThayDoiSoLuongLoaiKhach = (customer, giaTri) => {
+        let indexCustomerType = formik.values.customerInfo.findIndex((item) => { //Tìm index object loại khách đang thay đổi số lượng
+            return item.CustomerType === customer;
         });
+        let updateCustomerNumber = JSON.parse(JSON.stringify(formik.values.customerInfo));
         if (indexCustomerType !== -1) { //Thay đổi số lượng loại khách đã xác định
-            let updateCustomerNumber = [...datPhong.customerInfo];
             updateCustomerNumber[indexCustomerType].quantity += giaTri;
             if (updateCustomerNumber[indexCustomerType].quantity < 0) {
                 updateCustomerNumber[indexCustomerType].quantity = 0;
             };
-            setDatPhong({
-                ...datPhong,
-                customerInfo: updateCustomerNumber,
-            });
         };
-        setDatPhong({ //Tính tổng số lượng tất cả các loại khách
-            ...datPhong,
-            totalCustomer: datPhong.customerInfo.reduce((total, item) => {
-                return (total += item.quantity);
-            }, 0),
-        });
+        //Tính tổng số khách của tất các phân loại khách
+        let totalCustomerNumber = updateCustomerNumber.reduce((total, item) => {
+            return (total += item.quantity);
+        }, 0);
+        formik.setFieldValue('totalCustomer', totalCustomerNumber);
+
+        formik.setFieldValue('customerInfo', updateCustomerNumber);
     };
     //Render popover chọn số lượng từng loại khách trong search bar
     const renderLoaiKhach = () => {
-        return DanhSachLoaitKhach.map((Khach, index) => {
-            let soLuongLoaiKhach = () => { //Render số lượng hiện tại của từng loại khách
-                for (let key in datPhong.customerInfo) {
-                    if (datPhong.customerInfo[key].customerType === Khach.CustomerType) {
-                        return datPhong.customerInfo[key].quantity;
-                    }
-                }
-            };
+        return formik.values.customerInfo.map((Khach, index) => {
             return (
                 <div
                     key={index}
@@ -206,7 +167,7 @@ export default function HeaderTemplate() {
                         >
                             <FontAwesomeIcon icon={faMinus} />
                         </button>
-                        <p className="my-auto">{soLuongLoaiKhach()}</p>
+                        <p className="my-auto">{Khach.quantity}</p>
                         <button
                             className="w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300"
                             onClick={() => {
@@ -266,42 +227,6 @@ export default function HeaderTemplate() {
         </Menu>
     );
 
-    //Nhận thông tin người dùng nhập vào search bar & xử lý lưu trữ sử dụng
-    const handleSearch = () => {
-        if (datPhong.bookingLocation.idLocation.trim() !== "") {
-            //Lưu trữ thông tin tìm phòng vào redux bookingRoomSlice
-            dispatch(setBookingDate(datPhong.bookingDate));
-            dispatch(setBookingLocation(datPhong.bookingLocation));
-            dispatch(setCustomerInfo(datPhong.customerInfo));
-            dispatch(setTotalCustomer(datPhong.totalCustomer));
-
-            localSearchStorageService.setSearchInfoLocal(datPhong); //Lưu trữ thông tin tìm phòng vào localStorage SEARCH_INFO
-
-            setDatPhong({ //Set lại state rỗng trước khi nhận props value mới
-                bookingLocation: {
-                    idLocation: "",
-                    locationName: "",
-                },
-                bookingDate: {
-                    checkIn: null,
-                    checkOut: null,
-                },
-                customerInfo: DanhSachLoaitKhach.map((khach, index) => {
-                    return {
-                        customerType: khach.CustomerType,
-                        quantity: 0,
-                    };
-                }),
-                totalCustomer: 0,
-            });
-
-            //Chuyển trang danh sách phòng với vị trí chọn từ người dùnng
-            navigate(`/search/${datPhong.bookingLocation.idLocation}`);
-        } else {
-            message.error("Vui lòng chọn địa điểm bạn muốn tìm phòng");
-        }
-    };
-
     return (
         <div className="header w-full pt-5 pb-5 bg-white shadow-md">
             <div className="header-container w-11/12 mx-auto grid grid-cols-12">
@@ -325,9 +250,11 @@ export default function HeaderTemplate() {
                                             Địa điểm
                                         </label>
                                         <input
-                                            value={datPhong.bookingLocation.locationName}
+                                            value={formik.values.bookingLocation.locationName}
                                             className="location-input w-full bg-transparent border-none focus:outline-none"
                                             placeholder="Tìm kiếm phòng theo khu vực"
+                                            name="bookingLocation.locationName"
+                                            onChange={formik.handleChange}
                                         />
                                     </Popover>
                                     <div className="date-input-block col-span-4 h-16 bg-transparent cursor-pointer flex flex-row flex-wrap items-stretch relative">
@@ -346,7 +273,7 @@ export default function HeaderTemplate() {
                                             format={dateFormat}
                                             onChange={onChangeDatePicker}
                                             defaultValue={
-                                                datPhong.bookingDate.checkIn !== null && datPhong.bookingDate.checkOut !== null
+                                                formik.values.bookingDate.checkIn !== null && formik.values.bookingDate.checkOut !== null
                                                     ? DatePickerInitialValue
                                                     : ''
                                             }
@@ -362,9 +289,9 @@ export default function HeaderTemplate() {
                                             <label className="w-full font-bold pointer-events-none">
                                                 Khách
                                             </label>
-                                            {datPhong.totalCustomer > 0 ? (
+                                            {formik.values.totalCustomer > 0 ? (
                                                 <p className="w-full text-gray-800 pointer-events-none">
-                                                    {datPhong.totalCustomer}{" "}
+                                                    {formik.values.totalCustomer}{" "}
                                                     khách
                                                 </p>
                                             ) : (
@@ -375,9 +302,8 @@ export default function HeaderTemplate() {
                                         </Popover>
                                         <button
                                             className="rounded-full w-14 h-12 my-auto border-none bg-rose-500 text-white cursor-pointer z-50 active:bg-rose-700 active:shadow-lg"
-                                            onClick={() => {
-                                                handleSearch();
-                                            }}
+                                            type="submit"
+                                            onClick={formik.handleSubmit}
                                         >
                                             <FontAwesomeIcon
                                                 className="pointer-events-none"
@@ -401,9 +327,11 @@ export default function HeaderTemplate() {
                                             Địa điểm
                                         </label>
                                         <input
-                                            value={datPhong.bookingLocation.locationName}
+                                            value={formik.values.bookingLocation.locationName}
                                             className="location-input w-full bg-transparent border-none focus:outline-none"
                                             placeholder="Tìm kiếm phòng theo khu vực"
+                                            name="bookingLocation.locationName"
+                                            onChange={formik.handleChange}
                                         />
                                     </Popover>
                                     <div className="date-input-block col-span-4 h-16 bg-transparent cursor-pointer flex flex-row flex-wrap items-stretch relative">
@@ -421,6 +349,11 @@ export default function HeaderTemplate() {
                                             className="date-picker-container"
                                             format={dateFormat}
                                             onChange={onChangeDatePicker}
+                                            defaultValue={
+                                                formik.values.bookingDate.checkIn !== null && formik.values.bookingDate.checkOut !== null
+                                                    ? DatePickerInitialValue
+                                                    : ''
+                                            }
                                         />
                                     </div>
                                     <div className="col-span-3 h-16 px-2 rounded-full flex justify-between cursor-pointer hover:bg-gray-200">
@@ -433,9 +366,9 @@ export default function HeaderTemplate() {
                                             <label className="w-full font-bold pointer-events-none">
                                                 Khách
                                             </label>
-                                            {datPhong.totalCustomer > 0 ? (
+                                            {formik.values.totalCustomer > 0 ? (
                                                 <p className="w-full text-gray-800 pointer-events-none">
-                                                    {datPhong.totalCustomer}{" "}
+                                                    {formik.values.totalCustomer}{" "}
                                                     khách
                                                 </p>
                                             ) : (
@@ -446,9 +379,7 @@ export default function HeaderTemplate() {
                                         </Popover>
                                         <button
                                             className="rounded-full w-14 h-12 my-auto border-none bg-rose-500 text-white cursor-pointer z-50 active:bg-rose-700 active:shadow-lg"
-                                            onClick={() => {
-                                                handleSearch();
-                                            }}
+                                            type="submit"
                                         >
                                             <FontAwesomeIcon
                                                 className="pointer-events-none"
