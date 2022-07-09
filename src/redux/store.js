@@ -5,14 +5,17 @@ import nguoiDungSlice from "./nguoiDungSlice";
 import danhSachPhongSlice from "./danhSachPhongSlice";
 import phongSlice from "./phongSlice";
 import viTriSlice from "./viTriSlice";
-
+import chiTietPhongSlice from "./chiTietPhongSlice";
+import bookingRoomSlice from "./bookingRoomSlice";
 export const store = configureStore({
     reducer: {
         viTriSlice: viTriSlice,
         phongSlice: phongSlice,
         danhGiaSlice: danhGiaSlice,
         nguoiDungSlice: nguoiDungSlice,
+        bookingRoomSlice,
         authSlice,
         danhSachPhongSlice,
+        chiTietPhongSlice,
     },
 });

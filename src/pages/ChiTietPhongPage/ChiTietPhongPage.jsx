@@ -8,10 +8,8 @@ import {
 } from "../../redux/phongSlice";
 import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
 import moment from "moment";
-// import { FaStar, FaMedal, FaAirbnb, FaBed } from "react-icons/fa";
-// import { BsTranslate } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal, faStar, faLanguage } from "@fortawesome/free-solid-svg-icons";
+import { faMedal, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { convertLocaleString } from "../../utils/stringFormatUtils";
 import RoomFeatureList from "./RoomFeature/RoomFeatureList";
@@ -21,6 +19,8 @@ import CommentContainer from "./Comment/CommentContainer";
 import CommentModal from "./Comment/CommentModal";
 import ModalDirect from "./ModalDirect";
 import ChooseCustomer from "../../components/ChooseCustomer/ChooseCustomer";
+import RoomInfo from "./RoomInfo/RoomInfo";
+import BookTicket from "./BookTicket/BookTicket";
 import { animateScroll as scroll, scroller, Element } from "react-scroll";
 export default function ChiTietPhongPage() {
     const location = useLocation();
@@ -94,7 +94,7 @@ export default function ChiTietPhongPage() {
         const temp =
             moment(bookingTime.checkOut).diff(bookingTime.checkIn, "days") + 1;
         if (temp) setDaysOfBooking(temp);
-        console.log(bookingTime);
+        // console.log(bookingTime);
     }, [bookingTime]);
 
     useEffect(() => {
@@ -135,12 +135,7 @@ export default function ChiTietPhongPage() {
         setCustomerQuantity(totalCustomers);
         console.log(totalCustomers, customerList);
     };
-    const renderBedRoom = () => {
-        const components = [];
-        for (let i = 0; i < thongTinChiTietPhong.bedRoom; i++)
-            components.push(<img src={Bed} className="w-[30px] h-[30px]" />);
-        return components;
-    };
+
     const toggleModal = () => {
         setIsModalCommentOpen(!isModalCommentOpen);
     };
@@ -210,130 +205,32 @@ export default function ChiTietPhongPage() {
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
-                            className="h-full w-full rounded-3xl"
+                            className="h-96 w-full rounded-3xl"
                         />
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
-                            className="h-full w-full rounded-3xl"
+                            className="h-96 w-full rounded-3xl"
                         />
                     </div>
-                    {/* Room Info */}
+
                     <div className="flex w-full gap-[100px] pt-5">
                         <div className="w-[70%]">
-                            {/* Room owner */}
-                            <div className="flex justify-between items-center py-5 border-b-[2px] border-slate-200">
-                                <div>
-                                    <h2 className="text-2xl font-semibold">
-                                        Căn hộ {thongTinChiTietPhong.name} . Chủ
-                                        nhà: XYZ
-                                    </h2>
-                                    <p className="flex gap-2">
-                                        <span>
-                                            {thongTinChiTietPhong.guests} khách
-                                        </span>
-                                        <span className="text-slate-500">
-                                            .
-                                        </span>
-
-                                        <span>
-                                            {thongTinChiTietPhong.bedRoom} phòng
-                                            ngủ
-                                        </span>
-                                        <span className="text-slate-500">
-                                            .
-                                        </span>
-
-                                        <span>
-                                            {thongTinChiTietPhong.bath} phòng
-                                            tắm
-                                        </span>
-                                    </p>
-                                </div>
-                                <div className="cursor-pointer relative">
-                                    <img
-                                        src={thongTinChiTietPhong.image}
-                                        alt=""
-                                        className="rounded-full w-[70px] h-[70px]"
-                                    />
-                                    <span className="absolute -right-1 -bottom-[10px] bg-white w-[40px] h-[40px] flex justify-center items-center rounded-full border-[1px] border-slate-400 text-xl text-yellow-500">
-                                        <FontAwesomeIcon
-                                            className=""
-                                            icon={faMedal}
-                                        />
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* hardcode Chu nha sieu cap */}
-                            <div className="py-5 border-b-[2px] border-slate-200">
-                                <div className="flex gap-5 items-center">
-                                    <div className=" text-xl">
-                                        <FontAwesomeIcon
-                                            className=""
-                                            icon={faMedal}
-                                        />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-lg mb-0">
-                                            XYZ là Chủ nhà siêu cấp
-                                        </h4>
-                                        <span className=" text-gray-500">
-                                            Chủ nhà siêu cấp là những chủ nhà có
-                                            kinh nghiệm, được đánh giá cao và là
-                                            những người cam kết mang lại quãng
-                                            thời gian ở tuyệt vời cho khách.
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* Bed*/}
-                            <div className="py-5 border-b-[2px] border-slate-200">
-                                <h4 className="text-2xl font-semibold mb-0">
-                                    Nơi bạn sẽ nghỉ ngơi
-                                </h4>
-                                <div className="mt-5 grid grid-cols-4">
-                                    <div className="p-10 border-slate-300 border rounded-md inline-block text-lg">
-                                        <div className=" flex gap-5 justify-center">
-                                            {renderBedRoom()}
-                                        </div>
-                                        <span className=" block mt-2 font-semibold text-center">
-                                            {thongTinChiTietPhong.bedRoom} phòng
-                                            ngủ
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* Description */}
-                            <div className="py-5 border-b-[2px] border-slate-200">
-                                <div className="py-3 px-5 border-[1px] border-slate-700 flex items-center justify-between text-lg rounded cursor-pointer">
-                                    <span>Dịch sang tiếng việt</span>
-                                    <span>
-                                        <FontAwesomeIcon
-                                            className=""
-                                            icon={faLanguage}
-                                        />
-                                    </span>
-                                </div>
-                                <p className="text-lg mt-5 mb-0">
-                                    {thongTinChiTietPhong.description}
-                                </p>
-                            </div>
-                            {/* Room Features */}
-                            <div className="py-5 border-b-[2px] border-slate-200">
-                                <h2 className="text-2xl font-semibold">
-                                    Nơi này có những gì cho bạn
-                                </h2>
-                                <div>
-                                    <RoomFeatureList
-                                        featureList={roomFeatures}
-                                    />
-                                </div>
-                            </div>
+                            <RoomInfo
+                                thongTinChiTietPhong={thongTinChiTietPhong}
+                            />
                         </div>
                         {/* Booking */}
                         <div className="w-[30%] relative">
-                            <div className="border border-slate-300 rounded-md p-5 shadow sticky top-1">
+                            <div className="sticky top-1">
+                                <BookTicket
+                                    thongTinChiTietPhong={thongTinChiTietPhong}
+                                    scrollTo={scrollTo}
+                                    commentListSize={danhSachDanhGia.length}
+                                />
+                            </div>
+
+                            {/* <div className="border border-slate-300 rounded-md p-5 shadow sticky top-1">
                                 <div className="flex justify-between items-center">
                                     <span className="flex gap-2 items-center">
                                         <span className="font-semibold text-xl">
@@ -421,7 +318,7 @@ export default function ChiTietPhongPage() {
                                         <span> đ {countTotalCost()}</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     {/* Comment */}
