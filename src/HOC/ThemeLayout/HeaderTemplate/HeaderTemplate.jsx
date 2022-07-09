@@ -252,7 +252,7 @@ export default function HeaderTemplate() {
             dispatch(setCustomerInfo(datPhong.customerInfo));
             dispatch(setTotalCustomer(datPhong.totalCustomer));
             localSearchStorageService.setSearchInfoLocal(datPhong); //Lưu trữ thông tin tìm phòng vào localStorage SEARCH_INFO
-            // navigate(`/search/${datPhong.idViTri}`);
+            navigate(`/search/${datPhong.bookingLocation.idLocation}`);
         } else {
             message.error("Vui lòng chọn địa điểm bạn muốn tìm phòng");
         }
