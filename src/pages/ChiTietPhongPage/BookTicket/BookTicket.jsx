@@ -44,7 +44,7 @@ export default function BookTicket({
         setAbleToBook(isAbleToBook);
     }, [bookingDate, accessToken, totalCustomers]);
     useEffect(() => {
-        console.log({ ableToBook });
+        // console.log({ ableToBook });
     }, [ableToBook]);
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
@@ -59,7 +59,7 @@ export default function BookTicket({
             };
         });
         dispatch(setCustomerInfo(customerDataWithoutIndex));
-        console.log(totalCustomer, customerDataWithoutIndex);
+        // console.log(totalCustomer, customerDataWithoutIndex);
     };
     const handleBooking = () => {
         // const bookingData = {

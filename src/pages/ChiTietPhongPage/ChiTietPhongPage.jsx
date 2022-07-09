@@ -94,7 +94,7 @@ export default function ChiTietPhongPage() {
         const temp =
             moment(bookingTime.checkOut).diff(bookingTime.checkIn, "days") + 1;
         if (temp) setDaysOfBooking(temp);
-        console.log(bookingTime);
+        // console.log(bookingTime);
     }, [bookingTime]);
 
     useEffect(() => {
