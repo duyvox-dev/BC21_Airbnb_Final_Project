@@ -1,5 +1,40 @@
 import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
+import { localSearchStorageService } from "../services/localService";
 import { phongService } from "../services/phongService";
+
+let initialState = {};
+let searchValues = localSearchStorageService.getSearchInfoLocal();
+
+//Xử lý lấy value từ localSearchStorage truyền vào initialState
+if (searchValues !== null) { // localStorage đã nhận được value từ người dùng nhập vào
+    initialState = {
+        bookingLocation: {
+            idLocation: searchValues.bookingLocation.idLocation,
+            locationName: searchValues.bookingLocation.locationName,
+        },
+        bookingDate: {
+            checkIn: searchValues.bookingDate.checkIn,
+            checkOut: searchValues.bookingDate.checkOut,
+        },
+        customerInfo: searchValues.customerInfo,
+        isBookedSuccess: false,
+        totalCustomer: searchValues.totalCustomer,
+    };
+} else { //LocalStorage đang rỗng
+    initialState = {
+        bookingLocation: {
+            idLocation: "",
+            locationName: "",
+        },
+        bookingDate: {
+            checkIn: null,
+            checkOut: null,
+        },
+        customerInfo: [],
+        isBookedSuccess: false,
+        totalCustomer: 0,
+    };
+};
 
 export const bookRoom = createAsyncThunk(
     "booking/bookRoom",
@@ -30,21 +65,10 @@ export const SetCustomerInfo = createAction(
         };
     }
 );
+
 const bookingRoom = createSlice({
     name: "bookingRoom",
-    initialState: {
-        bookingLocation: {
-            idLocation: "",
-            locationName: "",
-        },
-        bookingDate: {
-            checkIn: "",
-            checkOut: "",
-        },
-        customerInfo: [],
-        isBookedSuccess: false,
-        totalCustomer: 0,
-    },
+    initialState: initialState,
     reducers: {
         setBookingDate(state, action) {
             state.bookingDate = action.payload;
@@ -53,10 +77,10 @@ const bookingRoom = createSlice({
             state.bookingLocation = action.payload;
         },
         setCustomerInfo(state, action) {
-            state.customerInfo = action.payload.customerInfo;
+            state.customerInfo = action.payload;
         },
         setTotalCustomer(state, action) {
-            state.totalCustomer = action.payload.totalCustomer;
+            state.totalCustomer = action.payload;
         },
         setBookingStatus(state, action) {
             state.isBookedSuccess = action.payload;
@@ -71,6 +95,11 @@ const bookingRoom = createSlice({
         },
     },
 });
+
 const { reducer, actions } = bookingRoom;
+
 export const { setBookingDate, setBookingStatus, setBookingLocation, setCustomerInfo, setTotalCustomer } = actions;
+
+export const selectThongTinTimPhong = (state) => state.bookingRoomSlice;
+
 export default reducer;

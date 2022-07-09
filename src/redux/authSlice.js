@@ -77,7 +77,7 @@ export const authSlice = createSlice({
       let { accessToken, user } = payload;
       state.isLoggedIn = true;
       state.isRegisterred = false;
-      state.userLogin = user.user;
+      state.userLogin = user;
       state.accessToken = accessToken;
     },
     [postDataDangNhap.rejected]: (state) => {
