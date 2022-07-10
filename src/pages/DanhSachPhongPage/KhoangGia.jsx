@@ -30,7 +30,7 @@ export default function KhoangGia() {
   };
 
   return (
-    <div className="pb-8 border-b">
+    <div className="lg:pb-8 pb-10 border-b">
       <div className="text-xl font-medium pb-2">Khoảng giá</div>
       <div>
         Giá trung bình là{" "}
@@ -58,7 +58,7 @@ export default function KhoangGia() {
         <div className="flex justify-center space-x-2 w-full pt-5">
           <div className="relative w-full h-12">
             <div className="absolute font-thin left-3 top-1">Giá tối thiểu</div>
-            <div className="absolute text-[#ff5a5f] -bottom-6">
+            <div className="absolute text-[#ff5a5f] -bottom-11 lg:-bottom-6">
               {errorValueInput}
             </div>
             <input

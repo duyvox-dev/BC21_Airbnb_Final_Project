@@ -73,7 +73,7 @@ export default function PhongNgu() {
     <div className="py-8 border-b">
       <div className="text-xl font-medium pb-4">Khách và phòng ngủ</div>
       <div className="text-lg">Khách</div>
-      <div className="flex justify-start p-4 space-x-4">
+      <div className="md:flex md:justify-start p-4 md:space-x-4 grid grid-cols-2 gap-4">
         <button
           name="guests"
           value={0}
@@ -89,7 +89,7 @@ export default function PhongNgu() {
         {renderSoLuongKhach()}
       </div>
       <div className="text-lg">Phòng ngủ</div>
-      <div className="flex justify-start p-4 space-x-4">
+      <div className="md:flex md:justify-start p-4 md:space-x-4 grid grid-cols-2 gap-4">
         <button
           name="bedRoom"
           value={0}
@@ -105,7 +105,7 @@ export default function PhongNgu() {
         {renderPhongNgu()}
       </div>
       <div className="text-lg">Phòng tắm</div>
-      <div className="flex justify-start p-4 space-x-4">
+      <div className="md:flex md:justify-start p-4 md:space-x-4 grid grid-cols-2 gap-4">
         <button
           name="bath"
           value={0}

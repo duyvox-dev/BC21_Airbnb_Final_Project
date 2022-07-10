@@ -40,7 +40,7 @@ export default function ModalChonPhong() {
             isOpen={isOpen}
             onClose={onClose}
             children={
-              <Dialog.Panel className="w-full md:max-w-[45rem] max-w-[25rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full md:max-w-[35rem] lg:max-w-[45rem] max-w-[21rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 text-center p-5 border-b"
