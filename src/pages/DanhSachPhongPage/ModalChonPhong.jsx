@@ -24,7 +24,7 @@ export default function ModalChonPhong() {
 
   return (
     <>
-      <div className="sticky top-0 w-full text-center py-5 bg-white z-10">
+      <div className="sticky top-0 w-full text-center py-5 bg-white z-10 border-b">
         <div className="flex justify-center items-center space-x-32">
           <div className="font-medium text-lg">
             Hơn {danhSachPhong?.length} chỗ ở
@@ -40,7 +40,7 @@ export default function ModalChonPhong() {
             isOpen={isOpen}
             onClose={onClose}
             children={
-              <Dialog.Panel className="w-full md:max-w-[45rem] max-w-[25rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full md:max-w-[35rem] lg:max-w-[45rem] max-w-[21rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 text-center p-5 border-b"
