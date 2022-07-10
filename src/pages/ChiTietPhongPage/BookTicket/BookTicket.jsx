@@ -7,6 +7,7 @@ import {
     setBookingDate,
     setCustomerInfo,
     setBookingStatus,
+    bookRoom,
 } from "../../../redux/bookingRoomSlice";
 import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
@@ -14,6 +15,7 @@ export default function BookTicket({
     thongTinChiTietPhong = {},
     scrollTo = () => {},
     commentListSize = 0,
+    setModalAuthVisible = () => {},
 }) {
     const dispatch = useDispatch();
     const { bookingDate, customerInfo } = useSelector(
@@ -27,25 +29,25 @@ export default function BookTicket({
     const [ableToBook, setAbleToBook] = useState(true);
     const [totalCustomers, setTotalCustomers] = useState(0);
     useEffect(() => {
-        setDaysOfBooking(
-            countDays(bookingDate?.checkIn, bookingDate?.checkOut)
-        );
+        const days = countDays(bookingDate?.checkIn, bookingDate?.checkOut);
+        if (days) setDaysOfBooking(days);
+        else setDaysOfBooking(0);
     }, [bookingDate]);
 
     useEffect(() => {
         let isAbleToBook = false;
         if (
-            accessToken &&
             bookingDate?.checkIn != "" &&
             bookingDate?.checkOut != "" &&
             totalCustomers != 0
         )
             isAbleToBook = true;
         setAbleToBook(isAbleToBook);
-    }, [bookingDate, accessToken, totalCustomers]);
+    }, [bookingDate, totalCustomers]);
     useEffect(() => {
+        setModalAuthVisible(false);
         // console.log({ ableToBook });
-    }, [ableToBook]);
+    }, [accessToken]);
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
     };
@@ -62,12 +64,17 @@ export default function BookTicket({
         // console.log(totalCustomer, customerDataWithoutIndex);
     };
     const handleBooking = () => {
-        // const bookingData = {
-        //     roomId: id,
-        //     ...bookingTime,
-        // };
-        // console.log(bookingData);
-        // dispatch(bookRoom(bookingData));
+        console.log({ accessToken }, { ableToBook });
+        if (accessToken && ableToBook) {
+            const bookingData = {
+                roomId: thongTinChiTietPhong._id,
+                ...bookingDate,
+            };
+            // console.log(bookingData);
+            dispatch(bookRoom(bookingData));
+        } else if (!accessToken) {
+            setModalAuthVisible(true);
+        }
     };
     const onDatePickerChange = (key, data) => {
         const newBookingDate = {

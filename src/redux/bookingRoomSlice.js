@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
+import { message } from "antd";
 import { phongService } from "../services/phongService";
 
 export const bookRoom = createAsyncThunk(
@@ -6,7 +7,9 @@ export const bookRoom = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
             const res = await phongService.datPhong(data);
-            console.log(res);
+            // console.log(res);
+            message.success(res.data.message);
+            // thunkAPI.dispatch()
             return res.data;
         } catch (err) {
             return thunkAPI.rejectWithValue();
