@@ -51,65 +51,113 @@ export let arrConvenient = [
   { id: 10, name: "Bồn tắm nước nóng", hotTub: true },
 ];
 
-// vòng lặp mặc định để tạo [] ban đầu cho data
-export let loopDefault = (data, number) => {
-  for (let i = 0; i <= number; i++) {
-    data[i] = [];
-  }
+// Lưu dữ liệu button ở lọc danh sách phòng
+export let handleDataSaveArrButton = (arr, dataValueButton) => {
+  return arr.reduce((arrNew, item) => {
+    if (
+      item[dataValueButton[0].name] >= dataValueButton[0].value &&
+      item[dataValueButton[1].name] >= dataValueButton[1].value &&
+      item[dataValueButton[2].name] >= dataValueButton[2].value
+    ) {
+      return [...arrNew, item];
+    } else {
+      return [...arrNew];
+    }
+  }, []);
 };
 
-// filter ra những trường hợp trùng khớp với key
-export let switchCaseKeyObj = (keyObj, data) => {
-  let arr = [];
-  keyObj.forEach((e) => {
-    arr = data.filter((item) => item[e] === true);
+// Lưu dữ liệu checkbox ở lọc danh sách phòng
+export let handleDataSaveArrCheckbox = (arr, dataCheckbox) => {
+  return arr.filter((item) => {
+    switch (dataCheckbox.length) {
+      case 1:
+        if (item[dataCheckbox[0]] === true) {
+          return item;
+        }
+        break;
+      case 2:
+        if (item[dataCheckbox[0]] === true && item[dataCheckbox[1]] === true) {
+          return item;
+        }
+
+        break;
+      case 3:
+        if (
+          item[dataCheckbox[0]] === true &&
+          item[dataCheckbox[1]] === true &&
+          item[dataCheckbox[2]] === true
+        ) {
+          return item;
+        }
+
+        break;
+      case 4:
+        if (
+          item[dataCheckbox[0]] === true &&
+          item[dataCheckbox[1]] === true &&
+          item[dataCheckbox[2]] === true &&
+          item[dataCheckbox[3]] === true
+        ) {
+          return item;
+        }
+
+        break;
+      case 5:
+        if (
+          item[dataCheckbox[0]] === true &&
+          item[dataCheckbox[1]] === true &&
+          item[dataCheckbox[2]] === true &&
+          item[dataCheckbox[3]] === true &&
+          item[dataCheckbox[4]] === true
+        ) {
+          return item;
+        }
+
+        break;
+      case 6:
+        if (
+          item[dataCheckbox[0]] === true &&
+          item[dataCheckbox[1]] === true &&
+          item[dataCheckbox[2]] === true &&
+          item[dataCheckbox[3]] === true &&
+          item[dataCheckbox[4]] === true &&
+          item[dataCheckbox[5]] === true
+        ) {
+          return item;
+        }
+
+        break;
+      case 7:
+        if (
+          item[dataCheckbox[0]] === true &&
+          item[dataCheckbox[1]] === true &&
+          item[dataCheckbox[2]] === true &&
+          item[dataCheckbox[3]] === true &&
+          item[dataCheckbox[4]] === true &&
+          item[dataCheckbox[5]] === true &&
+          item[dataCheckbox[6]] === true
+        ) {
+          return item;
+        }
+
+        break;
+      case 8:
+        if (
+          item[dataCheckbox[0]] === true &&
+          item[dataCheckbox[1]] === true &&
+          item[dataCheckbox[2]] === true &&
+          item[dataCheckbox[3]] === true &&
+          item[dataCheckbox[4]] === true &&
+          item[dataCheckbox[5]] === true &&
+          item[dataCheckbox[6]] === true &&
+          item[dataCheckbox[7]] === true
+        ) {
+          return item;
+        }
+
+        break;
+      default:
+        break;
+    }
   });
-  return arr;
-};
-
-// so sánh giá trị ở checkbox để render
-export let handleCompareDataJSON = (
-  arr,
-  danhSachPhong,
-  dataCheckbox,
-  number,
-  keyObj,
-  btn13,
-  btn14,
-  btn15
-) => {
-  if (
-    JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[11]) &&
-    JSON.stringify(danhSachPhong) !==
-      JSON.stringify(
-        dataCheckbox[number] &&
-          JSON.stringify(danhSachPhong) !==
-            JSON.stringify(dataCheckbox[btn13]) &&
-          JSON.stringify(danhSachPhong) !==
-            JSON.stringify(dataCheckbox[btn14]) &&
-          JSON.stringify(danhSachPhong) !== JSON.stringify(dataCheckbox[btn15])
-      )
-  ) {
-    arr = switchCaseKeyObj(keyObj, danhSachPhong);
-  } else if (
-    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[number])
-  ) {
-    arr = switchCaseKeyObj(keyObj, dataCheckbox[number]);
-  } else if (
-    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[11])
-  ) {
-    arr = switchCaseKeyObj(keyObj, dataCheckbox[11]);
-  } else if (
-    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[btn13])
-  ) {
-    arr = switchCaseKeyObj(keyObj, dataCheckbox[btn13]);
-  } else if (
-    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[btn14])
-  ) {
-    arr = switchCaseKeyObj(keyObj, dataCheckbox[btn14]);
-  } else if (
-    JSON.stringify(danhSachPhong) === JSON.stringify(dataCheckbox[btn15])
-  ) {
-    arr = switchCaseKeyObj(keyObj, dataCheckbox[btn15]);
-  }
 };
