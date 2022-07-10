@@ -58,6 +58,9 @@ export default function ChiTietPhongPage() {
             dispatch(setBookingStatus(false));
         }
     }, [isBookedSuccess]);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const scrollTo = (element) => {
         scroller.scrollTo(element, {
             duration: 1500,
