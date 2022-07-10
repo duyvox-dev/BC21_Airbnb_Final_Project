@@ -60,6 +60,7 @@ export default function DanhSachPhongPage() {
     });
   };
 
+  document.title = `Airbnb - ${danhSachPhong[0]?.locationId.name} - ${danhSachPhong[0]?.locationId.province}`;
   return (
     <>
       <div className=" py-5">
