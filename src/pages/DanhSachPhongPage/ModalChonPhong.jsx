@@ -24,7 +24,7 @@ export default function ModalChonPhong() {
 
   return (
     <>
-      <div className="sticky top-0 w-full text-center py-5 bg-white z-10">
+      <div className="sticky top-0 w-full text-center py-5 bg-white z-10 border-b">
         <div className="flex justify-center items-center space-x-32">
           <div className="font-medium text-lg">
             Hơn {danhSachPhong?.length} chỗ ở

@@ -62,9 +62,9 @@ export default function DanhSachPhongPage() {
 
   return (
     <>
-      <div className=" py-5">
+      <div className="pt-5 pb-16">
         <ModalChonPhong />
-        <div className="w-11/12 mx-auto">
+        <div className="w-11/12 mx-auto pt-5">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {renderDanhSachPhong()}
           </div>
