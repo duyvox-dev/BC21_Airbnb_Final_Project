@@ -137,14 +137,14 @@ export default function ChiTietPhongPage() {
                         />
                     </div>
 
-                    <div className="flex w-full gap-[100px] pt-5">
-                        <div className="w-[70%]">
+                    <div className="flex w-full sm:flex-col lg:flex-row gap-[100px] pt-5">
+                        <div className="sm:w-full lg:w-[70%]">
                             <RoomInfo
                                 thongTinChiTietPhong={thongTinChiTietPhong}
                             />
                         </div>
                         {/* Booking */}
-                        <div className="w-[30%] relative">
+                        <div className="sm:w-full lg:w-[30%] relative">
                             <div className="sticky top-1">
                                 <BookTicket
                                     thongTinChiTietPhong={thongTinChiTietPhong}

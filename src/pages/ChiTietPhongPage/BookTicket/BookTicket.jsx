@@ -122,14 +122,18 @@ export default function BookTicket({
                 <button
                     className={`${
                         !ableToBook
-                            ? "bg-gray-500 cursor-not-allowed"
+                            ? "bg-gray-500 cursor-default"
                             : "bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 "
-                    } text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out`}
+                    } relative text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out`}
                     // className="bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out"
                     onClick={handleBooking}
                     disabled={!ableToBook}
                 >
-                    Đặt Phòng
+                    <span>
+                        {ableToBook
+                            ? "Đặt phòng "
+                            : "Vui lòng chọn ngày và số lượng khách"}
+                    </span>
                 </button>
                 <div className="mt-2">
                     <p className="text-gray-700 text-center">
