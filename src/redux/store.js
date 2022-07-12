@@ -20,4 +20,7 @@ export const store = configureStore({
         danhSachPhongSlice,
         chiTietPhongSlice,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    }),
 });

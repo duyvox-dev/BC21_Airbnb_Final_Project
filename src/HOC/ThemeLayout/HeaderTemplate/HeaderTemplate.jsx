@@ -16,8 +16,6 @@ import { useFormik } from "formik";
 import SearchForm from "./SearchForm/SearchForm";
 import { closeSearchInput, openSearchInput, selectIsSearchInputOpen } from "../../../redux/pageSlice";
 
-const dateFormat = "DD/MM/YYYY";
-
 export default function HeaderTemplate() {
     const { userLogin } = useSelector((state) => state.authSlice);
     let dispatch = useDispatch();
@@ -78,33 +76,24 @@ export default function HeaderTemplate() {
     );
 
     //State lưu trữ thông tin tìm phòng của người dùng
-    let [searchInfo, setSearchInfo] = useState(
-        {
-            bookingLocation: {
-                locationName: '',
-            },
-            bookingDate: {
-                checkIn: moment(),
-                checkOut: moment(),
-            },
-            totalCustomer: 0,
-        },
-    );
-    useEffect(() => { //Re-render thanh searchInfo mini mỗi khi khách chọn lại thông tin
-        setSearchInfo({
+    let formik = useFormik({
+        initialValues: {
             bookingLocation: {
                 locationName: ThongTinTimPhong.bookingLocation.locationName,
             },
             bookingDate: {
-                checkIn: moment(ThongTinTimPhong.bookingDate.checkIn),
-                checkOut: moment(ThongTinTimPhong.bookingDate.checkOut),
+                checkIn: ThongTinTimPhong.bookingDate.checkIn,
+                checkOut: ThongTinTimPhong.bookingDate.checkOut,
             },
             totalCustomer: ThongTinTimPhong.totalCustomer,
-        });
+        },
+    });
+    useEffect(() => { //Re-render thanh searchInfo mini mỗi khi khách chọn lại thông tin
+        formik.setFieldValue('bookingLocation.locationName', ThongTinTimPhong.bookingLocation.locationName);
+        formik.setFieldValue('bookingDate.checkIn', ThongTinTimPhong.bookingDate.checkIn);
+        formik.setFieldValue('bookingDate.checkOut', ThongTinTimPhong.bookingDate.checkOut);
+        formik.setFieldValue('totalCustomer', ThongTinTimPhong.totalCustomer);
     }, [ThongTinTimPhong])
-    console.log(ThongTinTimPhong.bookingDate.checkIn, ThongTinTimPhong.bookingDate.checkOut);
-    console.log(searchInfo.bookingDate.checkIn, searchInfo.bookingDate.checkOut);
-
 
     //State điều khiển hiển thị thanh searchForm
     let isSearchOpen = useSelector(selectIsSearchInputOpen);
@@ -145,22 +134,19 @@ export default function HeaderTemplate() {
                             className="mr-2 px-2 my-auto font-bold"
                         >
                             {
-                                _.trim(searchInfo.bookingLocation.locationName) === '' //Kiểm tra thông tin vị trí có tồn tại không
+                                _.trim(formik.values.bookingLocation.locationName) === '' //Kiểm tra thông tin vị trí có tồn tại không
                                     ? 'Địa điểm bất kỳ'
-                                    : searchInfo.bookingLocation.locationName
+                                    : formik.values.bookingLocation.locationName
                             }
                         </p>
                         <p
                             className="mx-2 px-2 my-auto border-l border-r border-gray-400 font-bold"
                         >
                             {
-                                ThongTinTimPhong.bookingDate.checkIn !== null && ThongTinTimPhong.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
-                                    ? _.trim(ThongTinTimPhong.bookingDate.checkIn) === 'NaN' && _.trim(ThongTinTimPhong.bookingDate.checkOut) === 'NaN' //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
+                                formik.values.bookingDate.checkIn !== null && formik.values.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
+                                    ? _.trim(formik.values.bookingDate.checkIn) === 'NaN' && _.trim(formik.values.bookingDate.checkOut) === 'NaN' //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
                                         ? 'Thời gian bất kỳ'
-                                        : moment(ThongTinTimPhong.bookingDate.checkIn).format('M') === moment(ThongTinTimPhong.bookingDate.checkOut).format('M') //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string ngày có giá trị thì trả ra đúng giá trị
-                                            ? `Ngày ${moment(ThongTinTimPhong.bookingDate.checkIn).format('DD')} - ${moment(ThongTinTimPhong.bookingDate.checkOut).format('DD')} tháng ${moment(ThongTinTimPhong.bookingDate.checkOut).format('M')}` //Nếu thời gian nhận phòng và trả phòng cùng tháng
-                                            : `Ngày ${moment(ThongTinTimPhong.bookingDate.checkIn).format('DD')} tháng ${moment(ThongTinTimPhong.bookingDate.checkIn).format('M')} - ${moment(ThongTinTimPhong.bookingDate.checkOut).format('DD')} tháng ${moment(searchInfo.bookingDate.checkOut).format('M')}` //Nếu thời gian nhận phòng và trả phòng khác tháng
-
+                                        : `Ngày ${moment(formik.values.bookingDate.checkIn).format('DD/MM')} - ${moment(formik.values.bookingDate.checkOut).format('DD/MM')}` //Nếu thời gian nhận phòng và trả phòng khác tháng
                                     : 'Thời gian bất kỳ'
                             }
                         </p>
@@ -168,9 +154,9 @@ export default function HeaderTemplate() {
                             className="ml-2 px-2 my-auto font-bold"
                         >
                             {
-                                searchInfo.totalCustomer === 0
+                                formik.values.totalCustomer === 0
                                     ? 'Thêm khách'
-                                    : `${searchInfo.totalCustomer} khách`
+                                    : `${formik.values.totalCustomer} khách`
                             }
                         </p>
                         <button

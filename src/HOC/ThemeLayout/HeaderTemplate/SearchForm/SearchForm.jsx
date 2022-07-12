@@ -16,7 +16,7 @@ import { getDanhSachViTri, selectDanhSachViTri } from "../../../../redux/viTriSl
 import { setBookingDate, setBookingLocation, setCustomerInfo, setTotalCustomer } from "../../../../redux/bookingRoomSlice";
 import { localSearchStorageService } from "../../../../services/localService";
 import styles from '../css/SearchForm.css';
-import { closeSearchInput } from "../../../../redux/pageSlice";
+import { closeSearchInput, searchAction } from "../../../../redux/pageSlice";
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
@@ -62,7 +62,6 @@ export default function SearchForm({ ThongTinTimPhong }) {
                 dispatch(setTotalCustomer(values.totalCustomer));
 
                 localSearchStorageService.setSearchInfoLocal(values); //Lưu trữ thông tin tìm phòng vào localStorage SEARCH_INFO
-
                 //Chuyển trang danh sách phòng với vị trí chọn từ người dùnng
                 navigate(`/search/${values.bookingLocation.idLocation}`);
             } else {
@@ -95,11 +94,16 @@ export default function SearchForm({ ThongTinTimPhong }) {
     );
 
     //Nhận giá trị từ ô input ngày nhận/trả phòng
-    const onChangeDatePicker = (key, dateString) => {
-        let CheckIn = dateString[0]; //moment(key[0]).format(dateFormat);
-        let CheckOut = dateString[1]; //moment(key[1]).format(dateFormat);
-        formik.setFieldValue('bookingDate.checkIn', CheckIn);
-        formik.setFieldValue('bookingDate.checkOut', CheckOut);
+    const onChangeDatePicker = (dates, dateStrings) => {
+        if (dates) {
+            let CheckIn = _.first(dates);
+            let CheckOut = _.last(dates);
+            formik.setFieldValue('bookingDate.checkIn', CheckIn);
+            formik.setFieldValue('bookingDate.checkOut', CheckOut);
+        } else {
+            formik.setFieldValue('bookingDate.checkIn', null);
+            formik.setFieldValue('bookingDate.checkOut', null);
+        };
     };
 
     //Truyền value từ localSearchStorage vào RangePicker ngày nhận/trả phòng
@@ -111,7 +115,7 @@ export default function SearchForm({ ThongTinTimPhong }) {
     //Hàm cho người dùng chọn số lượng từng loại khách trong search bar
     const ThayDoiSoLuongLoaiKhach = (customer, giaTri) => {
         let indexCustomerType = formik.values.customerInfo.findIndex((item) => { //Tìm index object loại khách đang thay đổi số lượng
-            return item.CustomerType === customer;
+            return item.customerType === customer;
         });
         let updateCustomerNumber = JSON.parse(JSON.stringify(formik.values.customerInfo));
         if (indexCustomerType !== -1) { //Thay đổi số lượng loại khách đã xác định
@@ -137,14 +141,14 @@ export default function SearchForm({ ThongTinTimPhong }) {
                     className="w-full mb-2 grid grid-cols-3 border-solid border-0 border-b border-b-neutral-300 pb-2"
                 >
                     <div className="col-span-2 flex flex-wrap align-middle">
-                        <p className="w-full my-auto font-bold">{Khach.CustomerType}</p>
-                        <p className="w-full my-auto">{Khach.Description}</p>
+                        <p className="w-full my-auto font-bold">{Khach.customerType}</p>
+                        <p className="w-full my-auto">{Khach.description}</p>
                     </div>
                     <div className="col-span-1 ml-3 flex justify-between items-center">
                         <button
                             className="w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300"
                             onClick={() => {
-                                ThayDoiSoLuongLoaiKhach(Khach.CustomerType, GiamSoLuong);
+                                ThayDoiSoLuongLoaiKhach(Khach.customerType, GiamSoLuong);
                             }}
                         >
                             <FontAwesomeIcon icon={faMinus} />
@@ -153,7 +157,7 @@ export default function SearchForm({ ThongTinTimPhong }) {
                         <button
                             className="w-8 h-8 rounded-full cursor-pointer border border-neutral-300 active:shadow-lg active:bg-neutral-300"
                             onClick={() => {
-                                ThayDoiSoLuongLoaiKhach(Khach.CustomerType, TangSoLuong);
+                                ThayDoiSoLuongLoaiKhach(Khach.customerType, TangSoLuong);
                             }}
                         >
                             <FontAwesomeIcon icon={faPlus} />

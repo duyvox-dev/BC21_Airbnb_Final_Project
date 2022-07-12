@@ -17,7 +17,7 @@ const pageSlice = createSlice({
     },
 });
 
-export const { openSearchInput, closeSearchInput } = pageSlice.actions;
+export const { openSearchInput, closeSearchInput, searchAction } = pageSlice.actions;
 
 export const selectIsSearchInputOpen = (state) => state.pageSlice.isSearchInputOpen;
 
