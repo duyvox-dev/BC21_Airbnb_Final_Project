@@ -55,11 +55,11 @@ export default function BannerHomePage() {
             >
                 {renderCarouselSlider()}
             </Slider>
-            <div className="bg-black/50 flex flex-wrap items-center absolute w-full lg:bottom-8 lg:mb-2 lg:p-2 xs:bottom-3 md:bottom-8">
-                <h1 className='text-white mx-auto my-auto text-center lg:text-4xl lg:w-11/12 xs:w-8/12 xs:text-xs md:w-10/12 md:text-lg'>
+            <div className="bg-black/50 flex flex-wrap items-center absolute w-full lg:bottom-8 lg:mb-2 lg:p-2 sm:bottom-3 xs:bottom-3 md:bottom-8">
+                <h1 className='text-white mx-auto my-auto text-center lg:text-4xl lg:w-11/12 sm:w-8/12 sm:text-xs xs:w-8/12 xs:text-xs md:w-10/12 md:text-lg'>
                     KHÁCH SẠN, KHU NGHỈ DƯỠNG, NHÀ TRỌ VÀ HƠN THẾ NỮA
                 </h1>
-                <h2 className='text-white mx-auto my-auto text-center lg:text-xl lg:w-11/12 xs:w-full xs:text-xs xs:font-thin md:text-sm'>
+                <h2 className='text-white mx-auto my-auto text-center lg:text-xl lg:w-11/12 sm:w-full sm:text-xs sm:font-thin xs:w-full xs:text-xs xs:font-thin md:text-sm'>
                     Nhận giá tốt nhất cho hơn 10.000 chỗ nghỉ toàn Việt Nam
                 </h2>
             </div>

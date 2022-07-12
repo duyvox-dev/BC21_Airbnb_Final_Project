@@ -50,6 +50,7 @@ export default function DeXuatPhongHomePage(props) {
                         className="mx-auto rounded-lg bg-rose-500 text-white text-base active:scale-95
                         lg:px-5 lg:py-2 lg:mt-2
                         md:px-5 md:py-2 md:mt-2
+                        sm:px-3 sm:py-1
                         xs:px-3 xs:py-1"
                         onClick={() => { navigate(`/search/${item._id}`) }}
                     >
@@ -61,8 +62,8 @@ export default function DeXuatPhongHomePage(props) {
     };
 
     return (
-        <div className="main-page w-full lg:mt-10 lg:pb-5 xs:mt-5 md:mt-6">
-            <h1 className="lg:w-11/12 lg:text-2xl md:text-2xl xs:text-base mx-auto text-center">Những chỗ nghỉ nổi bật khuyến nghị cho bạn</h1>
+        <div className="main-page w-full lg:mt-10 lg:pb-5 sm:mt-5 xs:mt-5 md:mt-6">
+            <h1 className="lg:w-11/12 lg:text-2xl md:text-2xl sm:text-base xs:text-base mx-auto text-center">Những chỗ nghỉ nổi bật khuyến nghị cho bạn</h1>
             <Tabs defaultActiveKey="1" centered>
                 {renderTabPane()}
             </Tabs>

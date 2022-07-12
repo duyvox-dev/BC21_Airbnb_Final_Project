@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import useWindowDimensions from '../../../components/useWindowDimensions';
+import useWindowDimensions from '../../../HOOK/useWindowDimensions';
 
 export default function DanhGiaSliderHomePage(props) {
 
@@ -72,7 +72,7 @@ export default function DanhGiaSliderHomePage(props) {
 
     return (
         <div className="w-full mt-5 pb-5 relative">
-            <h1 className="w-11/12 mx-auto text-center lg:text-2xl md:text-2xl xs:text-base">Tiếng lành đồn xa</h1>
+            <h1 className="w-11/12 mx-auto text-center lg:text-2xl md:text-2xl sm:text-base xs:text-base">Tiếng lành đồn xa</h1>
             {
                 danhSachDanhGia.length > 0 && <Fragment>
                     <Slider
@@ -81,6 +81,7 @@ export default function DanhGiaSliderHomePage(props) {
                         className='mx-auto
                         lg:w-9/12 
                         md:w-full 
+                        sm:w-full
                         xs:w-full'
                     >
                         {renderDanhGiaSlider()}
@@ -91,6 +92,7 @@ export default function DanhGiaSliderHomePage(props) {
                 className="absolute text-gray-500 
                 lg:left-40 lg:top-1/2 lg:text-2xl
                 md:left-0 md:top-1/2 md:text-2xl
+                sm:left-0 sm:top-1/2 sm:text-2xl
                 xs:left-0 xs:top-1/2 xs:text-2xl"
                 onClick={() => { goToPrevious() }}
             >
@@ -102,6 +104,7 @@ export default function DanhGiaSliderHomePage(props) {
                 className="absolute text-gray-500
                 lg:right-40 lg:top-1/2 lg:text-2xl
                 md:right-0 md:top-1/2 md:text-2xl
+                sm:right-0 sm:top-1/2 sm:text-2xl
                 xs:right-0 xs:top-1/2 xs:text-2xl"
                 onClick={() => { goToNext() }}
             >

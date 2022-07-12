@@ -6,7 +6,7 @@ import { Rate } from 'antd';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
-import useWindowDimensions from '../../../components/useWindowDimensions';
+import useWindowDimensions from '../../../HOOK/useWindowDimensions';
 
 export default function DeXuatPhongTab(props) {
 
@@ -62,6 +62,7 @@ export default function DeXuatPhongTab(props) {
                 <div className='rounded-lg hover:shadow-xl duration-300
                 lg:px-2 lg:my-2 
                 md:w-11/12 md:mx-auto md:shadow-md md:overflow-hidden md:my-2 md:border md:border-gray-200 
+                sm:mx-2 sm:shadow-md sm:overflow-hidden sm:border sm:border-gray-200
                 xs:mx-2 xs:shadow-md xs:overflow-hidden xs:border xs:border-gray-200'>
                     <img className="w-full lg:rounded-xl" alt={phong.name} src={phong.image} />
                     <p
@@ -69,6 +70,7 @@ export default function DeXuatPhongTab(props) {
                     bg-rose-500 text-white text-center absolute rounded-full
                     lg:w-8 lg:h-8 lg:leading-8 lg:text-lg lg:top-5 lg:right-5
                     md:w-8 md:h-8 md:leading-8 md:text-lg md:top-5 md:right-8
+                    sm:w-6 sm:h-6 sm:leading-6 sm:text-base sm:top-3 sm:right-5
                     xs:w-6 xs:h-6 xs:leading-6 xs:text-base xs:top-3 xs:right-5"
                     >
                         {phong.locationId?.valueate}
@@ -77,6 +79,7 @@ export default function DeXuatPhongTab(props) {
                         className="font-bold text-center
                     lg:w-full lg:text-xl lg:mt-2
                     md:w-full md:text-xl md:mt-2
+                    sm:w-full sm:text-xl sm:mt-2
                     xs:w-full xs:text-xl xs:mt-2
                     ">
                         {phong.name}
@@ -85,6 +88,7 @@ export default function DeXuatPhongTab(props) {
                         className="flex justify-end 
                     lg:w-full
                     md:w-11/12 md:mx-auto md:justify-center
+                    sm:w-11/12 sm:mx-auto sm:justify-center
                     xs:w-11/12 xs:mx-auto xs:justify-center"
                     >
                         <span className="my-auto"><Rate allowHalf disabled defaultValue={diemDanhGia} /></span>
@@ -98,6 +102,7 @@ export default function DeXuatPhongTab(props) {
                             className="my-auto italic w-full
                             lg:text-right
                             md:text-center
+                            sm:text-center
                             xs:text-center"
                         >Giá rẻ nhất mỗi đêm từ
                         </p>
@@ -105,6 +110,7 @@ export default function DeXuatPhongTab(props) {
                             className="text-rose-600 w-full my-auto font-bold
                             lg:text-lg lg:text-right
                             md:text-lg md:text-center
+                            sm:text-lg sm:text-center
                             xs:text-lg xs:text-center"
                         >{phong.price?.toLocaleString()} VND
                         </p>
@@ -121,7 +127,7 @@ export default function DeXuatPhongTab(props) {
                     <Slider
                         ref={customSlider}
                         {...SliderSettings}
-                        className='w-full xs:p-3'
+                        className='w-full xs:p-3 sm:p-3'
                     >
                         {renderDeXuatPhongTab()}
                     </Slider>
@@ -129,6 +135,7 @@ export default function DeXuatPhongTab(props) {
                         className="absolute text-rose-600
                         lg:left-0 lg:top-1/3 lg:text-3xl
                         md:left-0 md:top-1/2 md:text-3xl
+                        sm:left-0 sm:top-1/2 sm:text-3xl
                         xs:left-0 xs:top-1/2 xs:text-3xl"
                         onClick={() => { goToPrevious() }}
                     >
@@ -140,6 +147,7 @@ export default function DeXuatPhongTab(props) {
                         className="absolute text-rose-600
                         lg:right-0 lg:top-1/3 lg:text-3xl
                         md:right-0 md:top-1/2 md:text-3xl
+                        sm:right-0 sm:top-1/2 sm:text-3xl
                         xs:right-0 xs:top-1/2 xs:text-3xl"
                         onClick={() => { goToNext() }}
                     >

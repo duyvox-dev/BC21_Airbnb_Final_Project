@@ -53,18 +53,18 @@ export default function LoaiHinhTienIchSliderHomePage(props) {
                 to={'/'}
                 className='text-inherit hover:text-inherit group'
             >
-                <div className='lg:w-32 md:w-16 xs:w-16 xs:mb-2'>
-                    <img className="xs:w-5 xs:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 lg:my-2 mx-auto group-hover:scale-110" src={item.hinhAnh} />
-                    <p className="xs:text-xs xs:font-normal md:text-xs lg:text-sm font-bold text-center mx-auto my-auto">{item.ten}</p>
+                <div className='lg:w-32 md:w-16 xs:w-16 xs:mb-2 sm:w-16 sm:mb-2'>
+                    <img className="xs:w-5 xs:h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 lg:my-2 mx-auto group-hover:scale-110" src={item.hinhAnh} />
+                    <p className="sm:text-xs sm:font-normal xs:text-xs xs:font-normal md:text-xs lg:text-sm font-bold text-center mx-auto my-auto">{item.ten}</p>
                 </div>
             </Link>
         })
     };
 
     return (
-        <div className="lg:w-full lg:mt-10 lg:pb-5 xs:-mt-6">
+        <div className="lg:w-full lg:mt-10 lg:pb-5 xs:-mt-6 sm:-mt-6">
             <h1 className="lg:w-11/12 lg:text-2xl mx-auto text-center">Các loại hình tiện ích bạn cần</h1>
-            <div className='lg:w-11/12 mx-auto flex justify-between items-start xs:grid xs:grid-cols-5'>
+            <div className='lg:w-11/12 mx-auto flex justify-between items-start xs:grid xs:grid-cols-5 sm:grid sm:grid-cols-5'>
                 {renderTienIchPhong()}
             </div>
         </div>

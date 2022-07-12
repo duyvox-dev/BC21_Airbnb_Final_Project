@@ -176,32 +176,64 @@ export default function SearchForm({ ThongTinTimPhong }) {
             <Tabs defaultActiveKey="1" centered>
                 <TabPane tab={<b>Chỗ ở</b>} key="1">
                     <div className="search-bar-container">
-                        <div className="search-bar-inner w-full grid grid-cols-12 bg-gray-100 rounded-full border-solid border border-neutral-300">
+                        <div className="search-bar-inner w-full 
+                        lg:grid lg:grid-cols-12 lg:bg-gray-100 lg:rounded-full lg:border-solid lg:border lg:border-neutral-300
+                        md:grid md:grid-cols-12 md:bg-gray-100 md:rounded-full md:border-solid md:border md:border-neutral-300
+                        sm:flex sm:flex-wrap sm:justify-center
+                        xs:flex xs:flex-wrap xs:justify-center">
                             <Popover
-                                className="location-input-block col-span-5 h-16 rounded-full px-5 py-2 cursor-pointer"
+                                className="location-input-block cursor-pointer
+                                lg:col-span-5 lg:h-16 lg:rounded-full lg:px-5 lg:py-2
+                                md:col-span-5 md:h-16 md:rounded-full md:px-5 md:py-2
+                                sm:w-full sm:flex sm:flex-wrap sm:justify-center
+                                xs:w-full xs:flex xs:flex-wrap xs:justify-center"
                                 content={contentViTri}
                                 title="Tìm kiếm phòng theo khu vực"
                                 trigger="focus"
                             >
-                                <label className="location-input-name w-full font-bold pointer-events-none">
+                                <label className="location-input-name w-full font-bold pointer-events-none
+                                sm:text-lg sm:text-center sm:w-full
+                                xs:text-lg xs:text-center xs:w-full">
                                     Địa điểm
                                 </label>
                                 <input
                                     value={formik.values.bookingLocation.locationName}
-                                    className="location-input w-full bg-transparent border-none focus:outline-none"
+                                    className="location-input w-full bg-transparent border-none focus:outline-none
+                                    sm:h-12 sm:w-full sm:text-center sm:border-solid sm:border sm:rounded-full sm:border-gray-200
+                                    xs:h-12 xs:w-full xs:text-center xs:border-solid xs:border xs:rounded-full xs:border-gray-200"
                                     placeholder="Tìm kiếm phòng theo khu vực"
                                     name="bookingLocation.locationName"
                                     onChange={formik.handleChange}
                                 />
                             </Popover>
-                            <div className="date-input-block col-span-4 h-16 bg-transparent cursor-pointer flex flex-row flex-wrap items-stretch relative">
-                                <div className="date-input-item w-6/12 py-2 relative">
-                                    <span className="date-input-name w-full absolute z-20 font-bold flex items-start justify-center pointer-events-none">
+                            <div className="date-input-block bg-transparent cursor-pointer
+                            lg:col-span-4 lg:h-16 lg:flex lg:flex-row lg:flex-wrap lg:items-stretch lg:relative
+                            md:col-span-4 md:h-16 md:flex md:flex-row md:flex-wrap md:items-stretch md:relative
+                            sm:w-full sm:mt-5 sm:flex sm:flex-wrap sm:justify-center
+                            xs:w-full xs:mt-5 xs:flex xs:flex-wrap xs:justify-center">
+                                <div className="date-input-item
+                                lg:w-6/12 lg:py-2 lg:relative
+                                md:w-6/12 md:py-2 md:relative
+                                sm:w-6/12 sm:flex sm:justify-center
+                                xs:w-6/12 xs:flex xs:justify-center">
+                                    <span className="date-input-name w-full pointer-events-none
+                                    lg:absolute lg:z-20 lg:font-bold lg:flex lg:items-start lg:justify-center
+                                    md:absolute md:z-20 md:font-bold md:flex md:items-start md:justify-center
+                                    sm:text-lg sm:font-bold sm:text-center
+                                    xs:text-lg xs:font-bold xs:text-center">
                                         Nhận phòng
                                     </span>
                                 </div>
-                                <div className="date-input-item w-6/12 py-2 relative">
-                                    <span className="date-input-name w-full absolute z-20 font-bold flex items-start justify-center pointer-events-none">
+                                <div className="date-input-item
+                                lg:w-6/12 lg:py-2 lg:relative
+                                md:w-6/12 md:py-2 md:relative
+                                sm:w-6/12 sm:flex sm:justify-center
+                                xs:w-6/12 xs:flex xs:justify-center">
+                                    <span className="date-input-name w-full pointer-events-none
+                                    lg:absolute lg:z-20 lg:font-bold lg:flex lg:items-start lg:justify-center
+                                    md:absolute md:z-20 md:font-bold md:flex md:items-start md:justify-center
+                                    sm:text-lg sm:font-bold sm:text-center
+                                    xs:text-lg xs:font-bold xs:text-center">
                                         Trả phòng
                                     </span>
                                 </div>
@@ -218,34 +250,58 @@ export default function SearchForm({ ThongTinTimPhong }) {
                                     }
                                 />
                             </div>
-                            <div className="col-span-3 h-16 px-2 rounded-full flex justify-between cursor-pointer hover:bg-gray-200">
+                            <div className="cursor-pointer 
+                            lg:col-span-3 lg:h-16 lg:px-2 lg:rounded-full lg:flex lg:justify-between lg:hover:bg-gray-200
+                            md:col-span-3 md:h-16 md:px-2 md:rounded-full md:flex md:justify-between md:hover:bg-gray-200
+                            sm:w-full sm:mt-5 sm:flex sm:flex-wrap sm:justify-center
+                            xs:w-full xs:mt-5 xs:flex xs:flex-wrap xs:justify-center">
                                 <Popover
                                     overlayClassName="rounded-lg"
-                                    className="pl-3 py-2 w-full bg-transparent border-none"
+                                    className="w-full bg-transparent border-none
+                                    lg:pl-3 lg:py-2
+                                    md:pl-3 md:py-2
+                                    sm:w-full sm:flex sm:flex-wrap sm:justify-center
+                                    xs:w-full xs:flex xs:flex-wrap xs:justify-center"
                                     content={contentLoaitKhach}
                                     trigger="click"
                                 >
-                                    <label className="w-full font-bold pointer-events-none">
+                                    <label className="w-full font-bold pointer-events-none
+                                    sm:text-lg sm:font-bold sm:text-center
+                                    xs:text-lg xs:font-bold xs:text-center">
                                         Khách
                                     </label>
-                                    {formik.values.totalCustomer > 0 ? (
-                                        <p className="w-full text-gray-800 pointer-events-none">
-                                            {formik.values.totalCustomer}{" "}
-                                            khách
-                                        </p>
-                                    ) : (
-                                        <p className="w-full text-gray-400 pointer-events-none">
-                                            Chọn khách
-                                        </p>
-                                    )}
+                                    <div
+                                        className="w-full 
+                                        sm:flex sm:items-center sm:justify-center sm:h-12 sm:border-solid sm:border sm:border-gray-200 sm:rounded-full
+                                        xs:flex xs:items-center xs:justify-center xs:h-12 xs:border-solid xs:border xs:border-gray-200 xs:rounded-full"
+                                    >
+                                        {formik.values.totalCustomer > 0 ? (
+                                            <p className="w-full text-gray-800 pointer-events-none
+                                            sm:text-center sm:my-auto
+                                            xs:text-center xs:my-auto">
+                                                {formik.values.totalCustomer}{" "}
+                                                khách
+                                            </p>
+                                        ) : (
+                                            <p className="w-full text-gray-400 pointer-events-none
+                                            sm:text-center sm:my-auto
+                                            xs:text-center xs:my-auto">
+                                                Chọn khách
+                                            </p>
+                                        )}
+                                    </div>
                                 </Popover>
                                 <button
-                                    className="rounded-full w-14 h-10 my-auto border-none bg-rose-500 text-white cursor-pointer z-50 active:bg-rose-700 active:shadow-lg flex items-center justify-center"
+                                    className="border-none bg-rose-500 text-white cursor-pointer z-50 active:bg-rose-700 active:shadow-lg
+                                    lg:rounded-full lg:w-14 lg:h-10 lg:my-auto lg:flex lg:items-center lg:justify-center
+                                    md:rounded-full md:w-14 md:h-10 md:my-auto md:flex md:items-center md:justify-center
+                                    sm:w-full sm:py-3 sm:mt-5 sm:rounded-lg
+                                    xs:w-full xs:py-3 xs:mt-5 xs:rounded-lg"
                                     type="submit"
                                     onClick={formik.handleSubmit}
                                 >
                                     <FontAwesomeIcon
-                                        className="pointer-events-none"
+                                        className="pointer-events-none xs:text-lg sm:text-lg"
                                         icon={faMagnifyingGlass}
                                     />
                                 </button>
@@ -254,80 +310,6 @@ export default function SearchForm({ ThongTinTimPhong }) {
                     </div>
                 </TabPane>
                 <TabPane tab={<b>Trải nghiệm</b>} key="2">
-                    <div className="search-bar-container">
-                        <div className="search-bar-inner w-full grid grid-cols-12 bg-gray-100 rounded-full border-solid border border-neutral-300">
-                            <Popover
-                                className="location-input-block col-span-5 h-16 rounded-full px-5 py-2 cursor-pointer"
-                                content={contentViTri}
-                                title="Tìm kiếm phòng theo khu vực"
-                                trigger="focus"
-                            >
-                                <label className="location-input-name w-full font-bold pointer-events-none">
-                                    Địa điểm
-                                </label>
-                                <input
-                                    value={formik.values.bookingLocation.locationName}
-                                    className="location-input w-full bg-transparent border-none focus:outline-none"
-                                    placeholder="Tìm kiếm phòng theo khu vực"
-                                    name="bookingLocation.locationName"
-                                    onChange={formik.handleChange}
-                                />
-                            </Popover>
-                            <div className="date-input-block col-span-4 h-16 bg-transparent cursor-pointer flex flex-row flex-wrap items-stretch relative">
-                                <div className="date-input-item w-6/12 py-2 relative">
-                                    <span className="date-input-name w-full absolute z-20 font-bold flex items-start justify-center pointer-events-none">
-                                        Nhận phòng
-                                    </span>
-                                </div>
-                                <div className="date-input-item w-6/12 py-2 relative">
-                                    <span className="date-input-name w-full absolute z-20 font-bold flex items-start justify-center pointer-events-none">
-                                        Trả phòng
-                                    </span>
-                                </div>
-                                <RangePicker
-                                    className="date-picker-container"
-                                    format={dateFormat}
-                                    onChange={onChangeDatePicker}
-                                    defaultValue={
-                                        formik.values.bookingDate.checkIn !== null && formik.values.bookingDate.checkOut !== null
-                                            ? DatePickerInitialValue
-                                            : ''
-                                    }
-                                />
-                            </div>
-                            <div className="col-span-3 h-16 px-2 rounded-full flex justify-between cursor-pointer hover:bg-gray-200">
-                                <Popover
-                                    overlayClassName="rounded-lg"
-                                    className="pl-3 py-2 w-full bg-transparent border-none"
-                                    content={contentLoaitKhach}
-                                    trigger="click"
-                                >
-                                    <label className="w-full font-bold pointer-events-none">
-                                        Khách
-                                    </label>
-                                    {formik.values.totalCustomer > 0 ? (
-                                        <p className="w-full text-gray-800 pointer-events-none">
-                                            {formik.values.totalCustomer}{" "}
-                                            khách
-                                        </p>
-                                    ) : (
-                                        <p className="w-full text-gray-400 pointer-events-none">
-                                            Chọn khách
-                                        </p>
-                                    )}
-                                </Popover>
-                                <button
-                                    className="rounded-full w-14 h-12 my-auto border-none bg-rose-500 text-white cursor-pointer z-50 active:bg-rose-700 active:shadow-lg"
-                                    type="submit"
-                                >
-                                    <FontAwesomeIcon
-                                        className="pointer-events-none"
-                                        icon={faMagnifyingGlass}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </TabPane>
             </Tabs>
         </div>
