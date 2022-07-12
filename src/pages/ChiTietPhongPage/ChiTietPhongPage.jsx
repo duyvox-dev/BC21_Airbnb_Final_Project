@@ -84,7 +84,7 @@ export default function ChiTietPhongPage() {
                 isModalOpen={isModalCommentOpen}
                 toggleModal={toggleCommentModal}
             />
-            <div className="container mx-auto py-10 px-2 ">
+            <div className="w-11/12 mx-auto py-10 px-2 ">
                 <div>
                     {/* Room header */}
                     <div>
