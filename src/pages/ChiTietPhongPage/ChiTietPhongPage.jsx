@@ -146,13 +146,28 @@ export default function ChiTietPhongPage() {
                         {/* Booking */}
                         <div className="sm:w-full lg:w-[30%] relative">
                             <div className="sticky top-1">
-                                <BookTicket
+                                <Element name="bookTicketContainer">
+                                    {
+                                        <BookTicket
+                                            thongTinChiTietPhong={
+                                                thongTinChiTietPhong
+                                            }
+                                            scrollTo={scrollTo}
+                                            commentListSize={
+                                                danhSachDanhGia.length
+                                            }
+                                            setModalAuthVisible={
+                                                setIsModalAuthOpen
+                                            }
+                                        />
+                                    }
+                                </Element>
+                                {/* <BookTicket
                                     thongTinChiTietPhong={thongTinChiTietPhong}
                                     scrollTo={scrollTo}
                                     commentListSize={danhSachDanhGia.length}
                                     setModalAuthVisible={setIsModalAuthOpen}
-                                    // roomID={id}
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>

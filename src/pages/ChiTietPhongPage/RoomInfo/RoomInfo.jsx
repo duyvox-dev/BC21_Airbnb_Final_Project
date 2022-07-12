@@ -20,7 +20,9 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
     const renderBedRoom = () => {
         const components = [];
         for (let i = 0; i < thongTinChiTietPhong.bedRoom; i++)
-            components.push(<img src={Bed} className="w-[30px] h-[30px]" />);
+            components.push(
+                <img src={Bed} className="w-[30px] h-[30px]" key={i} />
+            );
         return components;
     };
     return (

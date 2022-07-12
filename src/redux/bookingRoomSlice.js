@@ -8,7 +8,7 @@ export const bookRoom = createAsyncThunk(
         try {
             const res = await phongService.datPhong(data);
             // console.log(res);
-            message.success(res.data.message);
+            // message.success(res.data.message);
             // thunkAPI.dispatch()
             return res.data;
         } catch (err) {

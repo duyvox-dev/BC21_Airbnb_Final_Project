@@ -13,8 +13,6 @@ import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
 export default function BookTicket({
     thongTinChiTietPhong = {},
-    scrollTo = () => {},
-    commentListSize = 0,
     setModalAuthVisible = () => {},
 }) {
     const dispatch = useDispatch();
@@ -61,16 +59,13 @@ export default function BookTicket({
             };
         });
         dispatch(setCustomerInfo(customerDataWithoutIndex));
-        // console.log(totalCustomer, customerDataWithoutIndex);
     };
     const handleBooking = () => {
-        console.log({ accessToken }, { ableToBook });
         if (accessToken && ableToBook) {
             const bookingData = {
                 roomId: thongTinChiTietPhong._id,
                 ...bookingDate,
             };
-            // console.log(bookingData);
             dispatch(bookRoom(bookingData));
         } else if (!accessToken) {
             setModalAuthVisible(true);
@@ -107,16 +102,15 @@ export default function BookTicket({
                         <div className="absolute bottom-0 w-full">
                             <RangeDatePicker
                                 onChange={onDatePickerChange}
+                                defaultDate={bookingDate}
                             ></RangeDatePicker>
                         </div>
                     </div>
                     <div className="w-full p-4 border-t cursor-pointer">
-                        <div>
-                            <ChooseCustomer
-                                limit={thongTinChiTietPhong?.guests}
-                                handleChooseCustomer={handleChooseCustomer}
-                            ></ChooseCustomer>
-                        </div>
+                        <ChooseCustomer
+                            limit={thongTinChiTietPhong?.guests}
+                            handleChooseCustomer={handleChooseCustomer}
+                        ></ChooseCustomer>
                     </div>
                 </div>
                 <button
