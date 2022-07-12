@@ -13,7 +13,7 @@ export default function DanhSachPhongPage() {
 
   useEffect(() => {
     dispatch(getDanhSachPhong(id));
-  }, []);
+  }, [id]);
 
   let renderDanhSachPhong = () => {
     return danhSachPhong?.map((item, index) => {
