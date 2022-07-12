@@ -53,18 +53,18 @@ export default function LoaiHinhTienIchSliderHomePage(props) {
                 to={'/'}
                 className='text-inherit hover:text-inherit group'
             >
-                <div className='w-32'>
-                    <img className="w-8 h-8 mx-auto my-2 group-hover:scale-110" src={item.hinhAnh} />
-                    <p className="text-sm font-bold text-center mx-auto my-auto">{item.ten}</p>
+                <div className='lg:w-32 md:w-16 xs:w-16 xs:mb-2'>
+                    <img className="xs:w-5 xs:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 lg:my-2 mx-auto group-hover:scale-110" src={item.hinhAnh} />
+                    <p className="xs:text-xs xs:font-normal md:text-xs lg:text-sm font-bold text-center mx-auto my-auto">{item.ten}</p>
                 </div>
             </Link>
         })
     };
 
     return (
-        <div className="w-full mt-10 pb-5">
-            <h1 className="w-11/12 mx-auto text-2xl text-center">Các loại hình tiện ích bạn cần</h1>
-            <div className='w-11/12 mx-auto flex justify-between items-center'>
+        <div className="lg:w-full lg:mt-10 lg:pb-5 xs:-mt-6">
+            <h1 className="lg:w-11/12 lg:text-2xl mx-auto text-center">Các loại hình tiện ích bạn cần</h1>
+            <div className='lg:w-11/12 mx-auto flex justify-between items-start xs:grid xs:grid-cols-5'>
                 {renderTienIchPhong()}
             </div>
         </div>

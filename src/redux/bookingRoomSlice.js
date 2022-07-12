@@ -71,23 +71,23 @@ export const bookRoom = createAsyncThunk(
         }
     }
 );
-export const SetCustomerInfo = createAction(
-    "bookingRoom/SetCustomerInfo",
-    (customerInfo) => {
-        const countTotalCustomer = () => {
-            return customerInfo.reduce((sum, customer) => {
-                return sum + customer.soLuong;
-            }, 0);
-        };
-        const totalCus = countTotalCustomer();
-        return {
-            payload: {
-                customerInfo,
-                totalCustomer: totalCus,
-            },
-        };
-    }
-);
+// export const SetCustomerInfo = createAction(
+//     "bookingRoom/SetCustomerInfo",
+//     (customerInfo) => {
+//         const countTotalCustomer = () => {
+//             return customerInfo.reduce((sum, customer) => {
+//                 return sum + customer.soLuong;
+//             }, 0);
+//         };
+//         const totalCus = countTotalCustomer();
+//         return {
+//             payload: {
+//                 customerInfo,
+//                 totalCustomer: totalCus,
+//             },
+//         };
+//     }
+// );
 
 const bookingRoom = createSlice({
     name: "bookingRoom",
