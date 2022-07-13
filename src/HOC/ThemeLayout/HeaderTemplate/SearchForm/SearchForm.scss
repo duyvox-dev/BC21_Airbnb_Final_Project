@@ -48,20 +48,15 @@
                     @apply bg-transparent outline-none border-none;
                     @apply cursor-pointer;
                     input {
-                        @apply w-full;
-                        @apply lg:h-16 md:h-16;
-                        @apply lg:rounded-full md:rounded-full;
-                        @apply cursor-pointer;
-                        @apply text-center lg:pt-5 md:pt-5;
-                        @apply sm:border-solid sm:border sm:border-gray-200 sm:rounded-full sm:mx-2 sm:h-12;
-                        @apply xs:border-solid xs:border xs:border-gray-200 xs:rounded-full xs:mx-2 xs:h-12;
+                        @apply border-solid border border-gray-200 rounded-full mx-2 h-12 w-full text-center cursor-pointer;
+                        @apply lg:h-16 lg:rounded-full lg:pt-9 lg:border-none lg:mx-0;
+                        @apply md:h-16 md:rounded-full md:pt-7 md:border-none md:mx-0;
                         &:hover {
                             @apply lg:bg-gray-200;
                             @apply md:bg-gray-200;
                         };
                         &::placeholder {
-                            @apply sm:text-transparent;
-                            @apply xs:text-transparent;
+                            
                         };
                     };
                     .ant-picker-suffix {

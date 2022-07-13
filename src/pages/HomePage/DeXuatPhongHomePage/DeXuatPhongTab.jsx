@@ -59,59 +59,53 @@ export default function DeXuatPhongTab(props) {
                 key={index}
                 className='w-full cursor-pointer relative'
             >
-                <div className='rounded-lg hover:shadow-xl duration-300
-                lg:px-2 lg:my-2 
+                <div className='rounded-lg hover:shadow-xl duration-300 h-96 mx-2 shadow-md overflow-hidden border border-gray-200
+                lg:w-11/12 lg:my-2 lg:mx-auto lg:overflow-hidden lg:border lg:border-gray-200
                 md:w-11/12 md:mx-auto md:shadow-md md:overflow-hidden md:my-2 md:border md:border-gray-200 
-                sm:mx-2 sm:shadow-md sm:overflow-hidden sm:border sm:border-gray-200
-                xs:mx-2 xs:shadow-md xs:overflow-hidden xs:border xs:border-gray-200'>
-                    <img className="w-full lg:rounded-xl" alt={phong.name} src={phong.image} />
+                '>
+                    <img className="w-full" alt={phong.name} src={phong.image} />
                     <p
                         className="
                     bg-rose-500 text-white text-center absolute rounded-full
-                    lg:w-8 lg:h-8 lg:leading-8 lg:text-lg lg:top-5 lg:right-5
+                    lg:w-8 lg:h-8 lg:leading-8 lg:text-lg lg:top-5 lg:right-7
                     md:w-8 md:h-8 md:leading-8 md:text-lg md:top-5 md:right-8
-                    sm:w-6 sm:h-6 sm:leading-6 sm:text-base sm:top-3 sm:right-5
-                    xs:w-6 xs:h-6 xs:leading-6 xs:text-base xs:top-3 xs:right-5"
+                    w-6 h-6 leading-6 text-base top-3 right-5"
                     >
                         {phong.locationId?.valueate}
                     </p>
                     <h3
                         className="font-bold text-center
-                    lg:w-full lg:text-xl lg:mt-2
-                    md:w-full md:text-xl md:mt-2
-                    sm:w-full sm:text-xl sm:mt-2
-                    xs:w-full xs:text-xl xs:mt-2
-                    ">
+                    lg:w-full lg:text-xl lg:mt-2 lg:px-2
+                    md:w-full md:text-xl md:mt-2 md:px-2
+                    w-full text-xl mt-2 px-2">
                         {phong.name}
                     </h3>
                     <div
-                        className="flex justify-end 
-                    lg:w-full
-                    md:w-11/12 md:mx-auto md:justify-center
-                    sm:w-11/12 sm:mx-auto sm:justify-center
-                    xs:w-11/12 xs:mx-auto xs:justify-center"
+                        className="flex 
+                    lg:w-full lg:justify-end lg:px-2 lg:flex-nowrap
+                    md:w-11/12 md:mx-auto md:justify-center md:flex-wrap
+                    w-11/12 mx-auto justify-center flex-wrap"
                     >
-                        <span className="my-auto"><Rate allowHalf disabled defaultValue={diemDanhGia} /></span>
+                        <span className="w-full my-auto text-xs 
+                        md:text-center
+                        text-center"><Rate allowHalf disabled defaultValue={diemDanhGia} /></span>
                         <span
-                            className='text-blue-500 my-auto ml-3'>
+                            className='text-blue-500 text-xs w-full text-center my-2
+                            lg:ml-3 lg:text-right lg:my-0
+                            md:ml-2 md:text-center md:my-2'>
                             <FontAwesomeIcon icon={faLocationDot} /> {phong.locationId?.name}
                         </span>
                     </div>
-                    <div className="w-full">
+                    <div className="w-full absolute bottom-2
+                    lg:bottom-3 lg:right-10">
                         <p
-                            className="my-auto italic w-full
-                            lg:text-right
-                            md:text-center
-                            sm:text-center
-                            xs:text-center"
+                            className="my-auto italic w-full text-center
+                            lg:text-right"
                         >Giá rẻ nhất mỗi đêm từ
                         </p>
                         <p
-                            className="text-rose-600 w-full my-auto font-bold
-                            lg:text-lg lg:text-right
-                            md:text-lg md:text-center
-                            sm:text-lg sm:text-center
-                            xs:text-lg xs:text-center"
+                            className="text-rose-600 w-full my-auto font-bold text-lg text-center
+                            lg:text-lg lg:text-right"
                         >{phong.price?.toLocaleString()} VND
                         </p>
                     </div>
@@ -127,7 +121,7 @@ export default function DeXuatPhongTab(props) {
                     <Slider
                         ref={customSlider}
                         {...SliderSettings}
-                        className='w-full xs:p-3 sm:p-3'
+                        className='w-full p-3'
                     >
                         {renderDeXuatPhongTab()}
                     </Slider>
@@ -135,8 +129,7 @@ export default function DeXuatPhongTab(props) {
                         className="absolute text-rose-600
                         lg:left-0 lg:top-1/3 lg:text-3xl
                         md:left-0 md:top-1/2 md:text-3xl
-                        sm:left-0 sm:top-1/2 sm:text-3xl
-                        xs:left-0 xs:top-1/2 xs:text-3xl"
+                        left-0 top-1/2 text-3xl"
                         onClick={() => { goToPrevious() }}
                     >
                         <FontAwesomeIcon
@@ -147,8 +140,7 @@ export default function DeXuatPhongTab(props) {
                         className="absolute text-rose-600
                         lg:right-0 lg:top-1/3 lg:text-3xl
                         md:right-0 md:top-1/2 md:text-3xl
-                        sm:right-0 sm:top-1/2 sm:text-3xl
-                        xs:right-0 xs:top-1/2 xs:text-3xl"
+                        right-0 top-1/2 text-3xl"
                         onClick={() => { goToNext() }}
                     >
                         <FontAwesomeIcon

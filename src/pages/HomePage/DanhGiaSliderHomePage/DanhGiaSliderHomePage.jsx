@@ -72,7 +72,7 @@ export default function DanhGiaSliderHomePage(props) {
 
     return (
         <div className="w-full mt-5 pb-5 relative">
-            <h1 className="w-11/12 mx-auto text-center lg:text-2xl md:text-2xl sm:text-base xs:text-base">Tiếng lành đồn xa</h1>
+            <h1 className="w-11/12 mx-auto text-center lg:text-2xl md:text-2xl stext-base">Tiếng lành đồn xa</h1>
             {
                 danhSachDanhGia.length > 0 && <Fragment>
                     <Slider
@@ -81,8 +81,7 @@ export default function DanhGiaSliderHomePage(props) {
                         className='mx-auto
                         lg:w-9/12 
                         md:w-full 
-                        sm:w-full
-                        xs:w-full'
+                        w-full'
                     >
                         {renderDanhGiaSlider()}
                     </Slider>
@@ -92,8 +91,7 @@ export default function DanhGiaSliderHomePage(props) {
                 className="absolute text-gray-500 
                 lg:left-40 lg:top-1/2 lg:text-2xl
                 md:left-0 md:top-1/2 md:text-2xl
-                sm:left-0 sm:top-1/2 sm:text-2xl
-                xs:left-0 xs:top-1/2 xs:text-2xl"
+                left-0 top-1/2 stext-2xl"
                 onClick={() => { goToPrevious() }}
             >
                 <FontAwesomeIcon
@@ -104,8 +102,7 @@ export default function DanhGiaSliderHomePage(props) {
                 className="absolute text-gray-500
                 lg:right-40 lg:top-1/2 lg:text-2xl
                 md:right-0 md:top-1/2 md:text-2xl
-                sm:right-0 sm:top-1/2 sm:text-2xl
-                xs:right-0 xs:top-1/2 xs:text-2xl"
+                right-0 top-1/2 text-2xl"
                 onClick={() => { goToNext() }}
             >
                 <FontAwesomeIcon

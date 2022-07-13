@@ -115,22 +115,18 @@ export default function HeaderTemplate() {
     }, [ref]);
 
     return (
-        <div className="header w-full pt-5 pb-5 bg-white 
-        lg:shadow-md
-        sm:h-28 sm:flex sm:justify-center sm:bg-transparent
-        xs:h-28 xs:flex xs:justify-center xs:bg-transparent">
-            <div className="header-container mx-auto 
-            lg:grid lg:w-11/12 lg:grid-cols-12
-            md:grid md:w-11/12 md:grid-cols-12
-            sm:fixed sm:z-20 sm:top-0 sm:h-32 sm:w-full sm:px-2 sm:pt-2 sm:bg-white
-            xs:fixed xs:z-20 xs:top-0 xs:h-32 xs:w-full xs:px-2 xs:pt-2 xs:bg-white">
+        <div className="header w-full pt-5 pb-5  
+        lg:flex-none lg:shadow-md lg:h-fit lg:bg-white
+        md:flex-none md:h-fit md:bg-white
+        h-28 flex justify-center bg-transparent">
+            <div className="header-container fixed z-20 top-0 h-32 w-full px-2 pt-2 bg-white 
+            lg:grid lg:w-11/12 lg:mx-auto lg:grid-cols-12 lg:static lg:h-fit lg:px-0 lg:pt-0 lg:bg-none
+            md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none">
                 <Link to={"/"}
-                    className=' z-30 xs:w-fit sm:w-fit
-                md:w-fit md:flex md:items-center
-                lg:w-fit lg:flex lg:items-center'>
-                    <div className="cursor-pointer 
-                    xs:w-32 
-                    sm:w-32
+                    className=' z-30 w-fit
+                md:flex md:items-center
+                lg:flex lg:items-center'>
+                    <div className="cursor-pointer w-32
                     md:w-28 md:col-span-1
                     lg:w-40 lg:col-span-1">
                         <img className="w-full" src="../img/airbnb-logo3.png" />
@@ -141,19 +137,15 @@ export default function HeaderTemplate() {
                 lg:ml-10 lg:col-span-8
                 md:ml-12 md:col-span-8">
                     <div //Thanh searchInfo mini
-                        className="bg-white flex items-center justify-center rounded-full cursor-pointer border border-gray-200 shadow-md hover:shadow-lg mx-auto w-fit
-                        lg:px-2 lg:py-2
-                        md:px-2 md:py-2
-                        sm:mt-3 sm:px-1 sm:py-1
-                        xs:mt-3 xs:px-1 xs:py-1"
+                        className="mt-3 px-1 py-1 bg-white flex items-center justify-center rounded-full cursor-pointer border border-gray-200 shadow-md hover:shadow-lg mx-auto w-fit
+                        lg:px-2 lg:py-2 lg:mt-0
+                        md:px-2 md:py-2 md:mt-0"
                         onClick={handleSearchOpen}
                     >
                         <p
-                            className="my-auto font-bold 
-                            lg:pr-2 
-                            md:pr-2
-                            sm:text-center sm:text-xs sm:font-normal sm:pr-1
-                            xs:text-center xs:text-xs xs:font-normal xs:pr-1"
+                            className="my-auto text-center text-xs font-normal pr-1
+                            lg:pr-2 lg:font-bold lg:text-base
+                            md:pr-2 md:font-bold"
                         >
                             {
                                 _.trim(formik.values.bookingLocation.locationName) === '' //Kiểm tra thông tin vị trí có tồn tại không
@@ -162,11 +154,9 @@ export default function HeaderTemplate() {
                             }
                         </p>
                         <p
-                            className="my-auto border-l border-r border-gray-400 font-bold
-                            lg:px-2 
-                            md:px-2
-                            sm:text-center sm:text-xs sm:font-normal sm:px-1
-                            xs:text-center xs:text-xs xs:font-normal xs:px-1"
+                            className="my-auto border-l border-r border-gray-400 text-center text-xs font-normal px-1
+                            lg:px-2 lg:font-bold lg:text-base
+                            md:px-2 md:font-bold"
                         >
                             {
                                 formik.values.bookingDate.checkIn !== null && formik.values.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
@@ -177,11 +167,9 @@ export default function HeaderTemplate() {
                             }
                         </p>
                         <p
-                            className="my-auto font-bold
-                            lg:px-2 
-                            md:px-2
-                            sm:text-center sm:text-xs sm:font-normal sm:px-1
-                            xs:text-center xs:text-xs xs:font-normal xs:px-1"
+                            className="my-auto text-center text-xs font-normal px-1
+                            lg:px-2 lg:font-bold lg:text-base
+                            md:px-2 md:font-bold"
                         >
                             {
                                 formik.values.totalCustomer === 0
@@ -199,24 +187,26 @@ export default function HeaderTemplate() {
                         </button>
                     </div>
                 </div>
-                <div className="z-30 xs:absolute xs:top-2 xs:right-2
-                sm:absolute sm:top-2 sm:right-2
-                lg:flex lg:justify-end lg:items-center lg:col-span-3 
-                md:flex md:justify-end md:items-center md:col-span-3">
-                    <div className="md:hidden xs:hidden sm:hidden">
+                <div className="z-30 absolute top-2 right-2
+                lg:flex lg:justify-end lg:items-center lg:col-span-3 lg:static
+                md:flex md:justify-end md:items-center md:col-span-3 md:static">
+                    <div className="absolute -z-20 lg:static">
                         <button
                             type="button"
-                            className="bg-inherit border-none cursor-pointer rounded-full hover:bg-gray-100
+                            className="bg-inherit text-transparent border-none cursor-pointer rounded-full
                             md:w-36 md:text-xs
-                            lg:text-base lg:px-4 lg:h-10"
+                            lg:w-fit lg:text-base lg:px-4 lg:h-10 lg:text-black lg:hover:bg-gray-100"
                         >
                             Trở thành chủ nhà
                         </button>
                     </div>
-                    <div className="mx-3 xs:hidden sm:hidden">
-                        <button className="bg-inherit border-none cursor-pointer rounded-full hover:bg-gray-100 
+                    <div className="mx-3 absolute -z-20 lg:static">
+                        <button className="bg-inherit border-none cursor-pointer rounded-full 
+                        lg:hover:bg-gray-100
                         text-base w-10 h-10">
-                            <FontAwesomeIcon icon={faGlobe} />
+                            <FontAwesomeIcon
+                                className="text-transparent lg:text-black"
+                                icon={faGlobe} />
                         </button>
                     </div>
                     <div>
@@ -257,16 +247,11 @@ export default function HeaderTemplate() {
                 isSearchOpen
                     ? <div className="w-full absolute z-20 top-0">
                         <div className="bg-black/30 fixed inset-0 z-20" ref={ref} />
-                        <div className="w-full h-fit bg-white absolute z-20
-                        lg:pb-10
-                        md:pb-5
-                        sm:pb-5
-                        xs:pb-5">
-                            <div className="mx-auto
+                        <div className="w-full h-fit bg-white absolute z-20 pb-5
+                        lg:pb-10">
+                            <div className="mx-auto w-11/12
                             lg:w-6/12 
-                            md:w-11/12 md:mt-5
-                            sm:w-11/12
-                            xs:w-11/12">
+                            md:mt-5">
                                 <SearchForm
                                     ThongTinTimPhong={ThongTinTimPhong}
                                 />

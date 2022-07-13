@@ -68,11 +68,10 @@ export default function ThongTinCaNhanPage(props) {
     <div className='mx-auto 
     lg:w-10/12 lg:my-5 lg:grid lg:grid-cols-12
     md:w-11/12 md:my-5 md:grid md:grid-cols-12
-    sm:w-11/12 sm:mt-5
-    xs:w-11/12 xs:mt-5'>
+    w-11/12 mt-5'>
       <div className='lg:col-span-3 
       md:col-span-4
-      xs:w-full'>
+      w-full'>
         <div className='mx-auto bg-white
         lg:w-11/12 lg:p-5 lg:border lg:border-gray-300 lg:rounded-2xl
         md:w-11/12 md:p-5 md:border md:border-gray-300 md:rounded-2xl'>
@@ -83,19 +82,17 @@ export default function ThongTinCaNhanPage(props) {
               className='mx-auto rounded-full
               lg:w-36 lg:h-36
               md:w-36 md:h-36
-              sm:w-40 sm:h-40
-              xs:w-40 xs:h-40'
+              w-40 h-40'
             />
             <form
               onSubmit={formik.handleSubmit}
               className='w-full 
               lg:h-14 lg:flex lg:flex-wrap lg:justify-center lg:my-2 lg:relative
               md:h-14 md:flex md:flex-wrap md:justify-center md:my-2 md:relative
-              sm:w-full sm:h-16 sm:flex sm:flex-wrap sm:justify-center
-              xs:w-full xs:h-16 xs:flex xs:flex-wrap xs:justify-center'>
+              h-16 flex flex-wrap justify-center'>
               <label
                 for="upload-photo"
-                className='w-full cursor-pointer text-center underline font-bold lg:h-5 md:h-5'
+                className='w-full h-fit cursor-pointer text-center underline font-bold lg:h-5 md:h-5'
               >
                 Cập nhật ảnh đại diện
               </label>
@@ -112,8 +109,7 @@ export default function ThongTinCaNhanPage(props) {
                     className='bg-rose-500 text-white font-bold rounded-lg 
                     lg:py-1 lg:px-2 lg:text-sm lg:absolute lg:bottom-0
                     md:py-1 md:px-2 md:text-sm md:absolute md:bottom-0
-                    sm:py-1 sm:px-2 sm:mt-2
-                    xs:py-1 xs:px-2 xs:mt-2'
+                    py-1 px-2 mt-2'
                   >
                     Upload
                   </button>
@@ -121,12 +117,11 @@ export default function ThongTinCaNhanPage(props) {
               }
             </form>
           </div>
-          <div className='xs:mt-5 sm:mt-5'>
-            <div className='xs:w-11/12 xs:mx-auto
-            sm:w-11/12 sm:mx-auto'>
+          <div className='mt-5'>
+            <div className='w-11/12 mx-auto'>
               <img
                 src={xacMinhDanhTinhIcon}
-                className='lg:w-8 md:w-5 xs:w-8 sm:w-8'
+                className='lg:w-8 md:w-5 w-8'
               />
               <h2 className='font-bold lg:text-xl md:text-sm'>
                 Xác minh danh tính
@@ -137,17 +132,15 @@ export default function ThongTinCaNhanPage(props) {
               <button className='border border-gray-800 rounded-lg font-bold hover:bg-gray-200
             lg:py-2 lg:px-4
             md:py-2 md:px-4
-            sm:py-1 sm:px-2
-            xs:py-1 xs:px-2'>
+            py-1 px-2'>
                 Nhận huy hiệu
               </button>
             </div>
 
             <div className='lg:mt-5 lg:pt-5 lg:border-t lg:border-t-gray-300
           md:mt-5 md:pt-5 md:border-t md:border-t-gray-300
-          sm:w-11/12 sm:mx-auto sm:mt-2
-          xs:w-11/12 xs:mx-auto xs:mt-2'>
-              <p className='font-bold lg:text-xl md:text-sm sm:my-auto xs:my-auto'>{thongTinNguoiDung.name} đã xác nhận</p>
+          w-11/12 mx-auto mt-2'>
+              <p className='font-bold lg:text-xl md:text-sm my-auto'>{thongTinNguoiDung.name} đã xác nhận</p>
               <span><FontAwesomeIcon icon={faCheck} /></span> <span>Địa chỉ email</span>
             </div>
           </div>
@@ -155,30 +148,26 @@ export default function ThongTinCaNhanPage(props) {
       </div>
       <div className='lg:col-span-9
       md:col-span-8
-      sm:w-full sm:my-5
-      xs:w-full xs:my-5'>
+      w-full my-5'>
         <div className='w-full lg:p-2
         md:p-2'>
           <div className='w-full lg:mb-10
           md:mb-10'>
             <h1 className='font-bold my-auto lg:text-4xl
             md:text-2xl
-            sm:text-2xl sm:text-center
-            xs:text-2xl xs:text-center'>
+            text-2xl text-center'>
               Xin chào, tôi là {thongTinNguoiDung.name}
             </h1>
             <p className='text-gray-500 my-auto lg:text-base 
             md:text-base
-            sm:text-center
-            xs:text-center'>
+            text-center'>
               Bắt đầu tham gia vào 2022
             </p>
             <p
               className='underline cursor-pointer my-auto font-bold hover:text-gray-500
               lg:text-base lg:mt-2
               md:text-base md:mt-2
-              sm:mt-2 sm:text-center
-              xs:mt-2 xs:text-center'
+              mt-2 text-center'
               onClick={() => { handleHienThiChinhSuaThongTin() }}
             >
               Xem hồ sơ thông tin cá nhân
@@ -188,7 +177,7 @@ export default function ThongTinCaNhanPage(props) {
               : <Fragment />
             }
           </div>
-          <div className='xs:flex xs:justify-between xs:mt-5'>
+          <div className='flex justify-between mt-5'>
             <div className='w-full 
           lg:mb-10 lg:pb-5 lg:border-b lg:border-b-gray-300
           md:mb-10 md:pb-5 md:border-b md:border-b-gray-300
@@ -196,8 +185,7 @@ export default function ThongTinCaNhanPage(props) {
               <FontAwesomeIcon icon={faStar} className='lg:mb-1 md:mb-1' /> <span
                 className='font-bold my-auto lg:text-2xl 
                 md:text-2xl 
-                sm:text-center
-                xs:text-center'>
+                text-center'>
                 0 đánh giá
               </span>
             </div>
@@ -208,8 +196,7 @@ export default function ThongTinCaNhanPage(props) {
               <p className='underline cursor-pointer font-bold my-auto hover:text-gray-500
             lg:text-base
             md:text-base
-            sm:text-center
-            xs:text-center'>
+            text-center'>
                 Đánh giá của bạn
               </p>
             </div>
