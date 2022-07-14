@@ -7,15 +7,20 @@ import phongSlice from "./phongSlice";
 import viTriSlice from "./viTriSlice";
 import chiTietPhongSlice from "./chiTietPhongSlice";
 import bookingRoomSlice from "./bookingRoomSlice";
+import pageSlice from "./pageSlice";
 export const store = configureStore({
     reducer: {
         viTriSlice: viTriSlice,
         phongSlice: phongSlice,
         danhGiaSlice: danhGiaSlice,
         nguoiDungSlice: nguoiDungSlice,
+        pageSlice: pageSlice,
         bookingRoomSlice,
         authSlice,
         danhSachPhongSlice,
         chiTietPhongSlice,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    }),
 });
