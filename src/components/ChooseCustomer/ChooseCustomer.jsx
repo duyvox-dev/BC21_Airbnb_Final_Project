@@ -7,27 +7,27 @@ export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
     let danhSachLoaiKhach = [
         {
             index: 0,
-            ten: "Người lớn",
-            moTa: "Từ 13 tuổi trở lên",
-            soLuong: 0,
+            customerType: "Người lớn",
+            description: "Từ 13 tuổi trở lên",
+            quantity: 0,
         },
         {
             index: 1,
-            ten: "Trẻ em",
-            moTa: "Độ tuổi 2 - 12",
-            soLuong: 0,
+            customerType: "Trẻ em",
+            description: "Độ tuổi 2 - 12",
+            quantity: 0,
         },
         {
             index: 2,
-            ten: "Em bé",
-            moTa: "Dưới 2 tuổi",
-            soLuong: 0,
+            customerType: "Em bé",
+            description: "Dưới 2 tuổi",
+            quantity: 0,
         },
         {
             index: 3,
-            ten: "Thú cưng",
-            moTa: "Mang theo động vật cần được phục vụ?",
-            soLuong: 0,
+            customerType: "Thú cưng",
+            description: "Mang theo động vật cần được phục vụ?",
+            quantity: 0,
         },
     ];
     const [customerList, setCustomerList] = useState(danhSachLoaiKhach);
@@ -36,21 +36,21 @@ export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
     // const [customerQuantity]
     const incQuantity = (index) => {
         const newCustomerList = [...customerList];
-        newCustomerList[index].soLuong += 1;
+        newCustomerList[index].quantity += 1;
         setCustomerList(newCustomerList);
     };
     const decQuantity = (index) => {
         const newCustomerList = [...customerList];
 
-        newCustomerList[index].soLuong = Math.max(
+        newCustomerList[index].quantity = Math.max(
             0,
-            newCustomerList[index].soLuong - 1
+            newCustomerList[index].quantity - 1
         );
         setCustomerList(newCustomerList);
     };
     const countTotalCustomer = () => {
         return customerList.reduce((sum, customer) => {
-            return sum + customer.soLuong;
+            return sum + customer.quantity;
         }, 0);
     };
 

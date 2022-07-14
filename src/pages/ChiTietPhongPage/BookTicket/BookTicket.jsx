@@ -8,6 +8,7 @@ import {
     setCustomerInfo,
     setBookingStatus,
     bookRoom,
+    setTotalCustomer,
 } from "../../../redux/bookingRoomSlice";
 import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
@@ -53,12 +54,13 @@ export default function BookTicket({
         setTotalCustomers(totalCustomer);
         const customerDataWithoutIndex = customerList.map((customerItem) => {
             return {
-                ten: customerItem.ten,
-                moTa: customerItem.moTa,
-                soLuong: customerItem.soLuong,
+                customerType: customerItem.customerType,
+                description: customerItem.description,
+                quantity: customerItem.quantity,
             };
         });
         dispatch(setCustomerInfo(customerDataWithoutIndex));
+        dispatch(setTotalCustomer(totalCustomer));
     };
     const handleBooking = () => {
         if (accessToken && ableToBook) {

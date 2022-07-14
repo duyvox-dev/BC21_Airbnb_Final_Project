@@ -10,8 +10,10 @@ export default function ChooseCustomerItem({
         <div>
             <div className="flex justify-between items-center cursor-default">
                 <div className="w-1/2">
-                    <h4 className="font-semibold text-lg m-0">{data.ten}</h4>
-                    <span className="text-gray-500">{data.moTa}</span>
+                    <h4 className="font-semibold text-lg m-0">
+                        {data.customerType}
+                    </h4>
+                    <span className="text-gray-500">{data.description}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <button
@@ -27,7 +29,7 @@ export default function ChooseCustomerItem({
                     >
                         <span>-</span>
                     </button>
-                    <span>{data.soLuong}</span>
+                    <span>{data.quantity}</span>
                     <button
                         className={`w-[30px] h-[30px] text-lg border border-slate-300 rounded-full flex justify-center items-center ${
                             disabled == "inc"
