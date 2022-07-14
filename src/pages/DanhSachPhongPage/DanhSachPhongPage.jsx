@@ -1,18 +1,22 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDanhSachPhong } from "../../redux/danhSachPhongSlice";
+import { getDanhSachPhong, getIdCurrent } from "../../redux/danhSachPhongSlice";
 import { Link } from "react-router-dom";
 import ModalChonPhong from "./ModalChonPhong";
 
 export default function DanhSachPhongPage() {
   const { danhSachPhong } = useSelector((state) => state.danhSachPhongSlice);
+  const { totalCustomer } = useSelector((state) => state.bookingRoomSlice);
 
   let { id } = useParams();
   let dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getDanhSachPhong(id));
+  }, [id, totalCustomer]);
+  useEffect(() => {
+    dispatch(getIdCurrent(id));
   }, [id]);
 
   let renderDanhSachPhong = () => {

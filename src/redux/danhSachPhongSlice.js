@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { message } from "antd";
 import _ from "lodash";
+import { localSearchStorageService } from "../services/localService";
 import { phongService } from "../services/phongService";
 import {
   arrConvenient,
@@ -35,6 +36,7 @@ let initialState = {
     { name: bath, value: 0 },
   ],
   valueButton: [],
+  idCurrent: null,
 };
 
 export const getDanhSachPhong = createAsyncThunk(
@@ -42,7 +44,19 @@ export const getDanhSachPhong = createAsyncThunk(
   async (idViTri, thunkAPI) => {
     try {
       let result = await phongService.layDanhSachPhongTuViTri(idViTri);
-      return result.data;
+      let dataUpdate = null;
+      if (
+        thunkAPI.getState().bookingRoomSlice.bookingLocation.idLocation ===
+        thunkAPI.getState().danhSachPhongSlice.idCurrent
+      ) {
+        dataUpdate = result.data.filter(
+          (item) =>
+            item.guests >= thunkAPI.getState().bookingRoomSlice.totalCustomer
+        );
+      } else {
+        dataUpdate = result.data;
+      }
+      return dataUpdate;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue();
@@ -54,6 +68,9 @@ const danhSachPhongSlice = createSlice({
   name: "danhSachPhongSlice",
   initialState,
   reducers: {
+    getIdCurrent: (state, { payload }) => {
+      state.idCurrent = payload;
+    },
     // reducer trong khoảng giá
     handleChangePercent: (state, { payload }) => {
       let valueInputUpdate = 0;
@@ -253,7 +270,7 @@ export const handleValueButton = createAction(
   }
 );
 
-export const { handleSearchRoomList, deleteAllSearchRoomList } =
+export const { handleSearchRoomList, deleteAllSearchRoomList, getIdCurrent } =
   danhSachPhongSlice.actions;
 
 export default danhSachPhongSlice.reducer;
