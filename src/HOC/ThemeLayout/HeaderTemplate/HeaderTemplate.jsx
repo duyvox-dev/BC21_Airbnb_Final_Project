@@ -1,6 +1,10 @@
 import { Popover, Menu } from "antd";
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
-import { faBars, faGlobe, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+    faBars,
+    faGlobe,
+    faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,15 +15,19 @@ import MenuItem from "antd/lib/menu/MenuItem";
 import { dangXuat } from "../../../redux/authSlice";
 import { selectThongTinTimPhong } from "../../../redux/bookingRoomSlice";
 import moment from "moment";
-import _ from 'lodash';
+import _ from "lodash";
 import { useFormik } from "formik";
 import SearchForm from "./SearchForm/SearchForm";
-import { closeSearchInput, openSearchInput, selectIsSearchInputOpen } from "../../../redux/pageSlice";
+import {
+    closeSearchInput,
+    openSearchInput,
+    selectIsSearchInputOpen,
+} from "../../../redux/pageSlice";
 
 export default function HeaderTemplate() {
-  const { userLogin } = useSelector((state) => state.authSlice);
-  let dispatch = useDispatch();
-  let navigate = useNavigate();
+    const { userLogin } = useSelector((state) => state.authSlice);
+    let dispatch = useDispatch();
+    let navigate = useNavigate();
 
     //Lấy thông tin tìm phòng của người dùng từ localSearchStorage
     let ThongTinTimPhong = useSelector(selectThongTinTimPhong);
@@ -88,12 +96,22 @@ export default function HeaderTemplate() {
             totalCustomer: ThongTinTimPhong.totalCustomer,
         },
     });
-    useEffect(() => { //Re-render thanh searchInfo mini mỗi khi khách chọn lại thông tin
-        formik.setFieldValue('bookingLocation.locationName', ThongTinTimPhong.bookingLocation.locationName);
-        formik.setFieldValue('bookingDate.checkIn', ThongTinTimPhong.bookingDate.checkIn);
-        formik.setFieldValue('bookingDate.checkOut', ThongTinTimPhong.bookingDate.checkOut);
-        formik.setFieldValue('totalCustomer', ThongTinTimPhong.totalCustomer);
-    }, [ThongTinTimPhong])
+    useEffect(() => {
+        //Re-render thanh searchInfo mini mỗi khi khách chọn lại thông tin
+        formik.setFieldValue(
+            "bookingLocation.locationName",
+            ThongTinTimPhong.bookingLocation.locationName
+        );
+        formik.setFieldValue(
+            "bookingDate.checkIn",
+            ThongTinTimPhong.bookingDate.checkIn
+        );
+        formik.setFieldValue(
+            "bookingDate.checkOut",
+            ThongTinTimPhong.bookingDate.checkOut
+        );
+        formik.setFieldValue("totalCustomer", ThongTinTimPhong.totalCustomer);
+    }, [ThongTinTimPhong]);
 
     //State điều khiển hiển thị thanh searchForm
     let isSearchOpen = useSelector(selectIsSearchInputOpen);
@@ -102,7 +120,7 @@ export default function HeaderTemplate() {
             dispatch(closeSearchInput());
         } else {
             dispatch(openSearchInput());
-        };
+        }
     };
     const ref = useRef();
     useEffect(() => {
@@ -111,31 +129,40 @@ export default function HeaderTemplate() {
                 dispatch(closeSearchInput());
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
     }, [ref]);
 
     return (
-        <div className="header w-full pt-5 pb-5  
+        <div
+            className="header w-full pt-5 pb-5  
         lg:flex-none lg:shadow-md lg:h-fit lg:bg-white
         md:flex-none md:h-fit md:bg-white
-        h-28 flex justify-center bg-transparent">
-            <div className="header-container fixed z-20 top-0 h-32 w-full px-2 pt-2 bg-white 
+        h-28 flex justify-center bg-transparent"
+        >
+            <div
+                className="header-container fixed z-20 top-0 h-32 w-full px-2 pt-2 bg-white 
             lg:grid lg:w-11/12 lg:mx-auto lg:grid-cols-12 lg:static lg:h-fit lg:px-0 lg:pt-0 lg:bg-none
-            md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none">
-                <Link to={"/"}
-                    className=' z-30 w-fit
+            md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none"
+            >
+                <Link
+                    to={"/"}
+                    className=" z-30 w-fit
                 md:flex md:items-center
-                lg:flex lg:items-center'>
-                    <div className="cursor-pointer w-32
+                lg:flex lg:items-center"
+                >
+                    <div
+                        className="cursor-pointer w-32
                     md:w-28 md:col-span-1
-                    lg:w-40 lg:col-span-1">
+                    lg:w-40 lg:col-span-1"
+                    >
                         <img className="w-full" src="../img/airbnb-logo3.png" />
                     </div>
                 </Link>
                 <div
                     className="search-bar-container w-full 
                 lg:ml-10 lg:col-span-8
-                md:ml-12 md:col-span-8">
+                md:ml-12 md:col-span-8"
+                >
                     <div //Thanh searchInfo mini
                         className="mt-3 px-1 py-1 bg-white flex items-center justify-center rounded-full cursor-pointer border border-gray-200 shadow-md hover:shadow-lg mx-auto w-fit
                         lg:px-2 lg:py-2 lg:mt-0
@@ -147,39 +174,41 @@ export default function HeaderTemplate() {
                             lg:pr-2 lg:font-bold lg:text-base
                             md:pr-2 md:font-bold"
                         >
-                            {
-                                _.trim(formik.values.bookingLocation.locationName) === '' //Kiểm tra thông tin vị trí có tồn tại không
-                                    ? 'Địa điểm bất kỳ'
-                                    : formik.values.bookingLocation.locationName
-                            }
+                            {_.trim(
+                                formik.values.bookingLocation.locationName
+                            ) === "" //Kiểm tra thông tin vị trí có tồn tại không
+                                ? "Địa điểm bất kỳ"
+                                : formik.values.bookingLocation.locationName}
                         </p>
                         <p
                             className="my-auto border-l border-r border-gray-400 text-center text-xs font-normal px-1
                             lg:px-2 lg:font-bold lg:text-base
                             md:px-2 md:font-bold"
                         >
-                            {
-                                formik.values.bookingDate.checkIn !== null && formik.values.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
-                                    ? _.trim(formik.values.bookingDate.checkIn) === 'NaN' && _.trim(formik.values.bookingDate.checkOut) === 'NaN' //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
-                                        ? 'Thời gian bất kỳ'
-                                        : `Ngày ${moment(formik.values.bookingDate.checkIn).format('DD/MM')} - ${moment(formik.values.bookingDate.checkOut).format('DD/MM')}` //Nếu thời gian nhận phòng và trả phòng khác tháng
-                                    : 'Thời gian bất kỳ'
-                            }
+                            {formik.values.bookingDate.checkIn !== null &&
+                            formik.values.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
+                                ? _.trim(formik.values.bookingDate.checkIn) ===
+                                      "NaN" &&
+                                  _.trim(formik.values.bookingDate.checkOut) ===
+                                      "NaN" //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
+                                    ? "Thời gian bất kỳ"
+                                    : `Ngày ${moment(
+                                          formik.values.bookingDate.checkIn
+                                      ).format("DD/MM")} - ${moment(
+                                          formik.values.bookingDate.checkOut
+                                      ).format("DD/MM")}` //Nếu thời gian nhận phòng và trả phòng khác tháng
+                                : "Thời gian bất kỳ"}
                         </p>
                         <p
                             className="my-auto text-center text-xs font-normal px-1
                             lg:px-2 lg:font-bold lg:text-base
                             md:px-2 md:font-bold"
                         >
-                            {
-                                formik.values.totalCustomer === 0
-                                    ? 'Thêm khách'
-                                    : `${formik.values.totalCustomer} khách`
-                            }
+                            {formik.values.totalCustomer === 0
+                                ? "Thêm khách"
+                                : `${formik.values.totalCustomer} khách`}
                         </p>
-                        <button
-                            className="bg-rose-500 text-white rounded-full flex items-center justify-center w-9 h-9"
-                        >
+                        <button className="bg-rose-500 text-white rounded-full flex items-center justify-center w-9 h-9">
                             <FontAwesomeIcon
                                 className="pointer-events-none"
                                 icon={faMagnifyingGlass}
@@ -187,9 +216,11 @@ export default function HeaderTemplate() {
                         </button>
                     </div>
                 </div>
-                <div className="z-30 absolute top-2 right-2
+                <div
+                    className="z-30 absolute top-2 right-2
                 lg:flex lg:justify-end lg:items-center lg:col-span-3 lg:static
-                md:flex md:justify-end md:items-center md:col-span-3 md:static">
+                md:flex md:justify-end md:items-center md:col-span-3 md:static"
+                >
                     <div className="absolute -z-20 lg:static">
                         <button
                             type="button"
@@ -201,12 +232,15 @@ export default function HeaderTemplate() {
                         </button>
                     </div>
                     <div className="mx-3 absolute -z-20 lg:static">
-                        <button className="bg-inherit border-none cursor-pointer rounded-full 
+                        <button
+                            className="bg-inherit border-none cursor-pointer rounded-full 
                         lg:hover:bg-gray-100
-                        text-base w-10 h-10">
+                        text-base w-10 h-10"
+                        >
                             <FontAwesomeIcon
                                 className="text-transparent lg:text-black"
-                                icon={faGlobe} />
+                                icon={faGlobe}
+                            />
                         </button>
                     </div>
                     <div>
@@ -243,206 +277,25 @@ export default function HeaderTemplate() {
                     </div>
                 </div>
             </div>
-            {
-                isSearchOpen
-                    ? <div className="w-full absolute z-20 top-0">
-                        <div className="bg-black/30 fixed inset-0 z-20" ref={ref} />
-                        <div className="w-full h-fit bg-white absolute z-20 pb-5
-                        lg:pb-10">
-                            <div className="mx-auto w-11/12
+            {isSearchOpen ? (
+                <div className="w-full absolute z-20 top-0">
+                    <div className="bg-black/30 fixed inset-0 z-20" ref={ref} />
+                    <div
+                        className="w-full h-fit bg-white absolute z-20 pb-5
+                        lg:pb-10"
+                    >
+                        <div
+                            className="mx-auto w-11/12
                             lg:w-6/12 
-                            md:mt-5">
-                                <SearchForm
-                                    ThongTinTimPhong={ThongTinTimPhong}
-                                />
-                            </div>
+                            md:mt-5"
+                        >
+                            <SearchForm ThongTinTimPhong={ThongTinTimPhong} />
                         </div>
                     </div>
-                    : <Fragment />
-            }
-        </div>
-      );
-    });
-  };
-
-  const renderTongSoLuongKhach = datPhong.khach.reduce((total, item) => {
-    return (total += item.soLuong);
-  }, 0);
-
-  const contentLoaitKhach = <div className="w-full">{renderLoaiKhach()}</div>;
-
-  let handleLogout = () => {
-    dispatch(dangXuat());
-    navigate("/");
-  };
-
-  const contentMenuBar = (
-    <Menu className="w-52">
-      {userLogin ? (
-        <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-          <Link to={`/user/${userLogin._id}`}>Tài khoản</Link>
-        </MenuItem>
-      ) : (
-        <>
-          <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-            <Link to={"/register"}>Đăng ký</Link>
-          </MenuItem>
-          <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-            <Link to={"/login"}>Đăng nhập</Link>
-          </MenuItem>
-        </>
-      )}
-      <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-        <Link to={"/"}>Cho thuê nhà</Link>
-      </MenuItem>
-      <MenuItem className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300">
-        <Link to={"/"}>Tổ chức trải nghiệm</Link>
-      </MenuItem>
-      {userLogin ? (
-        <MenuItem
-          onClick={() => handleLogout()}
-          className="w-full text-base border-solid border-0 border-b border-b-neutral-300 pb-2 hover:bg-neutral-300"
-        >
-          Đăng xuất
-        </MenuItem>
-      ) : (
-        ""
-      )}
-    </Menu>
-  );
-
-  const handleSearch = () => {
-    console.log(datPhong);
-    if (datPhong.idViTri.trim() !== "") {
-      localSearchStorageService.setSearchInfoLocal(datPhong);
-      navigate(`/search/${datPhong.idViTri}`);
-    } else {
-      message.error("Vui lòng chọn địa điểm bạn muốn tìm phòng");
-    }
-  };
-
-  return (
-    <div className="header w-full pt-5 pb-5 bg-white shadow-md">
-      <div className="header-container w-11/12 mx-auto grid grid-cols-12">
-        <Link to={"/"}>
-          <div className="col-span-1 cursor-pointer">
-            <img className="w-full" src="../img/airbnb-logo3.png" />
-          </div>
-        </Link>
-        <div className="search-bar-container col-span-8 w-full ml-10">
-          <Tabs defaultActiveKey="1" centered>
-            <TabPane tab="Chỗ ở" key="1">
-              <div className="search-bar-container">
-                <div className="search-bar-inner w-full grid grid-cols-12 bg-gray-100 rounded-full border-solid border border-neutral-300">
-                  <Popover
-                    className="location-input-block col-span-5 h-16 rounded-full px-5 py-2 cursor-pointer"
-                    content={contentViTri}
-                    title="Tìm kiếm phòng theo khu vực"
-                    trigger="focus"
-                  >
-                    <label className="location-input-name w-full font-bold pointer-events-none">
-                      Địa điểm
-                    </label>
-                    <input
-                      value={datPhong.tenViTri}
-                      className="location-input w-full bg-transparent border-none focus:outline-none"
-                      placeholder="Tìm kiếm phòng theo khu vực"
-                    />
-                  </Popover>
-                  <div className="date-input-block col-span-4 h-16 bg-transparent cursor-pointer flex flex-row flex-wrap items-stretch relative">
-                    <div className="date-input-item w-6/12 py-2 relative">
-                      <span className="date-input-name w-full absolute z-20 font-bold flex items-start justify-center pointer-events-none">
-                        Nhận phòng
-                      </span>
-                    </div>
-                    <div className="date-input-item w-6/12 py-2 relative">
-                      <span className="date-input-name w-full absolute z-20 font-bold flex items-start justify-center pointer-events-none">
-                        Trả phòng
-                      </span>
-                    </div>
-                    <RangePicker
-                      className="date-picker-container"
-                      format={dateFormat}
-                      onChange={onChangeDatePicker}
-                    />
-                  </div>
-                  <div className="col-span-3 h-16 px-2 rounded-full flex justify-between cursor-pointer hover:bg-gray-200">
-                    <Popover
-                      overlayClassName="rounded-lg"
-                      className="pl-3 py-2 w-full bg-transparent border-none"
-                      content={contentLoaitKhach}
-                      trigger="click"
-                    >
-                      <label className="w-full font-bold pointer-events-none">
-                        Khách
-                      </label>
-                      {renderTongSoLuongKhach > 0 ? (
-                        <p className="w-full text-gray-800 pointer-events-none">
-                          {renderTongSoLuongKhach} khách
-                        </p>
-                      ) : (
-                        <p className="w-full text-gray-400 pointer-events-none">
-                          Chọn khách
-                        </p>
-                      )}
-                    </Popover>
-                    <button
-                      className="rounded-full w-14 h-12 my-auto border-none bg-rose-500 text-white cursor-pointer z-50 active:bg-rose-700 active:shadow-lg"
-                      onClick={() => {
-                        handleSearch();
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        className="pointer-events-none"
-                        icon={faMagnifyingGlass}
-                      />
-                    </button>
-                  </div>
                 </div>
-              </div>
-            </TabPane>
-            <TabPane tab="Trải nghiệm" key="2">
-              Trải nghiệm
-            </TabPane>
-          </Tabs>
+            ) : (
+                <Fragment />
+            )}
         </div>
-        <div className="col-span-3 flex justify-end">
-          <div>
-            <button
-              type="button"
-              className="bg-inherit border-none cursor-pointer text-base px-4 h-10 rounded-full hover:bg-gray-100"
-            >
-              Trở thành chủ nhà
-            </button>
-          </div>
-          <div className="mx-3">
-            <button className="bg-inherit border-none cursor-pointer text-base w-10 h-10 rounded-full hover:bg-gray-100">
-              <FontAwesomeIcon icon={faGlobe} />
-            </button>
-          </div>
-          <div>
-            <Popover
-              className="w-20 h-10 rounded-full cursor-pointer flex justify-between pl-3 pr-1 items-center bg-white border-solid border border-neutral-300 hover:shadow-lg"
-              content={<a onClick={hide}>{contentMenuBar}</a>}
-              trigger="click"
-              visible={visible}
-              onVisibleChange={handleVisibleChange}
-            >
-              <FontAwesomeIcon className="text-base" icon={faBars} />
-              {userLogin ? (
-                <img
-                  style={{ width: 35, height: 35 }}
-                  className="rounded-full"
-                  src={userLogin.avatar ? userLogin.avatar : userPic}
-                  alt="user-avatar"
-                />
-              ) : (
-                <FontAwesomeIcon className="text-3xl" icon={faCircleUser} />
-              )}
-            </Popover>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
