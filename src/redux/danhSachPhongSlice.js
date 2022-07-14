@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { message } from "antd";
 import _ from "lodash";
 import { phongService } from "../services/phongService";
+import { viTriService } from "../services/viTriService";
 import {
   arrConvenient,
   bath,
@@ -16,6 +17,7 @@ import {
 } from "../utils/danhSachPhong.util";
 
 let initialState = {
+  infoLocationDetail: null,
   danhSachPhong: [],
   dataSave: [],
   averagePrice: 0,
@@ -35,14 +37,39 @@ let initialState = {
     { name: bath, value: 0 },
   ],
   valueButton: [],
+  idCurrent: null,
 };
+
+export const getViTriChiTiet = createAsyncThunk(
+  "danhSachPhongSlice/fetchViTriChiTiet",
+  async (id, thunkAPI) => {
+    try {
+      let result = await viTriService.layThongTinChiTietViTri(id);
+      return result.data;
+    } catch {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
 
 export const getDanhSachPhong = createAsyncThunk(
   "danhSachPhongSlice/fetchGetDataPhong",
   async (idViTri, thunkAPI) => {
     try {
       let result = await phongService.layDanhSachPhongTuViTri(idViTri);
-      return result.data;
+      let dataUpdate = null;
+      if (
+        thunkAPI.getState().bookingRoomSlice.bookingLocation.idLocation ===
+        thunkAPI.getState().danhSachPhongSlice.idCurrent
+      ) {
+        dataUpdate = result.data.filter(
+          (item) =>
+            item.guests >= thunkAPI.getState().bookingRoomSlice.totalCustomer
+        );
+      } else {
+        dataUpdate = result.data;
+      }
+      return dataUpdate;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue();
@@ -54,6 +81,9 @@ const danhSachPhongSlice = createSlice({
   name: "danhSachPhongSlice",
   initialState,
   reducers: {
+    getIdCurrent: (state, { payload }) => {
+      state.idCurrent = payload;
+    },
     // reducer trong khoảng giá
     handleChangePercent: (state, { payload }) => {
       let valueInputUpdate = 0;
@@ -215,6 +245,12 @@ const danhSachPhongSlice = createSlice({
     [getDanhSachPhong.pending]: (state) => {
       state.danhSachPhong = [];
     },
+    [getViTriChiTiet.fulfilled]: (state, { payload }) => {
+      state.infoLocationDetail = payload;
+    },
+    [getViTriChiTiet.pending]: (state) => {
+      state.infoLocationDetail = {};
+    },
   },
 });
 
@@ -253,7 +289,7 @@ export const handleValueButton = createAction(
   }
 );
 
-export const { handleSearchRoomList, deleteAllSearchRoomList } =
+export const { handleSearchRoomList, deleteAllSearchRoomList, getIdCurrent } =
   danhSachPhongSlice.actions;
 
 export default danhSachPhongSlice.reducer;
