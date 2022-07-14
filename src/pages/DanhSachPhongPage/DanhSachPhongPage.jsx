@@ -72,7 +72,7 @@ export default function DanhSachPhongPage() {
     });
   };
 
-  document.title = `Airbnb - ${infoLocationDetail.name} - ${infoLocationDetail.province}`;
+  document.title = `Airbnb - ${infoLocationDetail?.name} - ${infoLocationDetail?.province}`;
   return (
     <>
       <div className="pt-5 pb-16">
