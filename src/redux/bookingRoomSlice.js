@@ -74,23 +74,6 @@ export const bookRoom = createAsyncThunk(
         }
     }
 );
-// export const SetCustomerInfo = createAction(
-//     "bookingRoom/SetCustomerInfo",
-//     (customerInfo) => {
-//         const countTotalCustomer = () => {
-//             return customerInfo.reduce((sum, customer) => {
-//                 return sum + customer.soLuong;
-//             }, 0);
-//         };
-//         const totalCus = countTotalCustomer();
-//         return {
-//             payload: {
-//                 customerInfo,
-//                 totalCustomer: totalCus,
-//             },
-//         };
-//     }
-// );
 
 const bookingRoom = createSlice({
     name: "bookingRoom",
@@ -118,6 +101,45 @@ const bookingRoom = createSlice({
         },
         [bookRoom.fulfilled]: (state, action) => {
             state.isBookedSuccess = true;
+            const newInitialState = {
+                bookingLocation: {
+                    idLocation: "",
+                    locationName: "",
+                },
+                bookingDate: {
+                    checkIn: null,
+                    checkOut: null,
+                },
+                customerInfo: [
+                    //Quy định phân loại khách
+                    {
+                        customerType: "Người lớn",
+                        description: "Từ 13 tuổi trở lên",
+                        quantity: 0,
+                    },
+                    {
+                        customerType: "Trẻ em",
+                        description: "Độ tuổi 2 - 12",
+                        quantity: 0,
+                    },
+                    {
+                        customerType: "Em bé",
+                        description: "Dưới 2 tuổi",
+                        quantity: 0,
+                    },
+                    {
+                        customerType: "Thú cưng",
+                        description: "Mang theo động vật cần được phục vụ?",
+                        quantity: 0,
+                    },
+                ],
+                isBookedSuccess: false,
+                totalCustomer: 0,
+            };
+            state.bookingLocation = newInitialState.bookingLocation;
+            state.bookingDate = newInitialState.bookingDate;
+            state.customerInfo = newInitialState.customerInfo;
+            state.totalCustomer = newInitialState.totalCustomer;
         },
     },
 });

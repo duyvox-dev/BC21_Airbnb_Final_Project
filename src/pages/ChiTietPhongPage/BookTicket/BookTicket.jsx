@@ -12,6 +12,7 @@ import {
 } from "../../../redux/bookingRoomSlice";
 import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
+import moment from "moment";
 export default function BookTicket({
     thongTinChiTietPhong = {},
     setModalAuthVisible = () => {},
@@ -75,8 +76,8 @@ export default function BookTicket({
     };
     const onDatePickerChange = (key, data) => {
         const newBookingDate = {
-            checkIn: data[0],
-            checkOut: data[1],
+            checkIn: moment(data[0]).format(),
+            checkOut: moment(data[1]).format(),
         };
         dispatch(setBookingDate(newBookingDate));
     };
