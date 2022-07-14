@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDanhSachPhong, getIdCurrent } from "../../redux/danhSachPhongSlice";
+import {
+  getDanhSachPhong,
+  getIdCurrent,
+  getViTriChiTiet,
+} from "../../redux/danhSachPhongSlice";
 import { Link } from "react-router-dom";
 import ModalChonPhong from "./ModalChonPhong";
 
 export default function DanhSachPhongPage() {
   const { danhSachPhong } = useSelector((state) => state.danhSachPhongSlice);
+  const { infoLocationDetail } = useSelector(
+    (state) => state.danhSachPhongSlice
+  );
   const { totalCustomer } = useSelector((state) => state.bookingRoomSlice);
 
   let { id } = useParams();
@@ -17,6 +24,7 @@ export default function DanhSachPhongPage() {
   }, [id, totalCustomer]);
   useEffect(() => {
     dispatch(getIdCurrent(id));
+    dispatch(getViTriChiTiet(id));
   }, [id]);
 
   let renderDanhSachPhong = () => {
@@ -64,15 +72,21 @@ export default function DanhSachPhongPage() {
     });
   };
 
-  document.title = `Airbnb - ${danhSachPhong[0]?.locationId.name} - ${danhSachPhong[0]?.locationId.province}`;
+  document.title = `Airbnb - ${infoLocationDetail.name} - ${infoLocationDetail.province}`;
   return (
     <>
       <div className="pt-5 pb-16">
         <ModalChonPhong />
         <div className="container mx-auto pt-5">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {renderDanhSachPhong()}
-          </div>
+          {danhSachPhong?.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {renderDanhSachPhong()}
+            </div>
+          ) : (
+            <div className="text-2xl font-bold">
+              Hiện tại không có phòng phù hợp, vui lòng quay lại sau.
+            </div>
+          )}
         </div>
       </div>
     </>
