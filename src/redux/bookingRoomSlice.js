@@ -67,7 +67,7 @@ export const bookRoom = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
             const res = await phongService.datPhong(data);
-            console.log(res);
+            localSearchStorageService.removeSearchInfoLocal();
             return res.data;
         } catch (err) {
             return thunkAPI.rejectWithValue();
