@@ -47,7 +47,7 @@ export default function ModalChonPhong() {
                 >
                   Bộ lọc
                 </Dialog.Title>
-                <div className="mt-2 h-[75vh] overflow-y-scroll">
+                <div className="mt-2 h-[650px] overflow-y-scroll">
                   <div className="p-5">
                     <KhoangGia />
                     <PhongNgu />
