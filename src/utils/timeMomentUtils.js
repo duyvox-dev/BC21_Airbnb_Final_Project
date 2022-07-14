@@ -1,5 +1,5 @@
 import moment from "moment";
 
 export const countDays = (from, to) => {
-    return moment(from).diff(to, "days") + 1;
+    return moment(to).diff(from, "days") + 1;
 };

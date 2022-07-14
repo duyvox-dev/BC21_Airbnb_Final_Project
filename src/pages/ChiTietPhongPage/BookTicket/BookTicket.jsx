@@ -7,13 +7,13 @@ import {
     setBookingDate,
     setCustomerInfo,
     setBookingStatus,
+    bookRoom,
 } from "../../../redux/bookingRoomSlice";
 import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
 export default function BookTicket({
     thongTinChiTietPhong = {},
-    scrollTo = () => {},
-    commentListSize = 0,
+    setModalAuthVisible = () => {},
 }) {
     const dispatch = useDispatch();
     const { bookingDate, customerInfo } = useSelector(
@@ -27,25 +27,25 @@ export default function BookTicket({
     const [ableToBook, setAbleToBook] = useState(true);
     const [totalCustomers, setTotalCustomers] = useState(0);
     useEffect(() => {
-        setDaysOfBooking(
-            countDays(bookingDate?.checkIn, bookingDate?.checkOut)
-        );
+        const days = countDays(bookingDate?.checkIn, bookingDate?.checkOut);
+        if (days) setDaysOfBooking(days);
+        else setDaysOfBooking(0);
     }, [bookingDate]);
 
     useEffect(() => {
         let isAbleToBook = false;
         if (
-            accessToken &&
             bookingDate?.checkIn != "" &&
             bookingDate?.checkOut != "" &&
             totalCustomers != 0
         )
             isAbleToBook = true;
         setAbleToBook(isAbleToBook);
-    }, [bookingDate, accessToken, totalCustomers]);
+    }, [bookingDate, totalCustomers]);
     useEffect(() => {
+        setModalAuthVisible(false);
         // console.log({ ableToBook });
-    }, [ableToBook]);
+    }, [accessToken]);
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
     };
@@ -59,15 +59,17 @@ export default function BookTicket({
             };
         });
         dispatch(setCustomerInfo(customerDataWithoutIndex));
-        // console.log(totalCustomer, customerDataWithoutIndex);
     };
     const handleBooking = () => {
-        // const bookingData = {
-        //     roomId: id,
-        //     ...bookingTime,
-        // };
-        // console.log(bookingData);
-        // dispatch(bookRoom(bookingData));
+        if (accessToken && ableToBook) {
+            const bookingData = {
+                roomId: thongTinChiTietPhong._id,
+                ...bookingDate,
+            };
+            dispatch(bookRoom(bookingData));
+        } else if (!accessToken) {
+            setModalAuthVisible(true);
+        }
     };
     const onDatePickerChange = (key, data) => {
         const newBookingDate = {
@@ -100,29 +102,32 @@ export default function BookTicket({
                         <div className="absolute bottom-0 w-full">
                             <RangeDatePicker
                                 onChange={onDatePickerChange}
+                                defaultDate={bookingDate}
                             ></RangeDatePicker>
                         </div>
                     </div>
                     <div className="w-full p-4 border-t cursor-pointer">
-                        <div>
-                            <ChooseCustomer
-                                limit={thongTinChiTietPhong?.guests}
-                                handleChooseCustomer={handleChooseCustomer}
-                            ></ChooseCustomer>
-                        </div>
+                        <ChooseCustomer
+                            limit={thongTinChiTietPhong?.guests}
+                            handleChooseCustomer={handleChooseCustomer}
+                        ></ChooseCustomer>
                     </div>
                 </div>
                 <button
                     className={`${
                         !ableToBook
-                            ? "bg-gray-500 cursor-not-allowed"
+                            ? "bg-gray-500 cursor-default px-2"
                             : "bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 "
-                    } text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out`}
+                    } relative text-center text-white font-semibold text-lg block py-2 px-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out`}
                     // className="bg-gradient-to-r from-rose-500 via-rose-600 to-rose-500 text-center text-white font-semibold text-lg block py-2 w-full rounded-md hover:bg-gradient-to-l  duration-300 ease-in-out"
                     onClick={handleBooking}
                     disabled={!ableToBook}
                 >
-                    Đặt Phòng
+                    <span>
+                        {ableToBook
+                            ? "Đặt phòng "
+                            : "Vui lòng chọn ngày và số lượng khách"}
+                    </span>
                 </button>
                 <div className="mt-2">
                     <p className="text-gray-700 text-center">

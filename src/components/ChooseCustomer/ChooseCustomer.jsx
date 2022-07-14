@@ -65,7 +65,7 @@ export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
     }, [totalCustomers]);
 
     return (
-        <div>
+        <div className="w-full">
             {" "}
             <Popover className="relative">
                 <Popover.Button className="outline-none border-none block w-full text-left">
@@ -85,11 +85,12 @@ export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
                 </Popover.Button>
 
                 <Popover.Panel className="absolute z-10 top-[50px] -left-[17px]">
-                    <div className="flex flex-col gap-5 bg-white p-5 shadow w-[312px] border border-slate-300 rounded">
-                        {customerList.map((loaiKhach) => {
+                    <div className="flex flex-col gap-5 bg-white p-5 shadow w-full border border-slate-300 rounded">
+                        {customerList.map((loaiKhach, index) => {
                             return (
                                 <ChooseCustomerItem
                                     data={loaiKhach}
+                                    key={index}
                                     incQuantity={incQuantity}
                                     decQuantity={decQuantity}
                                     disabled={disabledSide}

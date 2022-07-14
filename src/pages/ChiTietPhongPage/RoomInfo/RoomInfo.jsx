@@ -20,7 +20,9 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
     const renderBedRoom = () => {
         const components = [];
         for (let i = 0; i < thongTinChiTietPhong.bedRoom; i++)
-            components.push(<img src={Bed} className="w-[30px] h-[30px]" />);
+            components.push(
+                <img src={Bed} className="w-[30px] h-[30px]" key={i} />
+            );
         return components;
     };
     return (
@@ -29,7 +31,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                 {/* Room owner */}
                 <div className="flex justify-between items-center py-5 border-b-[2px] border-slate-200">
                     <div>
-                        <h2 className="text-2xl font-semibold">
+                        <h2 className="text-2xl font-semibold max-w-2xl">
                             Căn hộ {thongTinChiTietPhong.name} . Chủ nhà: XYZ
                         </h2>
                         <p className="flex gap-2">

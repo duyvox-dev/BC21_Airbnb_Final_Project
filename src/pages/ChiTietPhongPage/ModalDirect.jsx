@@ -28,10 +28,11 @@ export default function ModalDirect({
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-slate-300 flex gap-5">
-                    {modalDetail.actions.map((action) => {
+                    {modalDetail.actions.map((action, index) => {
                         return (
                             <button
                                 type="button"
+                                key={index}
                                 className={
                                     "  duration-300 ease-in-out  rounded-md   py-2  px-5 font-semibold text-white " +
                                     (action.type == "normal"
