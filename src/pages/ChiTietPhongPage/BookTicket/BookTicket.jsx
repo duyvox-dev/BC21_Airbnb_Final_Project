@@ -13,14 +13,15 @@ import {
 import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
 import moment from "moment";
-export default function BookTicket({
-    thongTinChiTietPhong = {},
-    setModalAuthVisible = () => {},
-}) {
+
+export default function BookTicket({ setModalAuthVisible = () => {} }) {
     const dispatch = useDispatch();
     const { bookingDate, customerInfo } = useSelector(
         (state) => state.bookingRoomSlice
     );
+
+    const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
+
     const { accessToken } = useSelector((state) => state.authSlice);
     // const { daysOfBooking, bookingDate, customerInfo } = useSelector(
     //     (state) => state.chiTietPhongSlice
@@ -83,7 +84,7 @@ export default function BookTicket({
     };
     return (
         <div>
-            <div className="border border-slate-300 rounded-md p-5 shadow ">
+            <div className=" p-5  ">
                 <div className="flex justify-between items-center">
                     <span className="flex gap-2 items-center">
                         <span className="font-semibold text-xl">

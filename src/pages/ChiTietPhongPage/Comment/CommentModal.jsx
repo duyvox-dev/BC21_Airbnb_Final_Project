@@ -17,7 +17,7 @@ export default function CommentModal({ isModalOpen, toggleModal }) {
                     Toàn bộ đánh giá
                 </Dialog.Title>
                 <div className="mt-2 h-[75vh] overflow-y-scroll">
-                    <div className="px-5 grid md:grid-cols-1 mt-10  lg:grid-cols-2 gap-10">
+                    <div className="px-5 grid md:grid-cols-1   lg:grid-cols-2 gap-10 py-5">
                         {danhSachDanhGia.length > 1 &&
                             danhSachDanhGia.map((danhGia, index) => {
                                 // console.log(danhGia);

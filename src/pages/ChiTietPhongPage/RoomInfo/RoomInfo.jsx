@@ -31,7 +31,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                 {/* Room owner */}
                 <div className="flex justify-between items-center py-5 border-b-[2px] border-slate-200">
                     <div>
-                        <h2 className="text-2xl font-semibold max-w-2xl">
+                        <h2 className="text-xl md:text-2xl font-semibold max-w-2xl">
                             Căn hộ {thongTinChiTietPhong.name} . Chủ nhà: XYZ
                         </h2>
                         <p className="flex gap-2">
@@ -46,7 +46,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                             <span>{thongTinChiTietPhong.bath} phòng tắm</span>
                         </p>
                     </div>
-                    <div className="cursor-pointer relative">
+                    <div className="hidden sm:block cursor-pointer relative">
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
@@ -82,7 +82,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                     <h4 className="text-2xl font-semibold mb-0">
                         Nơi bạn sẽ nghỉ ngơi
                     </h4>
-                    <div className="mt-5 grid grid-cols-4">
+                    <div className="mt-5 grid grid-cols-1 md:grid-cols-4">
                         <div className="p-10 border-slate-300 border rounded-md inline-block text-lg">
                             <div className=" flex gap-5 justify-center">
                                 {renderBedRoom()}
@@ -101,7 +101,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                             <FontAwesomeIcon className="" icon={faLanguage} />
                         </span>
                     </div>
-                    <p className="text-lg mt-5 mb-0">
+                    <p className=" text-md md:text-lg mt-5 mb-0">
                         {thongTinChiTietPhong.description}
                     </p>
                 </div>

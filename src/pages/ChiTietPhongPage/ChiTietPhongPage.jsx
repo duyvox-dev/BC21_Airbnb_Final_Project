@@ -11,7 +11,8 @@ import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-
+import { MobileView } from "react-device-detect";
+import Footer from "./Footer/Footer";
 import CommentContainer from "./Comment/CommentContainer";
 import CommentModal from "./Comment/CommentModal";
 import ModalDirect from "./ModalDirect";
@@ -20,6 +21,7 @@ import BookTicket from "./BookTicket/BookTicket";
 import { animateScroll as scroll, scroller, Element } from "react-scroll";
 import AuthModal from "../../components/Modal/AuthModal";
 import { setBookingStatus } from "../../redux/bookingRoomSlice";
+import BookTicketModal from "./BookTicket/BookTicketModal";
 export default function ChiTietPhongPage() {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -30,6 +32,7 @@ export default function ChiTietPhongPage() {
     const [isModalCommentOpen, setIsModalCommentOpen] = useState(false);
     const [isModalAuthOpen, setIsModalAuthOpen] = useState(false);
     const [isModalDirectOpen, setIsModalDirectOpen] = useState(false);
+    const [isBookTicketModalOpen, setIsBookTicketModalOpen] = useState(false);
     const modalDetailSuccessBooking = {
         title: "Đặt vé thành công",
         message: "Chúc bạn có một kì nghỉ tuyệt vời.",
@@ -49,12 +52,16 @@ export default function ChiTietPhongPage() {
     const toggleAuthModal = () => {
         setIsModalAuthOpen(!isModalAuthOpen);
     };
+    const toggleBookTicketModal = () => {
+        setIsBookTicketModalOpen(!isBookTicketModalOpen);
+    };
     // useEffect(() =>{
 
     // },[access])
     useEffect(() => {
         if (isBookedSuccess) {
             setIsModalDirectOpen(true);
+            setIsBookTicketModalOpen(false);
             dispatch(setBookingStatus(false));
         }
     }, [isBookedSuccess]);
@@ -71,7 +78,7 @@ export default function ChiTietPhongPage() {
     };
     document.title = `${thongTinChiTietPhong.name} - Airbnb`;
     return (
-        <div>
+        <div className="relative">
             <AuthModal
                 isModalOpen={isModalAuthOpen}
                 toggleModal={toggleAuthModal}
@@ -84,14 +91,19 @@ export default function ChiTietPhongPage() {
                 isModalOpen={isModalCommentOpen}
                 toggleModal={toggleCommentModal}
             />
-            <div className="w-11/12 mx-auto py-10 px-2 ">
-                <div>
+            <BookTicketModal
+                isModalOpen={isBookTicketModalOpen}
+                toggleModal={toggleBookTicketModal}
+            />
+
+            <div className="md:w-11/12 lg:container mx-auto py-10 px-5 ">
+                <div className="">
                     {/* Room header */}
                     <div>
-                        <h1 className=" font-bold text-3xl flex gap-2 items-center">
+                        <h1 className=" font-bold text-2xl md:text-3xl flex gap-2 items-center">
                             <span> {thongTinChiTietPhong.name}</span>
                         </h1>
-                        <div className="flex gap-2 items-center text-lg">
+                        <div className="flex gap-2 items-center text-md md:text-lg">
                             <span className="flex gap-2 items-center">
                                 <FontAwesomeIcon className="" icon={faStar} />
                                 <span className=" font-semibold">4.83</span>
@@ -109,22 +121,17 @@ export default function ChiTietPhongPage() {
                                 </span>
                             </span>
                             <span className="text-slate-500">.</span>
-                            <Link to="/search/">
-                                <span className="underline text-black font-semibold">
-                                    <span>
-                                        {thongTinChiTietPhong?.locationId?.name}{" "}
-                                        -{" "}
-                                        {
-                                            thongTinChiTietPhong?.locationId
-                                                ?.province
-                                        }
-                                    </span>
+
+                            <span className="underline text-black font-semibold cursor-pointer">
+                                <span>
+                                    {thongTinChiTietPhong?.locationId?.name} -{" "}
+                                    {thongTinChiTietPhong?.locationId?.province}
                                 </span>
-                            </Link>
+                            </span>
                         </div>
                     </div>
                     {/* Room image */}
-                    <div className=" h-96 my-5 grid grid-cols-2 gap-5">
+                    <div className=" h-96 my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
@@ -133,25 +140,22 @@ export default function ChiTietPhongPage() {
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
-                            className="h-96 w-full rounded-3xl"
+                            className="h-96 w-full rounded-3xl hidden md:block"
                         />
                     </div>
 
-                    <div className="flex w-full sm:flex-col lg:flex-row gap-[100px] pt-5">
-                        <div className="sm:w-full lg:w-[70%]">
+                    <div className="flex w-full flex-col lg:flex-row gap-[100px] pt-5">
+                        <div className="w-full lg:w-[70%]">
                             <RoomInfo
                                 thongTinChiTietPhong={thongTinChiTietPhong}
                             />
                         </div>
                         {/* Booking */}
-                        <div className="sm:w-full lg:w-[30%] relative">
-                            <div className="sticky top-1">
+                        <div className="sm:w-full lg:w-[30%] relative hidden lg:block">
+                            <div className="sticky top-1 border border-slate-300 rounded-md">
                                 <Element name="bookTicketContainer">
                                     {
                                         <BookTicket
-                                            thongTinChiTietPhong={
-                                                thongTinChiTietPhong
-                                            }
                                             scrollTo={scrollTo}
                                             commentListSize={
                                                 danhSachDanhGia.length
@@ -162,12 +166,6 @@ export default function ChiTietPhongPage() {
                                         />
                                     }
                                 </Element>
-                                {/* <BookTicket
-                                    thongTinChiTietPhong={thongTinChiTietPhong}
-                                    scrollTo={scrollTo}
-                                    commentListSize={danhSachDanhGia.length}
-                                    setModalAuthVisible={setIsModalAuthOpen}
-                                /> */}
                             </div>
                         </div>
                     </div>
@@ -191,6 +189,7 @@ export default function ChiTietPhongPage() {
                         </div>
                     </div>
                 </div>
+                <Footer toggleBookTicketModal={toggleBookTicketModal}></Footer>
             </div>
         </div>
     );
