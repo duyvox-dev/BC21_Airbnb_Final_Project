@@ -6,15 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setBookingDate,
     setCustomerInfo,
-    setBookingStatus,
     bookRoom,
     setTotalCustomer,
 } from "../../../redux/bookingRoomSlice";
 import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
 import moment from "moment";
-
-export default function BookTicket({ setModalAuthVisible = () => {} }) {
+import {
+    setAuthModal,
+    setBookTicketModal,
+} from "../../../redux/chiTietPhongSlice";
+export default function BookTicket() {
     const dispatch = useDispatch();
     const { bookingDate, customerInfo } = useSelector(
         (state) => state.bookingRoomSlice
@@ -23,9 +25,7 @@ export default function BookTicket({ setModalAuthVisible = () => {} }) {
     const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
 
     const { accessToken } = useSelector((state) => state.authSlice);
-    // const { daysOfBooking, bookingDate, customerInfo } = useSelector(
-    //     (state) => state.chiTietPhongSlice
-    // );
+
     const [daysOfBooking, setDaysOfBooking] = useState(0);
     const [ableToBook, setAbleToBook] = useState(true);
     const [totalCustomers, setTotalCustomers] = useState(0);
@@ -39,15 +39,18 @@ export default function BookTicket({ setModalAuthVisible = () => {} }) {
         let isAbleToBook = false;
         if (
             bookingDate?.checkIn != "" &&
+            bookingDate?.checkIn != "Invalid date" &&
             bookingDate?.checkOut != "" &&
+            bookingDate?.checkOut != "Invalid date" &&
             totalCustomers != 0
         )
             isAbleToBook = true;
         setAbleToBook(isAbleToBook);
     }, [bookingDate, totalCustomers]);
     useEffect(() => {
-        setModalAuthVisible(false);
-        // console.log({ ableToBook });
+        if (accessToken) {
+            dispatch(setAuthModal(false));
+        }
     }, [accessToken]);
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
@@ -70,9 +73,10 @@ export default function BookTicket({ setModalAuthVisible = () => {} }) {
                 roomId: thongTinChiTietPhong._id,
                 ...bookingDate,
             };
+            dispatch(setBookTicketModal(false));
             dispatch(bookRoom(bookingData));
         } else if (!accessToken) {
-            setModalAuthVisible(true);
+            dispatch(setAuthModal(true));
         }
     };
     const onDatePickerChange = (key, data) => {
@@ -147,7 +151,7 @@ export default function BookTicket({ setModalAuthVisible = () => {} }) {
                                 x {daysOfBooking} đêm
                             </span>
                         </span>
-                        <span> đ {countTotalCost()}</span>
+                        <span> đ {convertLocaleString(countTotalCost())}</span>
                     </div>
                 </div>
             </div>

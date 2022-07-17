@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import {
-    bookRoom,
-    getRoomDetail,
-    resetBookingStatus,
-} from "../../redux/phongSlice";
+import { getRoomDetail } from "../../redux/phongSlice";
 import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
-import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal, faStar } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { MobileView } from "react-device-detect";
 import Footer from "./Footer/Footer";
 import CommentContainer from "./Comment/CommentContainer";
 import CommentModal from "./Comment/CommentModal";
@@ -22,17 +15,17 @@ import { animateScroll as scroll, scroller, Element } from "react-scroll";
 import AuthModal from "../../components/Modal/AuthModal";
 import { setBookingStatus } from "../../redux/bookingRoomSlice";
 import BookTicketModal from "./BookTicket/BookTicketModal";
+import { message } from "antd";
+import { setCommentModal, setDirectModal } from "../../redux/chiTietPhongSlice";
 export default function ChiTietPhongPage() {
     const location = useLocation();
     const dispatch = useDispatch();
     const { isBookedSuccess } = useSelector((state) => state.bookingRoomSlice);
+    const { bookTicketModal } = useSelector((state) => state.chiTietPhongSlice);
     const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
     const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
     const { id } = useParams();
-    const [isModalCommentOpen, setIsModalCommentOpen] = useState(false);
-    const [isModalAuthOpen, setIsModalAuthOpen] = useState(false);
-    const [isModalDirectOpen, setIsModalDirectOpen] = useState(false);
-    const [isBookTicketModalOpen, setIsBookTicketModalOpen] = useState(false);
+
     const modalDetailSuccessBooking = {
         title: "Đặt vé thành công",
         message: "Chúc bạn có một kì nghỉ tuyệt vời.",
@@ -46,25 +39,13 @@ export default function ChiTietPhongPage() {
         dispatch(getDanhSachDanhGiaPhong(id));
     }, []);
 
-    const toggleCommentModal = () => {
-        setIsModalCommentOpen(!isModalCommentOpen);
-    };
-    const toggleAuthModal = () => {
-        setIsModalAuthOpen(!isModalAuthOpen);
-    };
-    const toggleBookTicketModal = () => {
-        setIsBookTicketModalOpen(!isBookTicketModalOpen);
-    };
-    // useEffect(() =>{
-
-    // },[access])
     useEffect(() => {
-        if (isBookedSuccess) {
-            setIsModalDirectOpen(true);
-            setIsBookTicketModalOpen(false);
+        if (isBookedSuccess && !bookTicketModal) {
+            dispatch(setDirectModal(true));
             dispatch(setBookingStatus(false));
         }
-    }, [isBookedSuccess]);
+    }, [bookTicketModal, isBookedSuccess]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -79,22 +60,10 @@ export default function ChiTietPhongPage() {
     document.title = `${thongTinChiTietPhong.name} - Airbnb`;
     return (
         <div className="relative">
-            <AuthModal
-                isModalOpen={isModalAuthOpen}
-                toggleModal={toggleAuthModal}
-            />
-            <ModalDirect
-                isModalOpen={isModalDirectOpen}
-                modalDetail={modalDirectDetail}
-            />
-            <CommentModal
-                isModalOpen={isModalCommentOpen}
-                toggleModal={toggleCommentModal}
-            />
-            <BookTicketModal
-                isModalOpen={isBookTicketModalOpen}
-                toggleModal={toggleBookTicketModal}
-            />
+            <ModalDirect modalDetail={modalDirectDetail} />
+            <BookTicketModal />
+            <AuthModal />
+            <CommentModal />
 
             <div className="md:w-11/12 lg:container mx-auto py-10 px-5 ">
                 <div className="">
@@ -154,17 +123,7 @@ export default function ChiTietPhongPage() {
                         <div className="sm:w-full lg:w-[30%] relative hidden lg:block">
                             <div className="sticky top-1 border border-slate-300 rounded-md">
                                 <Element name="bookTicketContainer">
-                                    {
-                                        <BookTicket
-                                            scrollTo={scrollTo}
-                                            commentListSize={
-                                                danhSachDanhGia.length
-                                            }
-                                            setModalAuthVisible={
-                                                setIsModalAuthOpen
-                                            }
-                                        />
-                                    }
+                                    {<BookTicket />}
                                 </Element>
                             </div>
                         </div>
@@ -180,16 +139,12 @@ export default function ChiTietPhongPage() {
                         </h2>
                         <div className="">
                             <Element name="commentContainer" className="py-10">
-                                {
-                                    <CommentContainer
-                                        toggleModal={toggleCommentModal}
-                                    />
-                                }
+                                {<CommentContainer />}
                             </Element>
                         </div>
                     </div>
                 </div>
-                <Footer toggleBookTicketModal={toggleBookTicketModal}></Footer>
+                <Footer></Footer>
             </div>
         </div>
     );

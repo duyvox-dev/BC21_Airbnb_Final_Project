@@ -1,13 +1,18 @@
 import React from "react";
 import CommentList from "./CommentList";
-import { useSelector } from "react-redux";
-
-export default function CommentContainer({ toggleModal }) {
+import { useDispatch, useSelector } from "react-redux";
+import { setCommentModal } from "../../../redux/chiTietPhongSlice";
+export default function CommentContainer() {
     const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
+    const dispatch = useDispatch();
+
+    const toggleModal = () => {
+        dispatch(setCommentModal(true));
+    };
     const LIMIT = 4;
     return (
         <div>
-            <CommentList limit={LIMIT} toggleModal={toggleModal}></CommentList>
+            <CommentList limit={LIMIT}></CommentList>
             <div className="mt-5">
                 {danhSachDanhGia.length > LIMIT - 1 && (
                     <button

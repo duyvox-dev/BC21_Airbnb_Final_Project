@@ -1,14 +1,19 @@
 import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CommentItem from "./CommentItem";
 import Modal from "../../../components/Modal/Modal";
-export default function CommentModal({ isModalOpen, toggleModal }) {
+import { setCommentModal } from "../../../redux/chiTietPhongSlice";
+export default function CommentModal() {
     const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
-
+    const dispatch = useDispatch();
+    const { commentModal } = useSelector((state) => state.chiTietPhongSlice);
+    const toggleModal = () => {
+        dispatch(setCommentModal(false));
+    };
     return (
-        <Modal isOpen={isModalOpen} onClose={toggleModal}>
+        <Modal isOpen={commentModal} onClose={toggleModal}>
             <Dialog.Panel className="w-full md:max-w-[45rem] max-w-[25rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                     as="h3"
