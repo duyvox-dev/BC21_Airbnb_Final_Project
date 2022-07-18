@@ -40,14 +40,11 @@ export default function ModalChonPhong() {
             isOpen={isOpen}
             onClose={onClose}
             children={
-              <Dialog.Panel className="w-full md:max-w-[35rem] lg:max-w-[45rem] max-w-[21rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 text-center p-5 border-b"
-                >
+              <Dialog.Panel className="w-full h-[80%] md:max-w-[35rem] lg:max-w-[45rem]  max-w-[80%] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all relative">
+                <div className="text-lg font-medium text-gray-900 text-center p-5 border-b fixed top-0 w-full bg-white z-10">
                   Bộ lọc
-                </Dialog.Title>
-                <div className="mt-2 h-[650px] overflow-y-scroll">
+                </div>
+                <div className="py-20 h-[100%] overflow-y-scroll">
                   <div className="p-5">
                     <KhoangGia />
                     <PhongNgu />
@@ -55,7 +52,7 @@ export default function ModalChonPhong() {
                   </div>
                 </div>
 
-                <div className="py-4 px-5 border-t">
+                <div className="py-4 px-5 border-t fixed bottom-0 w-full bg-white z-10">
                   <div className="flex justify-between">
                     <button
                       className="text-lg font-medium underline rounded-lg px-2 hover:bg-stone-100 transition-all duration-300"
