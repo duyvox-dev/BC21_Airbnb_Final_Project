@@ -77,7 +77,7 @@ export default function DanhSachPhongPage() {
     <>
       <div className="pt-5 pb-16">
         <ModalChonPhong />
-        <div className="container mx-auto pt-5">
+        <div className="container px-3 mx-auto pt-5">
           {danhSachPhong?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {renderDanhSachPhong()}
