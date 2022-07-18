@@ -18,7 +18,7 @@ export default function ModalDirect({ modalDetail = {} }) {
     };
 
     return (
-        <Modal isOpen={directModal} onClose={() => {}}>
+        <Modal isOpen={directModal} onClose={toggleModal} staticStatus={true}>
             <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all z-50">
                 <Dialog.Title
                     as="h3"
