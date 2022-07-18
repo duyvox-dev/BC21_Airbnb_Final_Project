@@ -41,6 +41,7 @@ export default function ChiTietPhongPage() {
 
     useEffect(() => {
         if (isBookedSuccess && !bookTicketModal) {
+            message.success("Đặt vé thành công ");
             dispatch(setDirectModal(true));
             dispatch(setBookingStatus(false));
         }
