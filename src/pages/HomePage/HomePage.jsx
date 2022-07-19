@@ -11,7 +11,8 @@ import DeXuatPhongHomePage from "./DeXuatPhongHomePage/DeXuatPhongHomePage";
 import DanhGiaSliderHomePage from "./DanhGiaSliderHomePage/DanhGiaSliderHomePage";
 
 export default function HomePage() {
-
+    document.title = `Airbnb - Đặt phòng giá tốt`;
+    
     let diemDanhGiaDiaDanhThuHut = 9; //Lấy danh sách vị trí có điểm đánh giá là 9
 
     let idViTriTimPhong = ''; //Lấy danh sách tất cả phòng tại mọi tỉnh thành

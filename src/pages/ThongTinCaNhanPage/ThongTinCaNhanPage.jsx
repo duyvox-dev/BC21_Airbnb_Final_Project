@@ -64,6 +64,8 @@ export default function ThongTinCaNhanPage(props) {
     setLoading(true);
   };
 
+  document.title = `${thongTinNguoiDung.name} - Airbnb`;
+  
   return (
     <div className='mx-auto 
     lg:w-10/12 lg:my-5 lg:grid lg:grid-cols-12
