@@ -134,32 +134,29 @@ export default function HeaderTemplate() {
 
     return (
         <div
-            className="header w-full pt-5 pb-5  
+            className="header w-full pt-5 pb-5
         lg:flex-none lg:shadow-md lg:h-fit lg:bg-white
         md:flex-none md:h-fit md:bg-white
         h-28 flex justify-center bg-transparent"
         >
             <div
-                className="header-container fixed z-20 top-0 h-32 w-full px-2 pt-2 bg-white 
+                className="header-container fixed z-20 top-0 left-0 w-full h-32 pt-2 bg-white 
             lg:grid lg:w-11/12 lg:mx-auto lg:grid-cols-12 lg:static lg:h-fit lg:px-0 lg:pt-0 lg:bg-none
             md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none"
             >
-                <Link
-                    to={"/"}
-                    className=" z-30 w-fit
-                md:flex md:items-center
-                lg:flex lg:items-center"
-                >
-                    <div
-                        className="cursor-pointer w-32
+                <div
+                    className="cursor-pointer w-32
                     md:w-28 md:col-span-1
                     lg:w-40 lg:col-span-1"
+                >
+                    <Link
+                        to={"/"}
                     >
                         <img className="w-full" src="../img/airbnb-logo3.png" />
-                    </div>
-                </Link>
+                    </Link>
+                </div>
                 <div
-                    className="search-bar-container w-full 
+                    className="search-bar-container 
                 lg:ml-10 lg:col-span-8
                 md:ml-12 md:col-span-8"
                 >
@@ -186,17 +183,17 @@ export default function HeaderTemplate() {
                             md:px-2 md:font-bold"
                         >
                             {formik.values.bookingDate.checkIn !== null &&
-                            formik.values.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
+                                formik.values.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
                                 ? _.trim(formik.values.bookingDate.checkIn) ===
-                                      "NaN" &&
-                                  _.trim(formik.values.bookingDate.checkOut) ===
-                                      "NaN" //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
+                                    "NaN" &&
+                                    _.trim(formik.values.bookingDate.checkOut) ===
+                                    "NaN" //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
                                     ? "Thời gian bất kỳ"
                                     : `Ngày ${moment(
-                                          formik.values.bookingDate.checkIn
-                                      ).format("DD/MM")} - ${moment(
-                                          formik.values.bookingDate.checkOut
-                                      ).format("DD/MM")}` //Nếu thời gian nhận phòng và trả phòng khác tháng
+                                        formik.values.bookingDate.checkIn
+                                    ).format("DD/MM")} - ${moment(
+                                        formik.values.bookingDate.checkOut
+                                    ).format("DD/MM")}` //Nếu thời gian nhận phòng và trả phòng khác tháng
                                 : "Thời gian bất kỳ"}
                         </p>
                         <p
