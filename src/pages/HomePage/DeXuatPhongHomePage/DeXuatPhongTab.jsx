@@ -59,10 +59,9 @@ export default function DeXuatPhongTab(props) {
                 key={index}
                 className='w-full cursor-pointer relative'
             >
-                <div className='rounded-lg hover:shadow-xl duration-300 h-96 mx-2 shadow-md overflow-hidden border border-gray-200
-                lg:w-11/12 lg:my-2 lg:mx-auto lg:overflow-hidden lg:border lg:border-gray-200
+                <div className='rounded-lg hover:shadow-xl duration-300 h-fit mx-2 shadow-md overflow-hidden border border-gray-200
                 md:w-11/12 md:mx-auto md:shadow-md md:overflow-hidden md:my-2 md:border md:border-gray-200 
-                '>
+                lg:w-11/12 lg:my-2 lg:mx-auto lg:overflow-hidden lg:border lg:border-gray-200'>
                     <img className="w-full" alt={phong.name} src={phong.image} />
                     <p
                         className="
@@ -74,40 +73,31 @@ export default function DeXuatPhongTab(props) {
                         {phong.locationId?.valueate}
                     </p>
                     <h3
-                        className="font-bold text-center
-                    lg:w-full lg:text-xl lg:mt-2 lg:px-2
-                    md:w-full md:text-xl md:mt-2 md:px-2
-                    w-full text-xl mt-2 px-2">
+                        className="font-bold text-center w-full text-xl mt-2 px-2 h-14">
                         {phong.name}
                     </h3>
                     <div
-                        className="flex 
-                    lg:w-full lg:justify-end lg:px-2 lg:flex-nowrap
-                    md:w-11/12 md:mx-auto md:justify-center md:flex-wrap
-                    w-11/12 mx-auto justify-center flex-wrap"
+                        className="flex w-11/12 mx-auto justify-center flex-wrap"
                     >
-                        <span className="w-full my-auto text-xs 
-                        md:text-center
-                        text-center"><Rate allowHalf disabled defaultValue={diemDanhGia} /></span>
+                        <span className="w-full my-auto text-xs text-center">
+                            <Rate allowHalf disabled defaultValue={diemDanhGia} />
+                        </span>
                         <span
-                            className='text-blue-500 text-xs w-full text-center my-2
-                            lg:ml-3 lg:text-right lg:my-0
-                            md:ml-2 md:text-center md:my-2'>
+                            className='text-blue-500 text-xs w-full text-center my-2'>
                             <FontAwesomeIcon icon={faLocationDot} /> {phong.locationId?.name}
                         </span>
                     </div>
-                    <div className="w-full absolute bottom-2
-                    lg:bottom-3 lg:right-10">
-                        <p
-                            className="my-auto italic w-full text-center
-                            lg:text-right"
-                        >Giá rẻ nhất mỗi đêm từ
-                        </p>
-                        <p
-                            className="text-rose-600 w-full my-auto font-bold text-lg text-center
-                            lg:text-lg lg:text-right"
-                        >{phong.price?.toLocaleString()} VND
-                        </p>
+                    <div className='w-full h-fit flex justify-end'>
+                        <div className="w-11/12 mx-auto">
+                            <p
+                                className="my-auto italic w-full text-center"
+                            >Giá rẻ nhất mỗi đêm từ
+                            </p>
+                            <p
+                                className="text-rose-600 w-full my-auto font-bold text-lg text-center"
+                            >{phong.price?.toLocaleString()} VND
+                            </p>
+                        </div>
                     </div>
                 </div>
             </Link>

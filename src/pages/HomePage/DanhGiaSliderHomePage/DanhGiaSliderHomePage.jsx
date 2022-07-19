@@ -24,10 +24,10 @@ export default function DanhGiaSliderHomePage(props) {
     //Quy định số lượng room card xuất hiện tuỳ theo kích cỡ màn hình
     let [currentScreenDimesion, setCurrentScreenDimesion] = useState(1);
     useEffect(() => { //Set lại giá trị currentScreenDimesion mỗi khi resize kích cỡ màn hình
-        if (checkScreenDimension.width > 1024) {
+        if (checkScreenDimension.width > 1396) {
             setCurrentScreenDimesion(3);
         };
-        if (checkScreenDimension.width > 768 && checkScreenDimension.width <= 1024) {
+        if (checkScreenDimension.width > 768 && checkScreenDimension.width <= 1396) {
             setCurrentScreenDimesion(2)
         };
         if (checkScreenDimension.width > 640 && checkScreenDimension.width <= 768) {

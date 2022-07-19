@@ -4,10 +4,10 @@ import HeaderTemplate from './HeaderTemplate/HeaderTemplate'
 
 export default function ThemeLayout(props) {
     return (
-        <Fragment>
+        <div className='w-full overflow-hidden'>
             <HeaderTemplate />
             <props.Component />
             <FooterTemplate />
-        </Fragment>
+        </div>
     )
 }
