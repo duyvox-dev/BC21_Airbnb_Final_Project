@@ -43,7 +43,7 @@ export default function DanhSachPhongPage() {
             />
           </div>
           <div className="mt-2 ">
-            <div className="text-lg font-bold">{item.name}</div>
+            <div className="sm:text-lg text-[16px] font-bold">{item.name}</div>
             <div
               style={{
                 overflow: "hidden",
@@ -62,7 +62,7 @@ export default function DanhSachPhongPage() {
             </div>
             <div>
               Giá:{" "}
-              <span className="text-lg font-bold">
+              <span className="sm:text-lg text-[16px] font-bold">
                 {item.price.toLocaleString()} VND/ngày
               </span>
             </div>
@@ -77,7 +77,7 @@ export default function DanhSachPhongPage() {
     <>
       <div className="pt-5 pb-16">
         <ModalChonPhong />
-        <div className="container px-3 mx-auto pt-28">
+        <div className="container px-3 mx-auto pt-52">
           {danhSachPhong?.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-4">
               {renderDanhSachPhong()}
