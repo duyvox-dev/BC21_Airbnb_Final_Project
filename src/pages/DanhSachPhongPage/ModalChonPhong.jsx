@@ -24,14 +24,14 @@ export default function ModalChonPhong() {
 
   return (
     <>
-      <div className="sticky top-0 w-full text-center py-5 bg-white z-10 border-b">
-        <div className="flex justify-center items-center space-x-32">
-          <div className="font-medium text-lg">
+      <div className="fixed z-10 w-full py-5 text-center bg-white border-b top-[8rem]">
+        <div className="flex items-center justify-center space-x-32">
+          <div className="text-lg font-medium">
             Hơn {danhSachPhong?.length} chỗ ở
           </div>
           <button
             onClick={() => setIsOpen(true)}
-            className="px-4 py-2 rounded-lg flex justify-center items-center space-x-2 border"
+            className="flex items-center justify-center px-4 py-2 space-x-2 border rounded-lg"
           >
             <FontAwesomeIcon icon={faArrowRightArrowLeft} />
             <div>Bộ lọc</div>
@@ -41,7 +41,7 @@ export default function ModalChonPhong() {
             onClose={onClose}
             children={
               <Dialog.Panel className="w-full h-[80%] md:max-w-[35rem] lg:max-w-[45rem]  max-w-[80%] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all relative">
-                <div className="text-lg font-medium text-gray-900 text-center p-5 border-b fixed top-0 w-full bg-white z-10">
+                <div className="fixed top-0 z-10 w-full p-5 text-lg font-medium text-center text-gray-900 bg-white border-b">
                   Bộ lọc
                 </div>
                 <div className="py-20 h-[100%] overflow-y-scroll">
@@ -52,17 +52,17 @@ export default function ModalChonPhong() {
                   </div>
                 </div>
 
-                <div className="py-4 px-5 border-t fixed bottom-0 w-full bg-white z-10">
+                <div className="fixed bottom-0 z-10 w-full px-5 py-4 bg-white border-t">
                   <div className="flex justify-between">
                     <button
-                      className="text-lg font-medium underline rounded-lg px-2 hover:bg-stone-100 transition-all duration-300"
+                      className="px-2 text-lg font-medium underline transition-all duration-300 rounded-lg hover:bg-stone-100"
                       onClick={() => dispatch(deleteAllSearchRoomList())}
                     >
                       Xóa tất cả
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-stone-700 px-4 py-2 text-base font-medium text-white hover:bg-stone-900 transition-all duration-300"
+                      className="inline-flex justify-center px-4 py-2 text-base font-medium text-white transition-all duration-300 border border-transparent rounded-md bg-stone-700 hover:bg-stone-900"
                       onClick={() => {
                         setIsOpen(false);
                         dispatch(handleSearchRoomList());
