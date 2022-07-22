@@ -17,7 +17,7 @@ export default function DangKyPage() {
     isRegisterred && navigate("/login");
   }, [isRegisterred, userLogin]);
   return (
-    <div className="p-10 flex justify-center">
+    <div className="p-10 pt-[136px] flex justify-center">
       <FormDangKy />
     </div>
   );

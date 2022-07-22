@@ -2,6 +2,7 @@ import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { authService } from "../services/authService";
 import { localStorageService } from "../services/localService";
+import { uploadAnhNguoiDung } from "./nguoiDungSlice";
 
 let initialState = {};
 const setupInitialState = () => {
@@ -86,6 +87,9 @@ export const authSlice = createSlice({
     [postDataDangNhap.pending]: (state) => {
       state.isLoggedIn = false;
       state.isRegisterred = false;
+    },
+    [uploadAnhNguoiDung.fulfilled]: (state, { payload }) => {
+      state.userLogin = payload;
     },
   },
 });

@@ -34,9 +34,8 @@ export default function FormDangNhap() {
           Chào mừng bạn đến với Airbnb
         </div>
         <Form
-          className="font-medium"
-          labelCol={{ span: 5 }}
-          style={{ width: "500px" }}
+          className="font-medium sm:w-[500px] w-full"
+          labelCol={{ span: 7 }}
           validateMessages={validateMessages}
           name="basic"
           initialValues={{

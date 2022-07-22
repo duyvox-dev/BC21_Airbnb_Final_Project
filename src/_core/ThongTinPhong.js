@@ -34,3 +34,11 @@ export const ThongTinPhong = {
 };
 
 export const DanhSachPhong = [ThongTinPhong];
+
+export const ThongTinTimPhong = {
+    idViTri: "",
+    tenViTri: "",
+    ngayNhanPhong: "",
+    ngayTraPhong: "",
+    khach: [],
+};

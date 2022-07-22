@@ -5,7 +5,7 @@ import DangNhapPage from "../pages/DangNhapPage/DangNhapPage";
 import DanhSachPhongPage from "../pages/DanhSachPhongPage/DanhSachPhongPage";
 import HomePage from "../pages/HomePage/HomePage";
 import NotFound from "../pages/NotFound/NotFound";
-import ThongTinCaNhan from "../pages/ThongTinCaNhanPage/ThongTinCaNhan";
+import ThongTinCaNhanPage from "../pages/ThongTinCaNhanPage/ThongTinCaNhanPage";
 
 export const userRoutes = [
     {
@@ -14,7 +14,7 @@ export const userRoutes = [
     },
     {
         path: "/user/:id",
-        component: <ThemeLayout Component={ThongTinCaNhan} />,
+        component: <ThemeLayout Component={ThongTinCaNhanPage} />,
     },
     {
         path: "/register",

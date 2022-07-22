@@ -39,9 +39,8 @@ export default function FormDangKy() {
           Chào mừng bạn đến với Airbnb
         </div>
         <Form
-          className="font-medium"
+          className="font-medium sm:w-[500px] w-full"
           labelCol={{ span: 7 }}
-          style={{ width: "500px" }}
           validateMessages={validateMessages}
           name="basic"
           initialValues={{
