@@ -32,7 +32,6 @@ const GiamSoLuong = -1;
 
 export default function HeaderTemplate() {
   const { userLogin } = useSelector((state) => state.authSlice);
-  console.log(userLogin);
   let dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -334,7 +333,7 @@ export default function HeaderTemplate() {
           </div>
           <div>
             <Popover
-              className="w-20 h-10 rounded-full cursor-pointer flex justify-around items-center bg-white border-solid border border-neutral-300 hover:shadow-lg"
+              className="w-20 h-10 rounded-full cursor-pointer flex justify-between pl-3 pr-1 items-center bg-white border-solid border border-neutral-300 hover:shadow-lg"
               content={<a onClick={hide}>{contentMenuBar}</a>}
               trigger="click"
               visible={visible}
@@ -346,7 +345,7 @@ export default function HeaderTemplate() {
                   style={{ width: 35, height: 35 }}
                   className="rounded-full"
                   src={userLogin.avatar ? userLogin.avatar : userPic}
-                  alt={userLogin.avatar ? userLogin.avatar : userPic}
+                  alt="user-avatar"
                 />
               ) : (
                 <FontAwesomeIcon className="text-3xl" icon={faCircleUser} />
