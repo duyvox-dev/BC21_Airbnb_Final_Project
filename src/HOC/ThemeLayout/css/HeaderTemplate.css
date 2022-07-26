@@ -50,7 +50,13 @@
   .header .header-container .search-bar-container .search-bar-inner .date-input-block .date-picker-container .ant-picker-active-bar {
     @apply hidden;
   }
-  .ant-popover-inner .ant-popover-inner-content .ant-menu .ant-menu-item .-title-content a:hover {
+  .ant-popover-open {
+    @apply lg:relative;
+  }
+  .ant-popover {
+    @apply lg:absolute lg:top-0;
+  }
+  .ant-popover .ant-popover-inner .ant-popover-inner-content .ant-menu .ant-menu-item .-title-content a:hover {
     @apply text-black;
   }
 }

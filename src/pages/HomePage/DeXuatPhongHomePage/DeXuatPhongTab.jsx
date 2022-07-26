@@ -59,44 +59,47 @@ export default function DeXuatPhongTab(props) {
                 key={index}
                 className='w-full cursor-pointer relative'
             >
-                <div className='rounded-lg hover:shadow-xl duration-300 h-fit mx-2 shadow-md overflow-hidden border border-gray-200
-                md:w-11/12 md:mx-auto md:shadow-md md:overflow-hidden md:my-2 md:border md:border-gray-200 
-                lg:w-11/12 lg:my-2 lg:mx-auto lg:overflow-hidden lg:border lg:border-gray-200'>
-                    <img className="w-full" alt={phong.name} src={phong.image} />
-                    <p
-                        className="
+                <div className='
+                md:w-11/12 md:mx-auto md:my-2
+                lg:container lg:my-2'>
+                    <div
+                        className='mx-2 rounded-lg hover:shadow-xl duration-300 h-fit shadow-md overflow-hidden border border-gray-200'>
+                        <img className="w-full" alt={phong.name} src={phong.image} />
+                        <p
+                            className="
                     bg-rose-500 text-white text-center absolute rounded-full
                     lg:w-8 lg:h-8 lg:leading-8 lg:text-lg lg:top-5 lg:right-7
                     md:w-8 md:h-8 md:leading-8 md:text-lg md:top-5 md:right-8
                     w-6 h-6 leading-6 text-base top-3 right-5"
-                    >
-                        {phong.locationId?.valueate}
-                    </p>
-                    <h3
-                        className="font-bold text-center w-full text-xl mt-2 px-2 h-14">
-                        {phong.name}
-                    </h3>
-                    <div
-                        className="flex w-11/12 mx-auto justify-center flex-wrap"
-                    >
-                        <span className="w-full my-auto text-xs text-center">
-                            <Rate allowHalf disabled defaultValue={diemDanhGia} />
-                        </span>
-                        <span
-                            className='text-blue-500 text-xs w-full text-center my-2'>
-                            <FontAwesomeIcon icon={faLocationDot} /> {phong.locationId?.name}
-                        </span>
-                    </div>
-                    <div className='w-full h-fit flex justify-end'>
-                        <div className="w-11/12 mx-auto">
-                            <p
-                                className="my-auto italic w-full text-center"
-                            >Giá rẻ nhất mỗi đêm từ
-                            </p>
-                            <p
-                                className="text-rose-600 w-full my-auto font-bold text-lg text-center"
-                            >{phong.price?.toLocaleString()} VND
-                            </p>
+                        >
+                            {phong.locationId?.valueate}
+                        </p>
+                        <h3
+                            className="font-bold text-center w-full text-xl mt-2 px-2 h-14">
+                            {phong.name}
+                        </h3>
+                        <div
+                            className="flex w-11/12 mx-auto justify-center flex-wrap"
+                        >
+                            <span className="w-full my-auto text-xs text-center">
+                                <Rate allowHalf disabled defaultValue={diemDanhGia} />
+                            </span>
+                            <span
+                                className='text-blue-500 text-xs w-full text-center my-2'>
+                                <FontAwesomeIcon icon={faLocationDot} /> {phong.locationId?.name}
+                            </span>
+                        </div>
+                        <div className='w-full h-fit flex justify-end'>
+                            <div className="w-11/12 mx-auto">
+                                <p
+                                    className="my-auto italic w-full text-center"
+                                >Giá rẻ nhất mỗi đêm từ
+                                </p>
+                                <p
+                                    className="text-rose-600 w-full my-auto font-bold text-lg text-center"
+                                >{phong.price?.toLocaleString()} VND
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -133,8 +133,10 @@ export default function HeaderTemplate() {
   }, [ref]);
 
   return (
-    <div className="fixed z-10 flex justify-center w-full pt-5 pb-5 bg-white header lg:flex-none lg:shadow-md lg:h-fit md:flex-none md:h-fit h-28">
-      <div className="fixed top-0 left-0 z-20 w-full h-32 pt-2 bg-white header-container lg:grid lg:w-11/12 lg:mx-auto lg:grid-cols-12 lg:static lg:h-fit lg:px-0 lg:pt-0 lg:bg-none md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none">
+    <div className="fixed z-20 flex justify-center w-full pt-5 pb-5 bg-white header lg:flex-none lg:shadow-md lg:h-fit md:flex-none md:h-fit h-28">
+      <div className="fixed top-0 left-0 z-20 w-full h-32 pt-2 bg-white header-container  
+      md:z-30 md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none
+      lg:z-30 lg:grid lg:w-11/12 lg:mx-auto lg:grid-cols-12 lg:static lg:h-fit lg:px-0 lg:pt-0 lg:bg-none">
         <div className="w-32 cursor-pointer md:w-28 md:col-span-1 lg:w-40 lg:col-span-1">
           <Link to={"/"}>
             <img className="w-full" src="../img/airbnb-logo3.png" />
@@ -180,7 +182,7 @@ export default function HeaderTemplate() {
           <div className="absolute -z-20 lg:static">
             <button
               type="button"
-              className="text-transparent border-none rounded-full cursor-pointer bg-inherit md:w-36 md:text-xs lg:w-fit lg:text-base lg:px-4 lg:h-10 lg:text-black lg:hover:bg-gray-100"
+              className="text-transparent border-none rounded-full cursor-pointer bg-inherit md:text-xs lg:w-fit lg:text-base lg:px-1 lg:h-10 lg:text-black lg:hover:bg-gray-100"
             >
               Trở thành chủ nhà
             </button>
@@ -219,8 +221,12 @@ export default function HeaderTemplate() {
       {isSearchOpen ? (
         <div className="absolute top-0 z-20 w-full">
           <div className="fixed inset-0 z-20 bg-black/30" ref={ref} />
-          <div className="absolute z-20 w-full pb-5 bg-white h-fit lg:pb-10">
-            <div className="w-11/12 mx-auto lg:w-6/12 md:mt-5">
+          <div className="absolute z-20 w-full bg-white pb-5 h-fit 
+          md:pt-14
+          lg:pb-10 lg:pt-14">
+            <div className="w-11/12 mx-auto 
+            md:mt-5
+            lg:w-8/12">
               <SearchForm ThongTinTimPhong={ThongTinTimPhong} />
             </div>
           </div>

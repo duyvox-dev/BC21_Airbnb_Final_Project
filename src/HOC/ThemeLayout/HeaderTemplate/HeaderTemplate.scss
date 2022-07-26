@@ -71,13 +71,19 @@
             };
         };
     };
-    .ant-popover-inner {
-        .ant-popover-inner-content {
-            .ant-menu {
-                .ant-menu-item {
-                    .-title-content {
-                        a:hover {
-                            @apply text-black;
+    .ant-popover-open {
+        @apply lg:relative;
+    };
+    .ant-popover {
+        @apply lg:absolute lg:top-0;
+        .ant-popover-inner {
+            .ant-popover-inner-content {
+                .ant-menu {
+                    .ant-menu-item {
+                        .-title-content {
+                            a:hover {
+                                @apply text-black;
+                            };
                         };
                     };
                 };
