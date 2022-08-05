@@ -1,9 +1,17 @@
 import React, { useEffect } from "react";
-import styles from '../css/HomePage.css';
-import { getDanhSachDiaDiemThuHut, getDanhSachViTri, selectDanhSachViTri, selectDanhSachViTriDanhGiaCao } from "../../redux/viTriSlice";
+import styles from "../css/HomePage.css";
+import {
+  getDanhSachDiaDiemThuHut,
+  getDanhSachViTri,
+  selectDanhSachViTri,
+  selectDanhSachViTriDanhGiaCao,
+} from "../../redux/viTriSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getDanhSachPhong, selectDanhSachPhong } from "../../redux/phongSlice";
-import { getDanhSachDanhGiaPhong, selectDanhSachDanhGia } from "../../redux/danhGiaSlice";
+import {
+  getDanhSachDanhGiaPhong,
+  selectDanhSachDanhGia,
+} from "../../redux/danhGiaSlice";
 import BannerHomePage from "./BannerHomePage/BannerHomePage";
 import ViTriThuHutSliderHomePage from "./ViTriThuHutSliderHomePage/ViTriThuHutSliderHomePage";
 import LoaiHinhTienIchSliderHomePage from "./LoaiHinhTienIchSliderHomePage/LoaiHinhTienIchSliderHomePage";
@@ -11,49 +19,52 @@ import DeXuatPhongHomePage from "./DeXuatPhongHomePage/DeXuatPhongHomePage";
 import DanhGiaSliderHomePage from "./DanhGiaSliderHomePage/DanhGiaSliderHomePage";
 
 export default function HomePage() {
-    document.title = `Airbnb - Đặt phòng giá tốt`;
-    
-    let diemDanhGiaDiaDanhThuHut = 9; //Lấy danh sách vị trí có điểm đánh giá là 9
+  document.title = `Airbnb - Đặt phòng giá tốt`;
 
-    let idViTriTimPhong = ''; //Lấy danh sách tất cả phòng tại mọi tỉnh thành
+  let diemDanhGiaDiaDanhThuHut = 9; //Lấy danh sách vị trí có điểm đánh giá là 9
 
-    let idPhongLayDanhGia = '6172311fefe193001c0a79a4';
+  let idViTriTimPhong = ""; //Lấy danh sách tất cả phòng tại mọi tỉnh thành
 
-    let dispatch = useDispatch();
+  let idPhongLayDanhGia = "6172311fefe193001c0a79a4";
 
-    useEffect(() => {
-        //Lấy danh sách vị trí có điểm đánh giá cao
-        dispatch(getDanhSachDiaDiemThuHut(diemDanhGiaDiaDanhThuHut));
+  let dispatch = useDispatch();
 
-        //Lấy danh sách tất cả vị trí
-        dispatch(getDanhSachViTri())
+  useEffect(() => {
+    //Lấy danh sách vị trí có điểm đánh giá cao
+    dispatch(getDanhSachDiaDiemThuHut(diemDanhGiaDiaDanhThuHut));
 
-        //Lấy danh sách tất cả phòng tại mọi tỉnh thành
-        dispatch(getDanhSachPhong(idViTriTimPhong));
+    //Lấy danh sách tất cả vị trí
+    dispatch(getDanhSachViTri());
 
-        //Lấy danh sách đánh giá của phòng cụ thể
-        dispatch(getDanhSachDanhGiaPhong(idPhongLayDanhGia));
-    }, []);
+    //Lấy danh sách tất cả phòng tại mọi tỉnh thành
+    dispatch(getDanhSachPhong(idViTriTimPhong));
 
-    let danhSachViTriDanhGiaCao = useSelector(selectDanhSachViTriDanhGiaCao);
+    //Lấy danh sách đánh giá của phòng cụ thể
+    dispatch(getDanhSachDanhGiaPhong(idPhongLayDanhGia));
+  }, []);
 
-    let danhSachPhong = useSelector(selectDanhSachPhong);
+  let danhSachViTriDanhGiaCao = useSelector(selectDanhSachViTriDanhGiaCao);
 
-    let danhSachDanhGia = useSelector(selectDanhSachDanhGia);
+  let danhSachPhong = useSelector(selectDanhSachPhong);
 
-    let danhSachViTri = useSelector(selectDanhSachViTri);
+  let danhSachDanhGia = useSelector(selectDanhSachDanhGia);
 
-    return <div
-        className='homepage w-full'>
-        <BannerHomePage />
-        <div className='w-11/12 mx-auto'>
-            <ViTriThuHutSliderHomePage danhSachViTriDanhGiaCao={danhSachViTriDanhGiaCao} />
-            <LoaiHinhTienIchSliderHomePage />
-            <DeXuatPhongHomePage
-                danhSachPhong={danhSachPhong}
-                danhSachViTri={danhSachViTri}
-            />
-            <DanhGiaSliderHomePage danhSachDanhGia={danhSachDanhGia} />
-        </div>
+  let danhSachViTri = useSelector(selectDanhSachViTri);
+
+  return (
+    <div className="homepage w-full pt-[86px]">
+      <BannerHomePage />
+      <div className="w-11/12 mx-auto">
+        <ViTriThuHutSliderHomePage
+          danhSachViTriDanhGiaCao={danhSachViTriDanhGiaCao}
+        />
+        <LoaiHinhTienIchSliderHomePage />
+        <DeXuatPhongHomePage
+          danhSachPhong={danhSachPhong}
+          danhSachViTri={danhSachViTri}
+        />
+        <DanhGiaSliderHomePage danhSachDanhGia={danhSachDanhGia} />
+      </div>
     </div>
+  );
 }

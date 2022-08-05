@@ -133,7 +133,7 @@ export default function HeaderTemplate() {
   }, [ref]);
 
   return (
-    <div className="fixed z-10 flex justify-center w-full pt-5 pb-5 bg-white header lg:flex-none lg:shadow-md lg:h-fit md:flex-none md:h-fit h-28">
+    <div className="fixed z-10 flex justify-center w-full pt-5 pb-5 bg-white shadow header lg:flex-none lg:shadow-md lg:h-fit md:flex-none md:h-fit h-28">
       <div className="fixed top-0 left-0 z-20 w-full h-32 pt-2 bg-white header-container lg:grid lg:w-11/12 lg:mx-auto lg:grid-cols-12 lg:static lg:h-fit lg:px-0 lg:pt-0 lg:bg-none md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none">
         <div className="w-32 cursor-pointer md:w-28 md:col-span-1 lg:w-40 lg:col-span-1">
           <Link to={"/"}>
