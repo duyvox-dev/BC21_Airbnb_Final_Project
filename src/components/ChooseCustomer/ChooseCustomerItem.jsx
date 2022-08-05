@@ -2,6 +2,7 @@ import React from "react";
 
 export default function ChooseCustomerItem({
     data,
+    index,
     disabled = "",
     incQuantity = () => {},
     decQuantity = () => {},
@@ -24,7 +25,7 @@ export default function ChooseCustomerItem({
                         }`}
                         disabled={disabled == "dec"}
                         onClick={() => {
-                            decQuantity(data.index);
+                            decQuantity(index);
                         }}
                     >
                         <span>-</span>
@@ -38,7 +39,7 @@ export default function ChooseCustomerItem({
                         }`}
                         disabled={disabled == "inc"}
                         onClick={() => {
-                            incQuantity(data.index);
+                            incQuantity(index);
                         }}
                     >
                         <span>+</span>

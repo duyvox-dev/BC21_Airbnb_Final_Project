@@ -82,8 +82,8 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                     <h4 className="text-2xl font-semibold mb-0">
                         Nơi bạn sẽ nghỉ ngơi
                     </h4>
-                    <div className="mt-5 grid grid-cols-1 md:grid-cols-4">
-                        <div className="p-10 border-slate-300 border rounded-md inline-block text-lg">
+                    <div className="mt-5">
+                        <div className="p-10 border-slate-300 border rounded-md text-lg md:w-1/2">
                             <div className=" flex gap-5 justify-center">
                                 {renderBedRoom()}
                             </div>

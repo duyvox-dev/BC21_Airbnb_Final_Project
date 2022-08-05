@@ -38,6 +38,8 @@ export default function BookTicket() {
     useEffect(() => {
         let isAbleToBook = false;
         if (
+            bookingDate?.checkIn != null &&
+            bookingDate?.checkOut != null &&
             bookingDate?.checkIn != "" &&
             bookingDate?.checkIn != "Invalid date" &&
             bookingDate?.checkOut != "" &&
@@ -111,6 +113,7 @@ export default function BookTicket() {
                             <RangeDatePicker
                                 onChange={onDatePickerChange}
                                 defaultDate={bookingDate}
+                                date={bookingDate}
                             ></RangeDatePicker>
                         </div>
                     </div>

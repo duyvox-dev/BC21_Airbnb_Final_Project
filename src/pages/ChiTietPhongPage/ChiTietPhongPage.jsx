@@ -4,7 +4,11 @@ import { useLocation, useParams } from "react-router-dom";
 import { getRoomDetail } from "../../redux/phongSlice";
 import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+    faMedal,
+    faStar,
+    faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer/Footer";
 import CommentContainer from "./Comment/CommentContainer";
 import CommentModal from "./Comment/CommentModal";
@@ -73,12 +77,14 @@ export default function ChiTietPhongPage() {
                         <h1 className=" font-bold text-2xl md:text-3xl flex gap-2 items-center">
                             <span> {thongTinChiTietPhong.name}</span>
                         </h1>
-                        <div className="flex gap-2 items-center text-md md:text-lg">
+                        <div className="flex flex-col md:flex-row gap-2 md:items-center text-md md:text-lg">
                             <span className="flex gap-2 items-center">
                                 <FontAwesomeIcon className="" icon={faStar} />
                                 <span className=" font-semibold">4.83</span>
                             </span>
-                            <span className="text-slate-500">.</span>
+                            <span className="text-slate-500 hidden md:block">
+                                .
+                            </span>
                             <span
                                 className="flex gap-2 items-center"
                                 onClick={() => {
@@ -90,27 +96,39 @@ export default function ChiTietPhongPage() {
                                     {danhSachDanhGia.length} đánh giá
                                 </span>
                             </span>
-                            <span className="text-slate-500">.</span>
+                            <span className="text-slate-500 hidden md:block">
+                                .
+                            </span>
+                            <span className="flex gap-2 items-center">
+                                <FontAwesomeIcon
+                                    className="md:hidden"
+                                    icon={faLocationDot}
+                                />
 
-                            <span className="underline text-black font-semibold cursor-pointer">
-                                <span>
-                                    {thongTinChiTietPhong?.locationId?.name} -{" "}
-                                    {thongTinChiTietPhong?.locationId?.province}
+                                <span className="underline text-black font-semibold cursor-pointer">
+                                    <span>
+                                        {thongTinChiTietPhong?.locationId?.name}{" "}
+                                        -{" "}
+                                        {
+                                            thongTinChiTietPhong?.locationId
+                                                ?.province
+                                        }
+                                    </span>
                                 </span>
                             </span>
                         </div>
                     </div>
                     {/* Room image */}
-                    <div className=" h-96 my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className=" h-64 md:h-96 my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
-                            className="h-96 w-full rounded-3xl"
+                            className="h-full w-full rounded-3xl"
                         />
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
-                            className="h-96 w-full rounded-3xl hidden md:block"
+                            className="h-full w-full rounded-3xl hidden md:block"
                         />
                     </div>
 
