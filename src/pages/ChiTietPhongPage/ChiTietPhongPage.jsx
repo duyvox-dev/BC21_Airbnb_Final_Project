@@ -26,7 +26,6 @@ import {
 export default function ChiTietPhongPage() {
     const dispatch = useDispatch();
     const { isBookedSuccess } = useSelector((state) => state.bookingRoomSlice);
-    const { bookTicketModal } = useSelector((state) => state.chiTietPhongSlice);
     const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
     const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
     const { id } = useParams();
@@ -67,7 +66,7 @@ export default function ChiTietPhongPage() {
     };
     document.title = `${thongTinChiTietPhong.name} - Airbnb`;
     return (
-        <div className="relative">
+        <div className="relative pt-[120px]">
             <BookTicketModal />
             <AuthModal />
             <ModalDirect modalDetail={modalDirectDetail} />
