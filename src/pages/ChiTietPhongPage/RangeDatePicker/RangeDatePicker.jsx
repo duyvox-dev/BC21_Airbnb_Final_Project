@@ -6,13 +6,14 @@ const { RangePicker } = DatePicker;
 export default function RangeDatePicker({
     onChange = () => {},
     defaultDate = {},
+    date = {},
 }) {
     let defaultBookingDate = [
         moment(defaultDate?.checkIn, "YYYY-MM-DD"),
         moment(defaultDate?.checkOut, "YYYY-MM-DD"),
     ];
     if (!defaultBookingDate[0]._isValid || !defaultBookingDate[0]._isValid) {
-        defaultBookingDate = [];
+        defaultBookingDate = [null, null];
     }
     return (
         <div>
@@ -20,6 +21,7 @@ export default function RangeDatePicker({
                 className="date-picker-custom"
                 onCalendarChange={onChange}
                 defaultValue={defaultBookingDate}
+                value={defaultBookingDate}
             />
         </div>
     );

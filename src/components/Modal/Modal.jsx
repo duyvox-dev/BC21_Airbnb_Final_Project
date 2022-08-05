@@ -1,9 +1,19 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-export default function Modal({ isOpen, onClose, children }) {
+export default function Modal({
+    isOpen,
+    onClose,
+    children,
+    staticStatus = false,
+}) {
     return (
         <Transition show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-50" onClose={onClose}>
+            <Dialog
+                as="div"
+                className="relative z-50"
+                onClose={onClose}
+                static={staticStatus}
+            >
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

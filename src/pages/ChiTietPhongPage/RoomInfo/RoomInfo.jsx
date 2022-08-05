@@ -1,8 +1,7 @@
 import React from "react";
 import RoomFeatureList from "../RoomFeature/RoomFeatureList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal, faStar, faLanguage } from "@fortawesome/free-solid-svg-icons";
-import { animateScroll as scroll, scroller, Element } from "react-scroll";
+import { faMedal, faLanguage } from "@fortawesome/free-solid-svg-icons";
 import Bed from "../../../assets/img/room-convenience/bed.png";
 export default function RoomInfo({ thongTinChiTietPhong }) {
     const features = {
@@ -31,7 +30,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                 {/* Room owner */}
                 <div className="flex justify-between items-center py-5 border-b-[2px] border-slate-200">
                     <div>
-                        <h2 className="text-2xl font-semibold max-w-2xl">
+                        <h2 className="text-xl md:text-2xl font-semibold max-w-2xl">
                             Căn hộ {thongTinChiTietPhong.name} . Chủ nhà: XYZ
                         </h2>
                         <p className="flex gap-2">
@@ -46,7 +45,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                             <span>{thongTinChiTietPhong.bath} phòng tắm</span>
                         </p>
                     </div>
-                    <div className="cursor-pointer relative">
+                    <div className="hidden sm:block cursor-pointer relative">
                         <img
                             src={thongTinChiTietPhong.image}
                             alt=""
@@ -82,8 +81,8 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                     <h4 className="text-2xl font-semibold mb-0">
                         Nơi bạn sẽ nghỉ ngơi
                     </h4>
-                    <div className="mt-5 grid grid-cols-4">
-                        <div className="p-10 border-slate-300 border rounded-md inline-block text-lg">
+                    <div className="mt-5">
+                        <div className="p-10 border-slate-300 border rounded-md text-lg md:w-1/2">
                             <div className=" flex gap-5 justify-center">
                                 {renderBedRoom()}
                             </div>
@@ -101,7 +100,7 @@ export default function RoomInfo({ thongTinChiTietPhong }) {
                             <FontAwesomeIcon className="" icon={faLanguage} />
                         </span>
                     </div>
-                    <p className="text-lg mt-5 mb-0">
+                    <p className=" text-md md:text-lg mt-5 mb-0">
                         {thongTinChiTietPhong.description}
                     </p>
                 </div>

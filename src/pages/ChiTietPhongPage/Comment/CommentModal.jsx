@@ -1,14 +1,18 @@
 import React from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { Dialog } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
 import CommentItem from "./CommentItem";
 import Modal from "../../../components/Modal/Modal";
-export default function CommentModal({ isModalOpen, toggleModal }) {
+import { setCommentModal } from "../../../redux/chiTietPhongSlice";
+export default function CommentModal() {
     const { danhSachDanhGia } = useSelector((state) => state.danhGiaSlice);
-
+    const dispatch = useDispatch();
+    const { commentModal } = useSelector((state) => state.chiTietPhongSlice);
+    const toggleModal = () => {
+        dispatch(setCommentModal(false));
+    };
     return (
-        <Modal isOpen={isModalOpen} onClose={toggleModal}>
+        <Modal isOpen={commentModal} onClose={toggleModal}>
             <Dialog.Panel className="w-full md:max-w-[45rem] max-w-[25rem] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                     as="h3"
@@ -17,7 +21,7 @@ export default function CommentModal({ isModalOpen, toggleModal }) {
                     Toàn bộ đánh giá
                 </Dialog.Title>
                 <div className="mt-2 h-[75vh] overflow-y-scroll">
-                    <div className="px-5 grid md:grid-cols-1 mt-10  lg:grid-cols-2 gap-10">
+                    <div className="px-5 grid md:grid-cols-1   lg:grid-cols-2 gap-10 py-5">
                         {danhSachDanhGia.length > 1 &&
                             danhSachDanhGia.map((danhGia, index) => {
                                 // console.log(danhGia);

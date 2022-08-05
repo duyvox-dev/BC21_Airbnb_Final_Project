@@ -2,11 +2,14 @@ import React from "react";
 import userImg from "../../../assets/img/user_default.png";
 import moment from "moment";
 import _ from "lodash";
-export default function ({
-    data,
-    toggleModal = () => {},
-    needTruncate = false,
-}) {
+import { useDispatch } from "react-redux";
+import { setCommentModal } from "../../../redux/chiTietPhongSlice";
+export default function ({ data, needTruncate = false }) {
+    const dispatch = useDispatch();
+
+    const toggleModal = () => {
+        dispatch(setCommentModal(true));
+    };
     const STRING_LIMIT_LENGTH = 150;
     return (
         <div className="pr-10">

@@ -6,28 +6,28 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setBookingDate,
     setCustomerInfo,
-    setBookingStatus,
     bookRoom,
     setTotalCustomer,
 } from "../../../redux/bookingRoomSlice";
 import { countDays } from "../../../utils/timeMomentUtils";
 import { useEffect } from "react";
 import moment from "moment";
-export default function BookTicket({
-    thongTinChiTietPhong = {},
-    setModalAuthVisible = () => {},
-}) {
+import {
+    setAuthModal,
+    setBookTicketModal,
+} from "../../../redux/chiTietPhongSlice";
+export default function BookTicket() {
     const dispatch = useDispatch();
-    const { bookingDate, customerInfo } = useSelector(
+    const { bookingDate, customerInfo, totalCustomer } = useSelector(
         (state) => state.bookingRoomSlice
     );
+
+    const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
+
     const { accessToken } = useSelector((state) => state.authSlice);
-    // const { daysOfBooking, bookingDate, customerInfo } = useSelector(
-    //     (state) => state.chiTietPhongSlice
-    // );
+
     const [daysOfBooking, setDaysOfBooking] = useState(0);
     const [ableToBook, setAbleToBook] = useState(true);
-    const [totalCustomers, setTotalCustomers] = useState(0);
     useEffect(() => {
         const days = countDays(bookingDate?.checkIn, bookingDate?.checkOut);
         if (days) setDaysOfBooking(days);
@@ -37,32 +37,37 @@ export default function BookTicket({
     useEffect(() => {
         let isAbleToBook = false;
         if (
+            bookingDate?.checkIn &&
+            bookingDate?.checkOut &&
             bookingDate?.checkIn != "" &&
+            bookingDate?.checkIn != "Invalid date" &&
             bookingDate?.checkOut != "" &&
-            totalCustomers != 0
+            bookingDate?.checkOut != "Invalid date" &&
+            totalCustomer != 0
         )
             isAbleToBook = true;
         setAbleToBook(isAbleToBook);
-    }, [bookingDate, totalCustomers]);
+    }, [bookingDate, totalCustomer]);
     useEffect(() => {
-        setModalAuthVisible(false);
-        // console.log({ ableToBook });
+        if (accessToken) {
+            dispatch(setAuthModal(false));
+        }
     }, [accessToken]);
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
     };
-    const handleChooseCustomer = (totalCustomer, customerList) => {
-        setTotalCustomers(totalCustomer);
-        const customerDataWithoutIndex = customerList.map((customerItem) => {
-            return {
-                customerType: customerItem.customerType,
-                description: customerItem.description,
-                quantity: customerItem.quantity,
-            };
-        });
-        dispatch(setCustomerInfo(customerDataWithoutIndex));
-        dispatch(setTotalCustomer(totalCustomer));
-    };
+    // const handleChooseCustomer = (totalCustomer, customerList) => {
+    //     // setTotalCustomers(totalCustomer);
+    //     const customerDataWithoutIndex = customerList.map((customerItem) => {
+    //         return {
+    //             customerType: customerItem.customerType,
+    //             description: customerItem.description,
+    //             quantity: customerItem.quantity,
+    //         };
+    //     });
+    //     dispatch(setCustomerInfo(customerDataWithoutIndex));
+    //     dispatch(setTotalCustomer(totalCustomer));
+    // };
     const handleBooking = () => {
         if (accessToken && ableToBook) {
             const bookingData = {
@@ -71,19 +76,22 @@ export default function BookTicket({
             };
             dispatch(bookRoom(bookingData));
         } else if (!accessToken) {
-            setModalAuthVisible(true);
+            dispatch(setAuthModal(true));
         }
     };
     const onDatePickerChange = (key, data) => {
+        data = data.map((date) => {
+            return date == "" ? null : moment(date).format();
+        });
         const newBookingDate = {
-            checkIn: moment(data[0]).format(),
-            checkOut: moment(data[1]).format(),
+            checkIn: data[0],
+            checkOut: data[1],
         };
         dispatch(setBookingDate(newBookingDate));
     };
     return (
         <div>
-            <div className="border border-slate-300 rounded-md p-5 shadow ">
+            <div className=" p-5  ">
                 <div className="flex justify-between items-center">
                     <span className="flex gap-2 items-center">
                         <span className="font-semibold text-xl">
@@ -106,13 +114,14 @@ export default function BookTicket({
                             <RangeDatePicker
                                 onChange={onDatePickerChange}
                                 defaultDate={bookingDate}
+                                date={bookingDate}
                             ></RangeDatePicker>
                         </div>
                     </div>
                     <div className="w-full p-4 border-t cursor-pointer">
                         <ChooseCustomer
                             limit={thongTinChiTietPhong?.guests}
-                            handleChooseCustomer={handleChooseCustomer}
+                            // handleChooseCustomer={handleChooseCustomer}
                         ></ChooseCustomer>
                     </div>
                 </div>
@@ -146,7 +155,7 @@ export default function BookTicket({
                                 x {daysOfBooking} đêm
                             </span>
                         </span>
-                        <span> đ {countTotalCost()}</span>
+                        <span> đ {convertLocaleString(countTotalCost())}</span>
                     </div>
                 </div>
             </div>
