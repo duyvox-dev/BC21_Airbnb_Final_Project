@@ -6,7 +6,7 @@ export default function Footer() {
     const { thongTinChiTietPhong } = useSelector((state) => state.phongSlice);
     const dispatch = useDispatch();
     return (
-        <div className="block lg:hidden sticky border-t-[1px] border-gray-300   py-3  w-full left-0 bottom-0 z-0 bg-white ">
+        <div className="block lg:hidden fixed border-t-[1px] border-gray-300   py-3 px-5  w-full left-0 bottom-0 z-0 bg-white ">
             <div className="w-full h-full flex justify-between items-center px-2">
                 <span className="flex gap-2 items-center">
                     <span className="font-semibold text-xl">
