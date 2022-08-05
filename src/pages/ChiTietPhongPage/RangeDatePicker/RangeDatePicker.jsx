@@ -13,9 +13,8 @@ export default function RangeDatePicker({
         moment(defaultDate?.checkOut, "YYYY-MM-DD"),
     ];
     if (!defaultBookingDate[0]._isValid || !defaultBookingDate[0]._isValid) {
-        defaultBookingDate = [];
+        defaultBookingDate = [null, null];
     }
-
     return (
         <div>
             <RangePicker

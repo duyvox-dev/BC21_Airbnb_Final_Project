@@ -2,7 +2,7 @@ import React from "react";
 import userImg from "../../../assets/img/user_default.png";
 import moment from "moment";
 import _ from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCommentModal } from "../../../redux/chiTietPhongSlice";
 export default function ({ data, needTruncate = false }) {
     const dispatch = useDispatch();

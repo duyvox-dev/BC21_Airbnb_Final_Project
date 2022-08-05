@@ -63,7 +63,7 @@ if (searchValues !== null) {
 }
 
 export const bookRoom = createAsyncThunk(
-    "booking/bookRoom",
+    "bookingRoom/bookRoom",
     async (data, thunkAPI) => {
         try {
             const res = await phongService.datPhong(data);

@@ -8,55 +8,26 @@ import {
     setCustomerInfo,
     setTotalCustomer,
 } from "../../redux/bookingRoomSlice";
+import _ from "lodash";
 export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
-    // let danhSachLoaiKhach = [
-    //     {
-    //         index: 0,
-    //         customerType: "Người lớn",
-    //         description: "Từ 13 tuổi trở lên",
-    //         quantity: 0,
-    //     },
-    //     {
-    //         index: 1,
-    //         customerType: "Trẻ em",
-    //         description: "Độ tuổi 2 - 12",
-    //         quantity: 0,
-    //     },
-    //     {
-    //         index: 2,
-    //         customerType: "Em bé",
-    //         description: "Dưới 2 tuổi",
-    //         quantity: 0,
-    //     },
-    //     {
-    //         index: 3,
-    //         customerType: "Thú cưng",
-    //         description: "Mang theo động vật cần được phục vụ?",
-    //         quantity: 0,
-    //     },
-    // ];
-    // const [customerList, setCustomerList] = useState(danhSachLoaiKhach);
     const [disabledSide, setDisabledSide] = useState("");
-    // const [totalCustomers, setTotalCustomers] = useState(0);
     const dispatch = useDispatch();
     const { totalCustomer, customerInfo } = useSelector(
         (state) => state.bookingRoomSlice
     );
     const incQuantity = (index) => {
-        let newCustomerInfo = [...customerInfo];
+        let newCustomerInfo = _.cloneDeep(customerInfo);
         newCustomerInfo[index].quantity += 1;
         dispatch(setCustomerInfo(newCustomerInfo));
     };
     const decQuantity = (index) => {
-        let newCustomerInfo = [...customerInfo];
+        let newCustomerInfo = _.cloneDeep(customerInfo);
 
         newCustomerInfo[index].quantity = Math.max(
             0,
             newCustomerInfo[index].quantity - 1
         );
         dispatch(setCustomerInfo(newCustomerInfo));
-
-        // setCustomerList(newCustomerList);
     };
     const countTotalCustomer = () => {
         return customerInfo.reduce((sum, customer) => {
@@ -71,7 +42,6 @@ export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
         if (limit && totalCustomer >= limit) setDisabledSide("inc");
         else if (totalCustomer < 0) setDisabledSide("dec");
         else setDisabledSide("");
-        // handleChooseCustomer(totalCustomers, customerList);
     }, [totalCustomer]);
 
     return (

@@ -1,6 +1,5 @@
 import React from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Dialog } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import CommentItem from "./CommentItem";
 import Modal from "../../../components/Modal/Modal";

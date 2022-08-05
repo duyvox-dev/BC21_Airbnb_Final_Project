@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getRoomDetail } from "../../redux/phongSlice";
 import { getDanhSachDanhGiaPhong } from "../../redux/danhGiaSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,10 +19,11 @@ import { animateScroll as scroll, scroller, Element } from "react-scroll";
 import AuthModal from "../../components/Modal/AuthModal";
 import { setBookingStatus } from "../../redux/bookingRoomSlice";
 import BookTicketModal from "./BookTicket/BookTicketModal";
-import { message } from "antd";
-import { setCommentModal, setDirectModal } from "../../redux/chiTietPhongSlice";
+import {
+    setDirectModal,
+    setBookTicketModal,
+} from "../../redux/chiTietPhongSlice";
 export default function ChiTietPhongPage() {
-    const location = useLocation();
     const dispatch = useDispatch();
     const { isBookedSuccess } = useSelector((state) => state.bookingRoomSlice);
     const { bookTicketModal } = useSelector((state) => state.chiTietPhongSlice);
@@ -44,12 +45,14 @@ export default function ChiTietPhongPage() {
     }, []);
 
     useEffect(() => {
-        if (isBookedSuccess && !bookTicketModal) {
-            message.success("Đặt vé thành công ");
-            dispatch(setDirectModal(true));
-            dispatch(setBookingStatus(false));
+        if (isBookedSuccess) {
+            dispatch(setBookTicketModal(false));
+            setTimeout(() => {
+                dispatch(setDirectModal(true));
+                dispatch(setBookingStatus(false));
+            }, 300);
         }
-    }, [bookTicketModal, isBookedSuccess]);
+    }, [isBookedSuccess]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -65,9 +68,9 @@ export default function ChiTietPhongPage() {
     document.title = `${thongTinChiTietPhong.name} - Airbnb`;
     return (
         <div className="relative">
-            <ModalDirect modalDetail={modalDirectDetail} />
             <BookTicketModal />
             <AuthModal />
+            <ModalDirect modalDetail={modalDirectDetail} />
             <CommentModal />
 
             <div className="md:w-11/12 lg:container mx-auto py-10 px-5 ">

@@ -1,8 +1,7 @@
 import React from "react";
 import RoomFeatureList from "../RoomFeature/RoomFeatureList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal, faStar, faLanguage } from "@fortawesome/free-solid-svg-icons";
-import { animateScroll as scroll, scroller, Element } from "react-scroll";
+import { faMedal, faLanguage } from "@fortawesome/free-solid-svg-icons";
 import Bed from "../../../assets/img/room-convenience/bed.png";
 export default function RoomInfo({ thongTinChiTietPhong }) {
     const features = {

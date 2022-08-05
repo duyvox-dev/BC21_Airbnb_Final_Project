@@ -18,7 +18,7 @@ import {
 } from "../../../redux/chiTietPhongSlice";
 export default function BookTicket() {
     const dispatch = useDispatch();
-    const { bookingDate, customerInfo } = useSelector(
+    const { bookingDate, customerInfo, totalCustomer } = useSelector(
         (state) => state.bookingRoomSlice
     );
 
@@ -28,7 +28,6 @@ export default function BookTicket() {
 
     const [daysOfBooking, setDaysOfBooking] = useState(0);
     const [ableToBook, setAbleToBook] = useState(true);
-    const [totalCustomers, setTotalCustomers] = useState(0);
     useEffect(() => {
         const days = countDays(bookingDate?.checkIn, bookingDate?.checkOut);
         if (days) setDaysOfBooking(days);
@@ -38,17 +37,17 @@ export default function BookTicket() {
     useEffect(() => {
         let isAbleToBook = false;
         if (
-            bookingDate?.checkIn != null &&
-            bookingDate?.checkOut != null &&
+            bookingDate?.checkIn &&
+            bookingDate?.checkOut &&
             bookingDate?.checkIn != "" &&
             bookingDate?.checkIn != "Invalid date" &&
             bookingDate?.checkOut != "" &&
             bookingDate?.checkOut != "Invalid date" &&
-            totalCustomers != 0
+            totalCustomer != 0
         )
             isAbleToBook = true;
         setAbleToBook(isAbleToBook);
-    }, [bookingDate, totalCustomers]);
+    }, [bookingDate, totalCustomer]);
     useEffect(() => {
         if (accessToken) {
             dispatch(setAuthModal(false));
@@ -57,34 +56,36 @@ export default function BookTicket() {
     const countTotalCost = () => {
         return daysOfBooking * thongTinChiTietPhong.price;
     };
-    const handleChooseCustomer = (totalCustomer, customerList) => {
-        setTotalCustomers(totalCustomer);
-        const customerDataWithoutIndex = customerList.map((customerItem) => {
-            return {
-                customerType: customerItem.customerType,
-                description: customerItem.description,
-                quantity: customerItem.quantity,
-            };
-        });
-        dispatch(setCustomerInfo(customerDataWithoutIndex));
-        dispatch(setTotalCustomer(totalCustomer));
-    };
+    // const handleChooseCustomer = (totalCustomer, customerList) => {
+    //     // setTotalCustomers(totalCustomer);
+    //     const customerDataWithoutIndex = customerList.map((customerItem) => {
+    //         return {
+    //             customerType: customerItem.customerType,
+    //             description: customerItem.description,
+    //             quantity: customerItem.quantity,
+    //         };
+    //     });
+    //     dispatch(setCustomerInfo(customerDataWithoutIndex));
+    //     dispatch(setTotalCustomer(totalCustomer));
+    // };
     const handleBooking = () => {
         if (accessToken && ableToBook) {
             const bookingData = {
                 roomId: thongTinChiTietPhong._id,
                 ...bookingDate,
             };
-            dispatch(setBookTicketModal(false));
             dispatch(bookRoom(bookingData));
         } else if (!accessToken) {
             dispatch(setAuthModal(true));
         }
     };
     const onDatePickerChange = (key, data) => {
+        data = data.map((date) => {
+            return date == "" ? null : moment(date).format();
+        });
         const newBookingDate = {
-            checkIn: moment(data[0]).format(),
-            checkOut: moment(data[1]).format(),
+            checkIn: data[0],
+            checkOut: data[1],
         };
         dispatch(setBookingDate(newBookingDate));
     };
@@ -120,7 +121,7 @@ export default function BookTicket() {
                     <div className="w-full p-4 border-t cursor-pointer">
                         <ChooseCustomer
                             limit={thongTinChiTietPhong?.guests}
-                            handleChooseCustomer={handleChooseCustomer}
+                            // handleChooseCustomer={handleChooseCustomer}
                         ></ChooseCustomer>
                     </div>
                 </div>
