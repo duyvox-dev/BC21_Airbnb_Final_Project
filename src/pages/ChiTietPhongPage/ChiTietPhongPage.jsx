@@ -61,7 +61,7 @@ export default function ChiTietPhongPage() {
             duration: 1500,
             delay: 0,
             smooth: "easeInOutQuart",
-            offset: -100,
+            offset: -180,
         });
     };
     document.title = `${thongTinChiTietPhong.name} - Airbnb`;
