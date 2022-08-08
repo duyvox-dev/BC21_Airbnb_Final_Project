@@ -1,115 +1,151 @@
 import React from 'react';
 import { faDongSign, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InstagramOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
+import {
+    InstagramOutlined,
+    FacebookOutlined,
+    TwitterOutlined,
+} from '@ant-design/icons';
 import styles from '../css/FooterTemplate.css';
 
 export default function FooterTemplate() {
+    return (
+        <div className="hidden w-full footer bg-neutral-100 md:block">
+            <div className="w-11/12 py-5 mx-auto">
+                <div className="grid w-full grid-cols-1 pb-2 mx-auto border-0 border-b border-solid xl:gap-10 xl:grid-cols-4 justify-items-start border-b-neutral-300">
+                    <div className="w-full pb-2 border-b xl:border-0">
+                        <h3 className="pb-3 text-sm font-bold text-left">
+                            Hỗ trợ
+                        </h3>
+                        <div className="grid w-full grid-cols-3 xl:grid-cols-1">
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Trung tâm trợ giúp
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                AirCover
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Thông tin an toàn
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Hỗ trợ người khuyết tật
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Các tuỳ chọn huỷ
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Biện pháp ứng phó với đại dịch COVID-19 của
+                                chúng tôi
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Báo cáo lo ngại của hàng xóm
+                            </p>
+                        </div>
+                    </div>
 
-  return (
-    <div className='footer w-full bg-neutral-100'>
-      <div className='w-11/12 mx-auto py-5'>
-        <div className='w-full mx-auto grid grid-cols-4 justify-items-center gap-10 border-solid border-0 border-b border-b-neutral-300 pb-2'>
-          <div>
-            <h3 className='font-bold 
-            text-xs text-center lg:text-left'>GIỚI THIỆU</h3>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Phương thức hoạt động của AirBnb</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Trang tin tức</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Nhà đầu tư</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>AirBnb Plus</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>AirBnb Luxe</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Hotel Tonight</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>AirBnb for work</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Nhờ có Host - mọi điều đều có thể</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Cơ hội nghề nghiệp</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Thư của nhà sáng lập</p>
-          </div>
+                    <div className="w-full pt-4 pb-2 border-b xl:border-0">
+                        <h3 className="pb-3 text-sm font-bold text-left">
+                            Cộng đồng
+                        </h3>
+                        <div className="grid w-full grid-cols-3 xl:grid-cols-1">
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Airbnb.org: nhà ở cứu trợ
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Hỗ trợ dân tị nạn Afghanistan
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Chống phân biệt đối xử
+                            </p>
+                        </div>
+                    </div>
 
-          <div className='footer-menu-item-list'>
-            <h3 className='font-bold 
-            text-xs text-center lg:text-left'>CỘNG ĐỒNG</h3>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Sự đa dạng và cảm giác thân thuộc</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Tiện nghi phù hợp cho người khuyết tật</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Đối tác liên kết AirBnb</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Chỗ ở cho tuyến đầu</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Lượt giới thiệu của khách</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>AirBnb.org</p>
-          </div>
+                    <div className="w-full pt-4 pb-2 border-b xl:border-0">
+                        <h3 className="pb-3 text-sm font-bold text-left">
+                            Đón tiếp khách
+                        </h3>
+                        <div className="grid w-full grid-cols-3 xl:grid-cols-1">
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Thử đón tiếp khách
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                AirCover cho Chủ nhà
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Xem tài nguyên đón tiếp khách
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Truy cập diễn đàn cộng đồng
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Đón tiếp khách có trách nhiệm
+                            </p>
+                        </div>
+                    </div>
 
-          <div className='footer-menu-item-list'>
-            <h3 className='font-bold 
-            text-xs text-center lg:text-left'>ĐÓN TIẾP KHÁCH</h3>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Cho thuê nhà</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Tổ chức trải nghiệm trực tuyến</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Tổ chức trải nghiệm</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Đón tiếp khách có trách nhiệm</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Trung tâm tài nguyên</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Trung tâm cộng đồng</p>
-          </div>
-
-          <div className='footer-menu-item-list'>
-            <h3 className='font-bold 
-            text-xs text-center lg:text-left'>HỖ TRỢ</h3>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Biện pháp ứng phó với đại dịch COVID-19 của chúng tôi</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Trung tâm giúp đỡ</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Các tuỳ chỉnh huỷ</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Hỗ trợ khu dân cư</p>
-            <p className='cursor-pointer hover:underline md:text-xs text-xs text-center lg:text-left'>Tin cậy và an toàn</p>
-          </div>
-        </div>
-        <div className='w-full flex justify-between
-        lg:pt-5 lg:px-2
-        md:mt-1
-        flex-wrap'>
-          <div className='flex
-          lg:w-5/12 lg:flex-nowrap lg:justify-between lg:mb-0
-          md:w-8/12 md:flex-nowrap md:justify-between md:mb-0
-          w-full flex-wrap justify-center mb-2'>
-            <p className='md:text-xs md:mb-0 md:w-fit md:text-left
-            lg:mb-0 lg:w-fit lg:text-left
-            text-xs w-full text-center mb-1'>2021 AirBnb, Inc. All rights reserved</p>
-            <p className='text-transparent lg:text-black'>|</p>
-            <p className='text-xs my-auto mx-1 md:mx-0 md:my-0 lg:mx-0 lg:my-0'>Quyền riêng tư</p>
-            <p className='text-transparent lg:text-black'>|</p>
-            <p className='text-xs my-auto mx-1 md:mx-0 md:my-0 lg:mx-0 lg:my-0'>Điều khoản</p>
-            <p className='text-transparent lg:text-black'>|</p>
-            <p className='text-xs my-auto mx-1 md:mx-0 md:my-0 lg:mx-0 lg:my-0'>Sơ đồ trang web</p>
-          </div>
-          <div className='flex w-full
-          lg:w-3/12 lg:justify-end
-          md:w-4/12 md:flex md:flex-wrap md:justify-end'>
-            <div className='w-full flex 
-            lg:w-52
-            md:justify-end md:mb-2'>
-              <div className='flex 
-              lg:justify-center lg:w-full
-              md:justify-end'>
-                <FontAwesomeIcon className='my-auto lg:my-0' icon={faGlobe} />
-                <p className='my-auto mx-1 text-xs
-                md:text-center
-                lg:my-0'>
-                  Tiếng Việt (VN)
-                </p>
-              </div>
-              <div className='flex 
-              lg:justify-center lg:w-full
-              md:justify-end'>
-                <FontAwesomeIcon className='my-auto mx-1 lg:my-0' icon={faDongSign} />
-                <p className='my-auto mx-1 text-xs lg:my-0'>
-                  VND
-                </p>
-              </div>
+                    <div className="w-full pt-4">
+                        <h3 className="pb-3 text-sm font-bold text-left">
+                            Airbnb
+                        </h3>
+                        <div className="grid w-full grid-cols-3 xl:grid-cols-1">
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Trang tin tức
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Tìm hiểu các tính năng mới
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Thư ngõ từ các nhà sáng lập
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underlined">
+                                Cơ hội nghề nghiệp
+                            </p>
+                            <p className="text-sm text-left cursor-pointer hover:underline">
+                                Nhà đầu tư
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col-reverse justify-between w-full pt-5 xl:flex-row xl:px-2">
+                    <div className="flex flex-col justify-center w-full xl:flex-row xl:justify-start">
+                        <p className="text-center">
+                            2021 AirBnb, Inc. All rights reserved.
+                        </p>
+                        <div className="flex justify-center space-x-2 xl:ml-5 xl:space-x-4">
+                            <p className="mx-1 my-auto text-sm md:mx-0 md:my-0 lg:mx-0 lg:my-0">
+                                Quyền riêng tư
+                            </p>
+                            <p className="mx-1 my-auto text-sm md:mx-0 md:my-0 lg:mx-0 lg:my-0">
+                                Điều khoản
+                            </p>
+                            <p className="mx-1 my-auto text-sm md:mx-0 md:my-0 lg:mx-0 lg:my-0">
+                                Sơ đồ trang web
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-center w-full pb-5 xl:justify-end">
+                        <FontAwesomeIcon
+                            className="my-auto lg:my-0"
+                            icon={faGlobe}
+                        />
+                        <p className="mx-1 my-auto text-sm font-medium md:text-center lg:my-0">
+                            Tiếng Việt (VN)
+                        </p>
+                        <FontAwesomeIcon
+                            className="mx-1 my-auto lg:my-0"
+                            icon={faDongSign}
+                        />
+                        <p className="mx-1 my-auto text-sm font-medium lg:my-0">
+                            VND
+                        </p>
+                        <div className="ml-5 space-x-2">
+                            <FacebookOutlined className="px-1 my-auto text-base cursor-pointer lg:my-0" />
+                            <TwitterOutlined className="px-1 my-auto text-base cursor-pointer lg:my-0" />
+                            <InstagramOutlined className="px-1 my-auto text-base cursor-pointer lg:my-0" />
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className='flex items-center 
-            lg:justify-between lg:w-fit lg:items-start
-            md:w-full md:justify-end'>
-              <FacebookOutlined className='px-1 my-auto text-base lg:my-0' />
-              <TwitterOutlined className='px-1 my-auto text-base lg:my-0' />
-              <InstagramOutlined className='px-1 my-auto text-base lg:my-0' />
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  )
+    );
 }
