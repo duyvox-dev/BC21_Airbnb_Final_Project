@@ -8,7 +8,12 @@ export default function BackToTopBtn() {
             className=" text-rose-500 text-2xl"
             smooth
             component={<FontAwesomeIcon icon={faAngleUp} />}
-            style={{ bottom: "80px", right: "40px" }}
+            style={{
+                bottom: "80px",
+                right: "40px",
+                background: "#f43f5e",
+                color: "white",
+            }}
         />
     );
 }
