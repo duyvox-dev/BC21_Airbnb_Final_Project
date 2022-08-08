@@ -28,7 +28,9 @@ export default function ThongTinCaNhanPage(props) {
 
     const [loading, setLoading] = useState(false);
     const [imgUrl, setImgUrl] = useState(user_default);
-
+    useEffect(() => {
+        if (thongTinNguoiDung.avatar) setImgUrl(thongTinNguoiDung.avatar);
+    }, [thongTinNguoiDung]);
     const handleHienThiChinhSuaThongTin = () => {
         dispatch(hienThiFormChinhSuaHoSo());
         window.scrollTo(0, 240);
