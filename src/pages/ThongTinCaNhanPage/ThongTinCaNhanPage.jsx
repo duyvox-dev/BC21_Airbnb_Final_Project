@@ -22,7 +22,9 @@ export default function ThongTinCaNhanPage(props) {
     useEffect(() => {
         dispatch(getThongTinNguoiDung(id));
     }, []);
-
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     let thongTinNguoiDung = useSelector(selectThongTinNguoiDung);
     let formChinhSuaHoSoOpen = useSelector(selectFormChinhSuaHoSoOpen);
 
