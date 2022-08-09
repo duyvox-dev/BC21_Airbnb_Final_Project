@@ -1,17 +1,17 @@
-import React, { useState, Fragment } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Dialog, Transition } from '@headlessui/react';
+import React, { useState, Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Dialog, Transition } from "@headlessui/react";
 
-import KhoangGia from './KhoangGia';
-import PhongNgu from './PhongNgu';
-import TienNghi from './TienNghi';
-import Modal from '../../components/Modal/Modal';
+import KhoangGia from "./KhoangGia";
+import PhongNgu from "./PhongNgu";
+import TienNghi from "./TienNghi";
+import Modal from "../../components/Modal/Modal";
 import {
     deleteAllSearchRoomList,
     handleSearchRoomList,
-} from '../../redux/danhSachPhongSlice';
+} from "../../redux/danhSachPhongSlice";
 
 export default function ModalChonPhong() {
     const { danhSachPhong } = useSelector((state) => state.danhSachPhongSlice);
@@ -24,7 +24,7 @@ export default function ModalChonPhong() {
 
     return (
         <>
-            <div className="fixed z-10 w-full py-5 text-center bg-white border-b top-[8rem] sm:top-[5.5rem]">
+            <div className="fixed z-10 w-full py-5 text-center bg-white border-b top-[8rem] sm:top-[4.7rem]">
                 <div className="flex items-center justify-center space-x-32">
                     <div className="text-lg font-medium">
                         Hơn {danhSachPhong?.length} chỗ ở
