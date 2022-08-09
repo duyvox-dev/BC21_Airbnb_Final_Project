@@ -1,19 +1,18 @@
-import React from 'react';
-import { Tabs } from 'antd';
-import _ from 'lodash';
-import DeXuatPhongTab from './DeXuatPhongTab';
-import { useNavigate } from 'react-router-dom';
-import styles from '../css/DeXuatPhongHomePage.css';
+import React from "react";
+import { Tabs } from "antd";
+import _ from "lodash";
+import DeXuatPhongTab from "./DeXuatPhongTab";
+import { useNavigate } from "react-router-dom";
+import styles from "../css/DeXuatPhongHomePage.css";
 
 const { TabPane } = Tabs;
 
 export default function DeXuatPhongHomePage(props) {
-
     let { danhSachPhong, danhSachViTri } = props;
 
     let navigate = useNavigate();
 
-    let DSViTri = _.uniqBy(danhSachViTri, 'province');
+    let DSViTri = _.uniqBy(danhSachViTri, "province");
 
     let tabValue = DSViTri.map((viTri, index) => {
         let renderKey = () => {
@@ -26,8 +25,8 @@ export default function DeXuatPhongHomePage(props) {
         return {
             key: renderKey(),
             name: viTri.province,
-            _id: viTri._id
-        }
+            _id: viTri._id,
+        };
     });
 
     const danhSachPhongTheoProvince = tabValue.map((Province, index) => {
@@ -35,34 +34,43 @@ export default function DeXuatPhongHomePage(props) {
             key: Province.key,
             name: Province.name,
             _id: Province._id,
-            DSPhong: danhSachPhong.filter(item => item.locationId?.province == Province.name),
-        }
+            DSPhong: danhSachPhong.filter(
+                (item) => item.locationId?.province == Province.name
+            ),
+        };
     });
 
     const renderTabPane = () => {
         return danhSachPhongTheoProvince.map((item, index) => {
-            return <TabPane tab={item.name} key={item.key}>
-                <DeXuatPhongTab
-                    deXuatDanhSachPhongTab={item.DSPhong}
-                />
-                <div className="w-full flex items-center">
-                    <button
-                        className="px-5 py-2 mt-2 mx-auto rounded-lg bg-rose-500 text-white text-base active:scale-95"
-                        onClick={() => { navigate(`/search/${item._id}`) }}
-                    >
-                        Xem tất cả
-                    </button>
-                </div>
-            </TabPane>
-        })
+            return (
+                <TabPane tab={item.name} key={item.key}>
+                    <DeXuatPhongTab deXuatDanhSachPhongTab={item.DSPhong} />
+                    <div className="w-full flex items-center">
+                        <button
+                            className="mx-auto rounded-lg bg-rose-500 text-white text-base active:scale-95
+                        lg:px-5 lg:py-2
+                        md:px-5 md:py-2
+                        px-3 py-1"
+                            onClick={() => {
+                                navigate(`/search/${item._id}`);
+                            }}
+                        >
+                            Xem tất cả
+                        </button>
+                    </div>
+                </TabPane>
+            );
+        });
     };
 
     return (
-        <div className="main-page w-full mt-10 pb-5">
-            <h1 className="w-11/12 mx-auto text-2xl text-center">Những chỗ nghỉ nổi bật khuyến nghị cho bạn</h1>
+        <div className="main-page w-full lg:mt-10 lg:pb-5 mt-5 md:mt-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-center">
+                Những chỗ nghỉ nổi bật khuyến nghị cho bạn
+            </h2>
             <Tabs defaultActiveKey="1" centered>
                 {renderTabPane()}
             </Tabs>
         </div>
-    )
+    );
 }

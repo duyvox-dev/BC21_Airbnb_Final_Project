@@ -3,76 +3,56 @@ import { useEffect, useState } from "react";
 import ChooseCustomerItem from "./ChooseCustomerItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    setCustomerInfo,
+    setTotalCustomer,
+} from "../../redux/bookingRoomSlice";
+import _ from "lodash";
 export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
-    let danhSachLoaiKhach = [
-        {
-            index: 0,
-            ten: "Người lớn",
-            moTa: "Từ 13 tuổi trở lên",
-            soLuong: 0,
-        },
-        {
-            index: 1,
-            ten: "Trẻ em",
-            moTa: "Độ tuổi 2 - 12",
-            soLuong: 0,
-        },
-        {
-            index: 2,
-            ten: "Em bé",
-            moTa: "Dưới 2 tuổi",
-            soLuong: 0,
-        },
-        {
-            index: 3,
-            ten: "Thú cưng",
-            moTa: "Mang theo động vật cần được phục vụ?",
-            soLuong: 0,
-        },
-    ];
-    const [customerList, setCustomerList] = useState(danhSachLoaiKhach);
     const [disabledSide, setDisabledSide] = useState("");
-    const [totalCustomers, setTotalCustomers] = useState(0);
-    // const [customerQuantity]
+    const dispatch = useDispatch();
+    const { totalCustomer, customerInfo } = useSelector(
+        (state) => state.bookingRoomSlice
+    );
     const incQuantity = (index) => {
-        const newCustomerList = [...customerList];
-        newCustomerList[index].soLuong += 1;
-        setCustomerList(newCustomerList);
+        let newCustomerInfo = _.cloneDeep(customerInfo);
+        newCustomerInfo[index].quantity += 1;
+        dispatch(setCustomerInfo(newCustomerInfo));
     };
     const decQuantity = (index) => {
-        const newCustomerList = [...customerList];
+        let newCustomerInfo = _.cloneDeep(customerInfo);
 
-        newCustomerList[index].soLuong = Math.max(
+        newCustomerInfo[index].quantity = Math.max(
             0,
-            newCustomerList[index].soLuong - 1
+            newCustomerInfo[index].quantity - 1
         );
-        setCustomerList(newCustomerList);
+        dispatch(setCustomerInfo(newCustomerInfo));
     };
     const countTotalCustomer = () => {
-        return customerList.reduce((sum, customer) => {
-            return sum + customer.soLuong;
+        return customerInfo.reduce((sum, customer) => {
+            return sum + customer.quantity;
         }, 0);
     };
 
     useEffect(() => {
-        setTotalCustomers(countTotalCustomer);
-    }, [customerList]);
+        dispatch(setTotalCustomer(countTotalCustomer()));
+    }, [customerInfo]);
     useEffect(() => {
-        if (limit && totalCustomers >= limit) setDisabledSide("inc");
-        else if (totalCustomers < 0) setDisabledSide("dec");
+        if (limit && totalCustomer >= limit) setDisabledSide("inc");
+        else if (totalCustomer < 0) setDisabledSide("dec");
         else setDisabledSide("");
-        handleChooseCustomer(totalCustomers, customerList);
-    }, [totalCustomers]);
+    }, [totalCustomer]);
 
     return (
-        <div>
+        <div className="w-full">
             {" "}
             <Popover className="relative">
                 <Popover.Button className="outline-none border-none block w-full text-left">
                     <div className="flex items-center justify-between">
                         <div>
                             <span className="font-semibold block">Khách</span>
-                            <span>{totalCustomers} Khách</span>
+                            <span>{totalCustomer} Khách</span>
                         </div>
 
                         <span>
@@ -85,11 +65,13 @@ export default function ChooseCustomer({ handleChooseCustomer, limit = 999 }) {
                 </Popover.Button>
 
                 <Popover.Panel className="absolute z-10 top-[50px] -left-[17px]">
-                    <div className="flex flex-col gap-5 bg-white p-5 shadow w-[312px] border border-slate-300 rounded">
-                        {customerList.map((loaiKhach) => {
+                    <div className="flex flex-col gap-5 bg-white p-5 shadow w-full border border-slate-300 rounded">
+                        {customerInfo.map((loaiKhach, index) => {
                             return (
                                 <ChooseCustomerItem
                                     data={loaiKhach}
+                                    key={index}
+                                    index={index}
                                     incQuantity={incQuantity}
                                     decQuantity={decQuantity}
                                     disabled={disabledSide}

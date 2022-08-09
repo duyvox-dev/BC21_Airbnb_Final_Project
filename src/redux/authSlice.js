@@ -74,7 +74,7 @@ export const authSlice = createSlice({
       state.isRegisterred = false;
     },
     [postDataDangNhap.fulfilled]: (state, { payload }) => {
-      let { accessToken, user } = payload;
+      let { accessToken, ...user } = payload;
       state.isLoggedIn = true;
       state.isRegisterred = false;
       state.userLogin = user.user;

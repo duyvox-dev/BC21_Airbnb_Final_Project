@@ -19,7 +19,7 @@ export default function DangKyPage() {
 
   document.title = "Airbnb® | Đăng ký";
   return (
-    <div className="p-10 flex justify-center">
+    <div className="p-10 pt-[136px] flex justify-center">
       <FormDangKy />
     </div>
   );
