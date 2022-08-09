@@ -97,14 +97,14 @@ export default function HeaderTemplate() {
     }, [ref]);
 
     return (
-        <div className="fixed z-20 flex justify-center w-full pt-5 pb-5 bg-white border-b header lg:flex-none lg:h-fit md:flex-none md:h-fit h-28">
-            <div className="fixed top-0 left-0 z-20 w-full h-32 pt-2 bg-white header-container lg:grid lg:w-11/12 lg:mx-auto lg:grid-cols-12 lg:static lg:h-fit lg:px-0 lg:pt-0 lg:bg-none md:grid md:w-11/12 md:mx-auto md:grid-cols-12 md:static md:h-fit md:px-0 md:pt-0 md:bg-none">
-                <div className="w-32 cursor-pointer md:w-28 md:col-span-1 lg:w-40 lg:col-span-1">
+        <div className="fixed z-20 flex justify-center w-full h-32 pt-5 pb-5 bg-white border-b header lg:flex-none lg:h-fit md:flex-none md:h-fit">
+            <div className="fixed top-0 left-0 z-20 flex justify-between w-full px-5 py-5 bg-white md:px-16 ">
+                <div className="w-32 cursor-pointer md:w-28  lg:w-40  md:mt-[10px]  lg:mt-0">
                     <Link to={'/'}>
                         <img className="w-full" src="../img/airbnb-logo3.png" />
                     </Link>
                 </div>
-                <div className="search-bar-container lg:ml-10 lg:col-span-8 md:ml-12 md:col-span-8">
+                <div className="search-bar-container absolute -bottom-7 left-[50%] -translate-x-1/2 min-w-[90%] md:min-w-0 md:bottom-4">
                     <div //Thanh searchInfo mini
                         className="flex items-center justify-center px-1 py-1 mx-auto mt-3 bg-white border border-gray-200 rounded-full shadow-md cursor-pointer hover:shadow-lg w-fit lg:px-2 lg:py-2 lg:mt-0 md:px-2 md:py-2 md:mt-0"
                         onClick={handleSearchOpen}
@@ -144,24 +144,9 @@ export default function HeaderTemplate() {
                         </button>
                     </div>
                 </div>
-                <div className="z-30 top-2 right-2 lg:flex lg:justify-end lg:items-center lg:col-span-3 lg:static md:flex md:justify-end md:items-center md:col-span-3 md:static">
-                    <div className="absolute -z-20 lg:static">
-                        <button
-                            type="button"
-                            className="text-transparent border-none rounded-full cursor-pointer bg-inherit md:w-36 md:text-xs lg:w-fit lg:text-base lg:px-4 lg:h-10 lg:text-black lg:hover:bg-gray-100"
-                        >
-                            Trở thành chủ nhà
-                        </button>
-                    </div>
-                    <div className="absolute mx-3 -z-20 lg:static">
-                        <button className="w-10 h-10 text-base border-none rounded-full cursor-pointer bg-inherit lg:hover:bg-gray-100">
-                            <FontAwesomeIcon
-                                className="text-transparent lg:text-black"
-                                icon={faGlobe}
-                            />
-                        </button>
-                    </div>
-                    <div>
+                {/* User menu */}
+                <div className=" lg:flex lg:justify-end lg:items-center lg:col-span-3 lg:static md:flex md:justify-end md:items-center md:col-span-3 md:static">
+                    <div className="">
                         <Menu
                             as="div"
                             className="relative inline-block text-left"
@@ -204,7 +189,7 @@ export default function HeaderTemplate() {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                             >
-                                <Menu.Items className="absolute mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg -left-12 w-44 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <Menu.Items className="absolute right-0 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg w-44 ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <div className="py-2">
                                         {userLogin ? (
                                             <Menu.Item>
