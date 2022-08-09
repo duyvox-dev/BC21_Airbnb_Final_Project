@@ -1,19 +1,19 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import xacMinhDanhTinhIcon from "../../assets/img/security.png";
-import { faCheck, faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FormChinhSuaHoSo from "./FormChinhSuaHoSo/FormChinhSuaHoSo";
-import { useParams } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import xacMinhDanhTinhIcon from '../../assets/img/security.png';
+import { faCheck, faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FormChinhSuaHoSo from './FormChinhSuaHoSo/FormChinhSuaHoSo';
+import { useParams } from 'react-router-dom';
 import {
     getThongTinNguoiDung,
     hienThiFormChinhSuaHoSo,
     selectFormChinhSuaHoSoOpen,
     selectThongTinNguoiDung,
     uploadAnhNguoiDung,
-} from "../../redux/nguoiDungSlice";
-import { useFormik } from "formik";
-import user_default from "../../assets/img/user_default.png";
+} from '../../redux/nguoiDungSlice';
+import { useFormik } from 'formik';
+import user_default from '../../assets/img/user_default.png';
 export default function ThongTinCaNhanPage(props) {
     let { id } = useParams();
 
@@ -46,7 +46,7 @@ export default function ThongTinCaNhanPage(props) {
         onSubmit: (values) => {
             //Tạo form data để gửi dữ liệu về backend
             let formData = new FormData();
-            formData.append("avatar", values.avatar);
+            formData.append('avatar', values.avatar);
 
             //Gọi API gửi dữ liệu về backend
             dispatch(uploadAnhNguoiDung(formData));
@@ -60,7 +60,7 @@ export default function ThongTinCaNhanPage(props) {
     const handleUploadAvatar = (e) => {
         //Lấy file từ event
         let file = e.target.files[0];
-        formik.setFieldValue("avatar", file);
+        formik.setFieldValue('avatar', file);
 
         //Tạo đối tượng đọc file
         let reader = new FileReader();
@@ -94,7 +94,7 @@ export default function ThongTinCaNhanPage(props) {
                             className="flex flex-wrap justify-center w-full h-16 lg:h-14 lg:flex lg:flex-wrap lg:justify-center lg:my-2 lg:relative md:h-14 md:flex md:flex-wrap md:justify-center md:my-2 md:relative"
                         >
                             <label
-                                for="upload-photo"
+                                htmlFor="upload-photo"
                                 className="w-full font-bold text-center underline cursor-pointer h-fit lg:h-5 md:h-5"
                             >
                                 Cập nhật ảnh đại diện
@@ -141,7 +141,7 @@ export default function ThongTinCaNhanPage(props) {
                             </p>
                             <span>
                                 <FontAwesomeIcon icon={faCheck} />
-                            </span>{" "}
+                            </span>{' '}
                             <span>Địa chỉ email</span>
                         </div>
                     </div>
@@ -177,7 +177,7 @@ export default function ThongTinCaNhanPage(props) {
                             <FontAwesomeIcon
                                 icon={faStar}
                                 className="lg:mb-1 md:mb-1"
-                            />{" "}
+                            />{' '}
                             <span className="my-auto font-bold text-center lg:text-2xl md:text-2xl">
                                 0 đánh giá
                             </span>
