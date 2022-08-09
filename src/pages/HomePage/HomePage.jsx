@@ -55,7 +55,9 @@ export default function HomePage() {
 
     return (
         <div className="homepage w-full pt-[86px]">
-            <BannerHomePage />
+            <div className="pt-12 md:pt-0">
+                <BannerHomePage />
+            </div>
             <div className="w-11/12 mx-auto">
                 <ViTriThuHutSliderHomePage
                     danhSachViTriDanhGiaCao={danhSachViTriDanhGiaCao}
