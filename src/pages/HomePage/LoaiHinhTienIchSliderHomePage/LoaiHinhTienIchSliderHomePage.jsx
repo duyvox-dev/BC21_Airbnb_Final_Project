@@ -92,13 +92,9 @@ export default function LoaiHinhTienIchSliderHomePage(props) {
         md:mt-0
         lg:mt-10 lg:pb-5"
         >
-            <h1
-                className="w-11/12 mx-auto
-            md:text-2xl
-            lg:text-2xl text-center"
-            >
+            <h2 className="text-2xl md:text-3xl font-bold text-center">
                 Các loại hình tiện ích bạn cần
-            </h1>
+            </h2>
             <div
                 className=" 
             w-full grid grid-cols-5
