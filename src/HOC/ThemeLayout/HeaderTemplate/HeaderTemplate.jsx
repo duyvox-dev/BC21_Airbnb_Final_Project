@@ -1,28 +1,28 @@
-import { Menu, Transition } from '@headlessui/react';
-import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
+import { Menu, Transition } from "@headlessui/react";
+import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import {
     faBars,
     faGlobe,
     faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import userPic from '../../../assets/img/user_pic.png';
-import styled from '../css/HeaderTemplate.css';
-import { Link, useNavigate } from 'react-router-dom';
-import MenuItem from 'antd/lib/menu/MenuItem';
-import { dangXuat } from '../../../redux/authSlice';
-import { selectThongTinTimPhong } from '../../../redux/bookingRoomSlice';
-import moment from 'moment';
-import _ from 'lodash';
-import { useFormik } from 'formik';
-import SearchForm from './SearchForm/SearchForm';
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import userPic from "../../../assets/img/user_pic.png";
+import styled from "../css/HeaderTemplate.css";
+import { Link, useNavigate } from "react-router-dom";
+import { dangXuat } from "../../../redux/authSlice";
+import { selectThongTinTimPhong } from "../../../redux/bookingRoomSlice";
+import moment from "moment";
+import _ from "lodash";
+import { useFormik } from "formik";
+import SearchForm from "./SearchForm/SearchForm";
+import airbnbLogo from "../../../assets/img/airbnb-logo.png";
 import {
     closeSearchInput,
     openSearchInput,
     selectIsSearchInputOpen,
-} from '../../../redux/pageSlice';
+} from "../../../redux/pageSlice";
 
 export default function HeaderTemplate() {
     const { userLogin } = useSelector((state) => state.authSlice);
@@ -44,7 +44,7 @@ export default function HeaderTemplate() {
     //Hàm xử lý đăng xuất cho người dùng
     let handleLogout = () => {
         dispatch(dangXuat());
-        navigate('/');
+        navigate("/");
     };
 
     //State lưu trữ thông tin tìm phòng của người dùng
@@ -63,18 +63,18 @@ export default function HeaderTemplate() {
     useEffect(() => {
         //Re-render thanh searchInfo mini mỗi khi khách chọn lại thông tin
         formik.setFieldValue(
-            'bookingLocation.locationName',
+            "bookingLocation.locationName",
             ThongTinTimPhong.bookingLocation.locationName
         );
         formik.setFieldValue(
-            'bookingDate.checkIn',
+            "bookingDate.checkIn",
             ThongTinTimPhong.bookingDate.checkIn
         );
         formik.setFieldValue(
-            'bookingDate.checkOut',
+            "bookingDate.checkOut",
             ThongTinTimPhong.bookingDate.checkOut
         );
-        formik.setFieldValue('totalCustomer', ThongTinTimPhong.totalCustomer);
+        formik.setFieldValue("totalCustomer", ThongTinTimPhong.totalCustomer);
     }, [ThongTinTimPhong]);
 
     //State điều khiển hiển thị thanh searchForm
@@ -93,15 +93,15 @@ export default function HeaderTemplate() {
                 dispatch(closeSearchInput());
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
     }, [ref]);
 
     return (
         <div className="fixed z-20 flex justify-center w-full h-32 pt-5 pb-5 bg-white border-b header lg:flex-none lg:h-fit md:flex-none md:h-fit">
             <div className="fixed top-0 left-0 z-20 flex justify-between w-full px-5 py-5 bg-white md:px-16 ">
                 <div className="w-32 cursor-pointer md:w-28  lg:w-40  md:mt-[10px]  lg:mt-0">
-                    <Link to={'/'}>
-                        <img className="w-full" src="../img/airbnb-logo3.png" />
+                    <Link to={"/"}>
+                        <img className="w-full" src={airbnbLogo} />
                     </Link>
                 </div>
                 <div className="search-bar-container absolute -bottom-7 left-[50%] -translate-x-1/2 min-w-[90%] md:min-w-0 md:bottom-4">
@@ -112,28 +112,28 @@ export default function HeaderTemplate() {
                         <p className="pr-1 my-auto text-xs font-normal text-center lg:pr-2 lg:font-bold lg:text-base md:pr-2 md:font-bold">
                             {_.trim(
                                 formik.values.bookingLocation.locationName
-                            ) === '' //Kiểm tra thông tin vị trí có tồn tại không
-                                ? 'Địa điểm bất kỳ'
+                            ) === "" //Kiểm tra thông tin vị trí có tồn tại không
+                                ? "Địa điểm bất kỳ"
                                 : formik.values.bookingLocation.locationName}
                         </p>
                         <p className="px-1 my-auto text-xs font-normal text-center border-l border-r border-gray-400 lg:px-2 lg:font-bold lg:text-base md:px-2 md:font-bold">
                             {formik.values.bookingDate.checkIn !== null &&
                             formik.values.bookingDate.checkOut !== null //Nếu localStorage chưa nhận giá trị thời gian nhận/trả phòng thì trả ra string rỗng
                                 ? _.trim(formik.values.bookingDate.checkIn) ===
-                                      'NaN' &&
+                                      "NaN" &&
                                   _.trim(formik.values.bookingDate.checkOut) ===
-                                      'NaN' //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
-                                    ? 'Thời gian bất kỳ'
+                                      "NaN" //Nếu localStorage đang lưu trữ giá trị checkIn/checkOut là string rỗng (Giá trị là number, nếu string rỗng => NaN) thì trả ra string rỗng
+                                    ? "Thời gian bất kỳ"
                                     : `Ngày ${moment(
                                           formik.values.bookingDate.checkIn
-                                      ).format('DD/MM')} - ${moment(
+                                      ).format("DD/MM")} - ${moment(
                                           formik.values.bookingDate.checkOut
-                                      ).format('DD/MM')}` //Nếu thời gian nhận phòng và trả phòng khác tháng
-                                : 'Thời gian bất kỳ'}
+                                      ).format("DD/MM")}` //Nếu thời gian nhận phòng và trả phòng khác tháng
+                                : "Thời gian bất kỳ"}
                         </p>
                         <p className="px-1 my-auto text-xs font-normal text-center lg:px-2 lg:font-bold lg:text-base md:px-2 md:font-bold">
                             {formik.values.totalCustomer === 0
-                                ? 'Thêm khách'
+                                ? "Thêm khách"
                                 : `${formik.values.totalCustomer} khách`}
                         </p>
                         <button className="flex items-center justify-center text-white rounded-full bg-rose-500 w-9 h-9">
@@ -201,8 +201,8 @@ export default function HeaderTemplate() {
                                                         <button
                                                             className={`${
                                                                 active
-                                                                    ? 'bg-gray-100 font-bold'
-                                                                    : ''
+                                                                    ? "bg-gray-100 font-bold"
+                                                                    : ""
                                                             } group w-full h-12 text-left items-center rounded-md px-3 text-sm transition-all cursor-pointer`}
                                                         >
                                                             Tài khoản
@@ -216,13 +216,13 @@ export default function HeaderTemplate() {
                                                     {({ active }) => (
                                                         <Link
                                                             className="w-full h-full text-black hover:text-black"
-                                                            to={'/register'}
+                                                            to={"/register"}
                                                         >
                                                             <button
                                                                 className={`${
                                                                     active
-                                                                        ? 'bg-gray-100 font-bold'
-                                                                        : ''
+                                                                        ? "bg-gray-100 font-bold"
+                                                                        : ""
                                                                 } group w-full h-12 text-left items-center rounded-md px-3 text-sm transition-all cursor-pointer`}
                                                             >
                                                                 Đăng ký
@@ -234,13 +234,13 @@ export default function HeaderTemplate() {
                                                     {({ active }) => (
                                                         <Link
                                                             className="w-full h-full text-black hover:text-black"
-                                                            to={'/login'}
+                                                            to={"/login"}
                                                         >
                                                             <button
                                                                 className={`${
                                                                     active
-                                                                        ? 'bg-gray-100 font-bold'
-                                                                        : ''
+                                                                        ? "bg-gray-100 font-bold"
+                                                                        : ""
                                                                 } group w-full h-12 text-left items-center rounded-md px-3 text-sm transition-all cursor-pointer`}
                                                             >
                                                                 Đăng nhập
@@ -256,8 +256,8 @@ export default function HeaderTemplate() {
                                                 <button
                                                     className={`${
                                                         active
-                                                            ? 'bg-gray-100 font-bold'
-                                                            : ''
+                                                            ? "bg-gray-100 font-bold"
+                                                            : ""
                                                     } group w-full h-12 text-left items-center rounded-md px-3 text-sm transition-all cursor-pointer`}
                                                 >
                                                     Cho thuê nhà
@@ -269,8 +269,8 @@ export default function HeaderTemplate() {
                                                 <button
                                                     className={`${
                                                         active
-                                                            ? 'bg-gray-100 font-bold'
-                                                            : ''
+                                                            ? "bg-gray-100 font-bold"
+                                                            : ""
                                                     } group w-full h-12 text-left items-center rounded-md px-3 text-sm transition-all cursor-pointer`}
                                                 >
                                                     Tổ chức trải nghiệm
@@ -285,8 +285,8 @@ export default function HeaderTemplate() {
                                                         <button
                                                             className={`${
                                                                 active
-                                                                    ? 'bg-gray-100 font-bold'
-                                                                    : ''
+                                                                    ? "bg-gray-100 font-bold"
+                                                                    : ""
                                                             } group w-full h-12 text-left items-center rounded-md px-3 text-sm transition-all cursor-pointer`}
                                                             onClick={() =>
                                                                 handleLogout()
@@ -298,7 +298,7 @@ export default function HeaderTemplate() {
                                                 </Menu.Item>
                                             </>
                                         ) : (
-                                            ''
+                                            ""
                                         )}
                                     </div>
                                 </Menu.Items>

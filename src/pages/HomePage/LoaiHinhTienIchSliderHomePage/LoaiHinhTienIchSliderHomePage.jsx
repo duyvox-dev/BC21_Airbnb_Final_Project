@@ -1,87 +1,112 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import { Link } from "react-router-dom";
+import gym from "../../../assets/img/room-convenience/gym.png";
+import tv from "../../../assets/img/room-convenience/tv.png";
+import bathTub from "../../../assets/img/room-convenience/bath-tub.png";
+import bonfire from "../../../assets/img/room-convenience/bonfire.png";
+import chef from "../../../assets/img/room-convenience/chef.png";
+import elevator from "../../../assets/img/room-convenience/elevator.png";
+import heater from "../../../assets/img/room-convenience/heater.png";
+import pool from "../../../assets/img/room-convenience/pool.png";
+import dryer from "../../../assets/img/room-convenience/dryer.png";
+import wifi from "../../../assets/img/room-convenience/wifi.png";
 export default function LoaiHinhTienIchSliderHomePage(props) {
-
     const tienIchIconArr = [
         {
-            hinhAnh: '../img/room-convenience/bath-tub.png',
-            ten: 'Bồn tắm nước nóng',
+            hinhAnh: bathTub,
+            ten: "Bồn tắm nước nóng",
         },
         {
-            hinhAnh: '../img/room-convenience/bonfire.png',
-            ten: 'Đốt lửa trại',
+            hinhAnh: bonfire,
+            ten: "Đốt lửa trại",
         },
         {
-            hinhAnh: '../img/room-convenience/chef.png',
-            ten: 'Nhà bếp',
+            hinhAnh: chef,
+            ten: "Nhà bếp",
         },
         {
-            hinhAnh: '../img/room-convenience/hair-dryer.png',
-            ten: 'Máy sấy tóc',
+            hinhAnh: dryer,
+            ten: "Máy sấy tóc",
         },
         {
-            hinhAnh: '../img/room-convenience/heater.png',
-            ten: 'Lò sưởi ấm',
+            hinhAnh: heater,
+            ten: "Lò sưởi ấm",
         },
         {
-            hinhAnh: '../img/room-convenience/lift-sign.png',
-            ten: 'Thang máy',
+            hinhAnh: elevator,
+            ten: "Thang máy",
         },
         {
-            hinhAnh: '../img/room-convenience/stationary-bike.png',
-            ten: 'Khu tập gym',
+            hinhAnh: gym,
+            ten: "Khu tập gym",
         },
         {
-            hinhAnh: '../img/room-convenience/swimming-pool.png',
-            ten: 'Hồ bơi',
+            hinhAnh: pool,
+            ten: "Hồ bơi",
         },
         {
-            hinhAnh: '../img/room-convenience/watch-tv.png',
-            ten: 'Tivi truyền hình cáp',
+            hinhAnh: tv,
+            ten: "Tivi truyền hình cáp",
         },
         {
-            hinhAnh: '../img/room-convenience/wifi.png',
-            ten: 'Free Wifi',
+            hinhAnh: wifi,
+            ten: "Free Wifi",
         },
     ];
 
     const renderTienIchPhong = () => {
         return tienIchIconArr.map((item, index) => {
-            return <Link
-                key={index}
-                to={'/'}
-                className='text-inherit hover:text-inherit group'
-            >
-                <div className='lg:w-28 lg:wb-0
+            return (
+                <Link
+                    key={index}
+                    to={"/"}
+                    className="text-inherit hover:text-inherit group"
+                >
+                    <div
+                        className="lg:w-28 lg:wb-0
                 md:w-16 md:wb-0
-                w-16 mb-2'>
-                    <img className="w-5 h-5 
+                w-16 mb-2"
+                    >
+                        <img
+                            className="w-5 h-5 
                     md:w-6 md:h-6 
-                    lg:w-8 lg:h-8 lg:my-2 mx-auto group-hover:scale-110" src={item.hinhAnh} />
-                    <p className="text-xs font-normal text-center my-auto
+                    lg:w-8 lg:h-8 lg:my-2 mx-auto group-hover:scale-110"
+                            src={item.hinhAnh}
+                        />
+                        <p
+                            className="text-xs font-normal text-center my-auto
                     md:text-xs 
-                    lg:text-sm lg:font-bold">{item.ten}</p>
-                </div>
-            </Link>
-        })
+                    lg:text-sm lg:font-bold"
+                        >
+                            {item.ten}
+                        </p>
+                    </div>
+                </Link>
+            );
+        });
     };
 
     return (
-        <div className="w-full -mt-6
+        <div
+            className="w-full -mt-6
         md:mt-0
-        lg:mt-10 lg:pb-5">
-            <h1 className="w-11/12 mx-auto
+        lg:mt-10 lg:pb-5"
+        >
+            <h1
+                className="w-11/12 mx-auto
             md:text-2xl
-            lg:text-2xl text-center">
+            lg:text-2xl text-center"
+            >
                 Các loại hình tiện ích bạn cần
             </h1>
-            <div className=' 
+            <div
+                className=" 
             w-full grid grid-cols-5
             md:w-11/12 md:mt-5 md:mx-auto md:flex md:justify-between md:items-start
-            lg:w-11/12 lg:mx-auto lg:flex lg:justify-center lg:items-start'>
+            lg:w-11/12 lg:mx-auto lg:flex lg:justify-center lg:items-start"
+            >
                 {renderTienIchPhong()}
             </div>
         </div>
-    )
+    );
 }

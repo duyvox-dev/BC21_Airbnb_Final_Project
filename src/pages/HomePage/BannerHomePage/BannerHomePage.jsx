@@ -1,17 +1,18 @@
-import React from 'react'
-import Slider from 'react-slick';
-
+import React from "react";
+import Slider from "react-slick";
+import banner1 from "../../../assets/img/banner/banner-1.jpg";
+import banner2 from "../../../assets/img/banner/banner-2.jpg";
+import banner3 from "../../../assets/img/banner/banner-3.jpg";
 export default function BannerHomePage() {
-
     const bannerArr = [
         {
-            hinhAnh: '../img/banner-1.jpg',
+            hinhAnh: banner1,
         },
         {
-            hinhAnh: '../img/banner-2.jpg',
+            hinhAnh: banner2,
         },
         {
-            hinhAnh: '../img/banner-3.jpg',
+            hinhAnh: banner3,
         },
     ];
 
@@ -28,31 +29,30 @@ export default function BannerHomePage() {
 
     const renderCarouselSlider = () => {
         return bannerArr.map((item, index) => {
-            return <div
-                key={index}
-                className='w-full'
-            >
-                <img className="lg:w-full" src={item.hinhAnh} />
-            </div>
-        })
+            return (
+                <div key={index} className="w-full">
+                    <img className="lg:w-full" src={item.hinhAnh} />
+                </div>
+            );
+        });
     };
 
     return (
         <div className="relative">
             <Slider
                 {...SliderSettings}
-                className='banner-slider-container w-full lg:mt-2'
+                className="banner-slider-container w-full lg:mt-2"
             >
                 {renderCarouselSlider()}
             </Slider>
             <div className="bg-black/50 flex flex-wrap items-center absolute w-full lg:bottom-8 lg:mb-2 lg:p-2 bottom-3 md:bottom-8">
-                <h1 className='text-white mx-auto my-auto text-center lg:text-4xl lg:w-11/12 w-8/12 text-xs md:w-10/12 md:text-lg'>
+                <h1 className="text-white mx-auto my-auto text-center lg:text-4xl lg:w-11/12 w-8/12 text-xs md:w-10/12 md:text-lg">
                     KHÁCH SẠN, KHU NGHỈ DƯỠNG, NHÀ TRỌ VÀ HƠN THẾ NỮA
                 </h1>
-                <h2 className='text-white mx-auto my-auto text-center lg:text-xl lg:w-11/12 w-full text-xs font-thin md:text-sm'>
+                <h2 className="text-white mx-auto my-auto text-center lg:text-xl lg:w-11/12 w-full text-xs font-thin md:text-sm">
                     Nhận giá tốt nhất cho hơn 10.000 chỗ nghỉ toàn Việt Nam
                 </h2>
             </div>
         </div>
-    )
+    );
 }
