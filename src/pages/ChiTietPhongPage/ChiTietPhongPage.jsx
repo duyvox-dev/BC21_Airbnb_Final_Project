@@ -82,7 +82,12 @@ export default function ChiTietPhongPage() {
                         <div className="flex flex-col md:flex-row gap-2 md:items-center text-md md:text-lg">
                             <span className="flex gap-2 items-center">
                                 <FontAwesomeIcon className="" icon={faStar} />
-                                <span className=" font-semibold">4.83</span>
+                                <span className=" font-semibold">
+                                    {parseFloat(
+                                        thongTinChiTietPhong?.locationId
+                                            ?.valueate / 2
+                                    ).toFixed(1)}
+                                </span>
                             </span>
                             <span className="text-slate-500 hidden md:block">
                                 .
