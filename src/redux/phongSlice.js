@@ -1,16 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { phongService } from "../services/phongService";
-import {
-    DanhSachPhong,
-    ThongTinPhong,
-    ThongTinTimPhong,
-} from "../_core/ThongTinPhong";
-import { ThongTinViTri } from "../_core/ThongTinViTri";
+import { DanhSachPhong, ThongTinPhong } from "../_core/ThongTinPhong";
 
 let initialState = {
     danhSachPhong: DanhSachPhong,
     thongTinChiTietPhong: ThongTinPhong,
     isBookedSuccess: false,
+    isExist: true,
 };
 
 //Lấy danh sách tất cả phòng tại mọi tỉnh thành
@@ -33,27 +29,11 @@ export const getRoomDetail = createAsyncThunk(
             const res = await phongService.layThongTinChiTietPhong(id);
             return res.data;
         } catch (err) {
-            // const message = err.response.data.content;
-            // thunkAPI.dispatch(setErrorMessage(message));
             return thunkAPI.rejectWithValue();
         }
     }
 );
-// export const bookRoom = createAsyncThunk(
-//     "phongSlice/bookRoom",
-//     async (data, thunkAPI) => {
-//         try {
-//             const res = await phongService.datPhong(data);
-//             // dispatch(res.)
-//             console.log(res);
-//             return res.data;
-//         } catch (err) {
-//             // const message = err.response.data.content;
-//             // thunkAPI.dispatch(setErrorMessage(message));
-//             return thunkAPI.rejectWithValue();
-//         }
-//     }
-// );
+
 const phongSlice = createSlice({
     name: "phongSlice",
     initialState: initialState,
@@ -72,12 +52,16 @@ const phongSlice = createSlice({
         },
         [getDanhSachPhong.rejected]: (state, action) => {},
         [getRoomDetail.pending]: (state, action) => {
+            state.isExist = true;
             state.thongTinChiTietPhong = {};
         },
         [getRoomDetail.fulfilled]: (state, action) => {
             state.thongTinChiTietPhong = action.payload;
+            state.isExist = true;
         },
-        [getRoomDetail.rejected]: (state, action) => {},
+        [getRoomDetail.rejected]: (state, action) => {
+            state.isExist = false;
+        },
     },
 });
 
