@@ -8,6 +8,8 @@ import viTriSlice from "./viTriSlice";
 import bookingRoomSlice from "./bookingRoomSlice";
 import pageSlice from "./pageSlice";
 import chiTietPhongSlice from "./chiTietPhongSlice";
+import loadingSlice from "./loadingSlice";
+
 export const store = configureStore({
     reducer: {
         viTriSlice: viTriSlice,
@@ -19,6 +21,7 @@ export const store = configureStore({
         authSlice,
         danhSachPhongSlice,
         chiTietPhongSlice,
+        loadingSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
