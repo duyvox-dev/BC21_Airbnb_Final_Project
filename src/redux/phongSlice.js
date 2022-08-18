@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { phongService } from "../services/phongService";
-import { DanhSachPhong, ThongTinPhong } from "../_core/ThongTinPhong";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { message } from 'antd';
+import { phongService } from '../services/phongService';
+import { DanhSachPhong, ThongTinPhong } from '../_core/ThongTinPhong';
 
 let initialState = {
     danhSachPhong: DanhSachPhong,
@@ -11,19 +12,19 @@ let initialState = {
 
 //Lấy danh sách tất cả phòng tại mọi tỉnh thành
 export let getDanhSachPhong = createAsyncThunk(
-    "phongSlice/fetchDanhSachPhong",
+    'phongSlice/fetchDanhSachPhong',
     async (idViTri) => {
         try {
             let result = await phongService.layDanhSachPhong(idViTri);
             return result.data;
         } catch (error) {
-            console.log(error);
+            message.error('Có lỗi xảy ra vui lòng thử lại');
             return error;
         }
     }
 );
 export const getRoomDetail = createAsyncThunk(
-    "phongSlice/getRoomDetail",
+    'phongSlice/getRoomDetail',
     async (id, thunkAPI) => {
         try {
             const res = await phongService.layThongTinChiTietPhong(id);
@@ -35,7 +36,7 @@ export const getRoomDetail = createAsyncThunk(
 );
 
 const phongSlice = createSlice({
-    name: "phongSlice",
+    name: 'phongSlice',
     initialState: initialState,
     reducers: {
         layDanhSachPhong: (state, action) => {

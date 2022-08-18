@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { trim } from "lodash";
-import { danhGiaService } from "../services/danhGiaService";
-import { DanhSachDanhGia, ThongTinDanhGia } from "../_core/ThongTinDanhGia";
-import { DanhSachPhong, ThongTinPhong } from "../_core/ThongTinPhong";
-import { ThongTinViTri } from "../_core/ThongTinViTri";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { message } from 'antd';
+import { trim } from 'lodash';
+import { danhGiaService } from '../services/danhGiaService';
+import { DanhSachDanhGia, ThongTinDanhGia } from '../_core/ThongTinDanhGia';
+import { DanhSachPhong, ThongTinPhong } from '../_core/ThongTinPhong';
+import { ThongTinViTri } from '../_core/ThongTinViTri';
 
 let initialState = {
     danhSachDanhGia: DanhSachDanhGia,
@@ -12,7 +13,7 @@ let initialState = {
 
 //Lấy danh sách đánh giá của phòng cụ thể
 export let getDanhSachDanhGiaPhong = createAsyncThunk(
-    "danhGiaSlice/fetchDanhSachDanhGiaTheoPhong",
+    'danhGiaSlice/fetchDanhSachDanhGiaTheoPhong',
     async (idPhong) => {
         try {
             let result = await danhGiaService.layDanhSachDanhGiaTheoPhong(
@@ -21,24 +22,23 @@ export let getDanhSachDanhGiaPhong = createAsyncThunk(
             const rawData = result.data;
             let filterBlankComment = result.data;
             filterBlankComment = filterBlankComment.filter((comment) => {
-                return comment.content != "";
+                return comment.content != '';
             });
             filterBlankComment.sort(function compare(a, b) {
                 var dateA = new Date(a.created_at);
                 var dateB = new Date(b.created_at);
                 return dateB - dateA;
             });
-            // console.log(rawData);
             return filterBlankComment;
         } catch (error) {
-            console.log(error);
+            message.error('Có lỗi xảy ra vui lòng thử lại');
             return error;
         }
     }
 );
 
 const danhGiaSlice = createSlice({
-    name: "danhGiaSlice",
+    name: 'danhGiaSlice',
     initialState: initialState,
     reducers: {
         layDanhSachDanhGia: (state, action) => {
