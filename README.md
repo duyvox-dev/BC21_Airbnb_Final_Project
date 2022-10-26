@@ -8,13 +8,13 @@
 
 #### Search page:
 
-![Airbnb HomePage](./assets/wireframes/search.png)
-![Airbnb HomePage](./assets/screenshots/search_filter.png)
+![Airbnb Search](./assets/screenshots/search.png)
+![Airbnb Search](./assets/screenshots/search_filter.png)
 
-#### Home page:
+#### Detail page:
 
-![MovieTime HomePage](./assets/screenshots/detail_pc.png)
-![MovieTime HomePage](./assets/wireframes/detail_mobile.png)
+![Airbnb Detail](./assets/screenshots/detail_pc.png)
+![Airbnb Detail](./assets/screenshots/detail_mobile.png)
 
 You can see more screenshots in assets/screenshots
 
