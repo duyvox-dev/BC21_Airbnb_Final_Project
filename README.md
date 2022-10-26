@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# **Airbnb**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### **A full-featured accommodation booking app, built with ReactJS**
 
-## Available Scripts
+### Click here for [live demo](https://airbnb-bc21.netlify.app/)
 
-In the project directory, you can run:
+## Screenshots
 
-### `npm start`
+#### Search page:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![Airbnb HomePage](./assets/wireframes/search.png)
+![Airbnb HomePage](./assets/screenshots/search_filter.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Home page:
 
-### `npm test`
+![MovieTime HomePage](./assets/screenshots/detail_pc.png)
+![MovieTime HomePage](./assets/wireframes/detail_mobile.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You can see more screenshots in assets/screenshots
 
-### `npm run build`
+## Description
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   **Airbnb** is an opportunity for me to enhance my programming skills and experiment with some new technologies that I've learnt recently (e.g. RESTful API, TailwindCss, Ant Design and ReduxToolkit) as well. The project implements some pages of the original [Aribnb](https://www.airbnb.com.vn/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-   [x] Authentication (JWT token is stored in local storage)
+-   [x] Search room by location, checkin checkout time and number of guests.
+-   [x] Booking room.
 
-### `npm run eject`
+## Tech stack
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+-   **Front-end**
+    -   **ReactJS**
+    -   **TailwindCSS**
+    -   **Ant Design**
+    -   **Redux Toolkit**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Disclaimer
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+-   **Airbnb** is designed to work well with various screens, so you can experience on your phone as well.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Credits
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   The UI design is inspired by [Aribnb](https://www.airbnb.com.vn/)
