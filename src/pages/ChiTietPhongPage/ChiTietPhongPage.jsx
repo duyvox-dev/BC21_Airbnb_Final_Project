@@ -157,16 +157,16 @@ export default function ChiTietPhongPage() {
                             </div>
                         </div>
                         {/* Room image */}
-                        <div className=" h-64 md:h-96 my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="my-2 md:my-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                             <img
                                 src={thongTinChiTietPhong.image}
                                 alt=""
-                                className="h-full w-full rounded-3xl"
+                                className="block max-h-96 w-full rounded-3xl"
                             />
                             <img
                                 src={thongTinChiTietPhong.image}
                                 alt=""
-                                className="h-full w-full rounded-3xl hidden md:block"
+                                className=" max-h-96  w-full rounded-3xl hidden md:block"
                             />
                         </div>
 
